@@ -1,0 +1,23 @@
+{
+  "name": "@webdev-tools/react",
+  "author": "livemehere",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "keywords": [],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "dependencies": {
+    "@webdev-tools/core": "workspace:*"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@webdev-tools/core",
+  "author": "livemehere",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  }
+}

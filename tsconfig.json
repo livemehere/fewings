@@ -1,0 +1,24 @@
+{
+  "include": ["packages/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": false,
+    "allowImportingTsExtensions": false,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["DOM", "ESNext", "DOM.Iterable"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2022",
+    "noUnusedParameters": false,
+    "noUnusedLocals": true
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "webdev-tools",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "livemehere",
+  "license": "MIT",
+  "packageManager": "pnpm@8.6.12",
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "esbuild": "^0.24.2",
+    "glob": "^11.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsup": "^8.3.5",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.11",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "scripts": {
+    "build:all": "node scripts/build.mjs"
+  }
+}
