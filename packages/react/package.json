@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "@webdev-tools/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "@webdev-tools/core": "*"
   }
 }
