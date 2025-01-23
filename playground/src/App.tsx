@@ -1,42 +1,14 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import { AnimateNumber } from "@fekit/fancy-react/AnimateNumber";
+import { useState } from "react";
+import { AnimateNumber } from "@fewings/fancy-react/AnimateNumber";
 import { css } from "@emotion/react";
-import { shade } from "@fekit/core/color";
-import { Space, Flex, Stack } from "@fekit/fancy-react/layout";
-import { Emitter } from "@fekit/core/classes";
-import { addCommas } from "@fekit/core/math";
-
-class A extends Emitter<{
-  any: () => void;
-}> {
-  constructor() {
-    super();
-  }
-}
-
-const a = new A();
+import { shade } from "@fewings/core/color";
+import { Space, Flex, Stack } from "@fewings/fancy-react/layout";
+import { addCommas } from "@fewings/core/math";
 
 function App() {
   const [count, setCount] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => {
-      setCount((prev) => prev + 888);
-      a.dispatch("any");
-    }, 1000);
-    return () => {
-      clearInterval(id);
-    };
-  }, []);
 
-  useEffect(() => {
-    const off = a.on("any", () => {
-      console.log("call any");
-    });
-    return () => {
-      off();
-    };
-  }, []);
   return (
     <div>
       <Space y={100} />

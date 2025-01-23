@@ -1,5 +1,5 @@
 {
-  "name": "@fekit/react",
+  "name": "@fewings/react",
   "author": "livemehere",
   "version": "0.0.1",
   "license": "MIT",
@@ -16,12 +16,12 @@
     "package.json"
   ],
   "dependencies": {
-    "@fekit/core": "workspace:*",
+    "@fewings/core": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "peerDependencies": {
-    "@fekit/core": "*",
+    "@fewings/core": "*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

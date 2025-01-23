@@ -1,7 +1,7 @@
-# @fekit/core
+# @fewings/core
 
 ## Installation
 
 ```bash
-yarn add @fekit/core # core - no other peerDependencies
+yarn add @fewings/core # core - no other peerDependencies
 ```

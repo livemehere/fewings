@@ -1,8 +1,8 @@
-# @fekit/react
+# @fewings/react
 
 ## Installation
 
 ```bash
-yarn add @fekit/fancy-react # core
-yarn add react react-dom motion @emotion/react @fekit/core @fekit/react # peerDependencies
+yarn add @fewings/fancy-react # core
+yarn add react react-dom motion @emotion/react fewings/core fewings/react # peerDependencies
 ```

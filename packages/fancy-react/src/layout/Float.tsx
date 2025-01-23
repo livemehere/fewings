@@ -1,5 +1,5 @@
 import { PropsWithChildren, ComponentProps } from "react";
-import { resolveCssValue } from "@fekit/core/converter";
+import { resolveCssValue } from "@fewings/core/converter";
 
 type Props = PropsWithChildren<{
   position?: "absolute" | "fixed" | "relative" | "sticky";

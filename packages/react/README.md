@@ -1,8 +1,8 @@
-# @fekit/react
+# @fewings/react
 
 ## Installation
 
 ```bash
-yarn add @fekit/react # core
-yarn add @fekit/core react react-dom # peerDependencies
+yarn add @fewings/react # core
+yarn add @fewings/core react react-dom # peerDependencies
 ```
