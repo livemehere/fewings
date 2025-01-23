@@ -1,26 +1,46 @@
 {
-  "name": "@webdev-tools/react",
+  "name": "@fekit/react",
   "author": "livemehere",
   "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
-  "keywords": [],
+  "description": "Useful react components and hooks",
+  "keywords": [
+    "react",
+    "react-hooks",
+    "react-ui",
+    "react-components"
+  ],
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "exports": {
-    ".": {
+    "./ui": {
       "import": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
+        "default": "./dist/ui/index.mjs",
+        "types": "./dist/ui/index.d.mts"
       },
       "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "default": "./dist/ui/index.js",
+        "types": "./dist/ui/index.d.ts"
+      }
+    },
+    "./hooks": {
+      "import": {
+        "default": "./dist/hooks/index.mjs",
+        "types": "./dist/hooks/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/hooks/index.js",
+        "types": "./dist/hooks/index.d.ts"
       }
     }
   },
   "dependencies": {
-    "@webdev-tools/core": "workspace:*"
+    "@fekit/core": "workspace:*"
   },
   "peerDependencies": {
-    "@webdev-tools/core": "*"
+    "@fekit/core": "*"
   }
 }

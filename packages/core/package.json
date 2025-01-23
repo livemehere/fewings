@@ -1,18 +1,38 @@
 {
-  "name": "@webdev-tools/core",
+  "name": "@fekit/core",
   "author": "livemehere",
   "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
+  "description": "Useful pure functions for frontend development",
+  "keywords": [
+    "frontend",
+    "pure-functions",
+    "utils"
+  ],
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "exports": {
-    ".": {
+    "./number": {
       "import": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
+        "default": "./dist/number/index.mjs",
+        "types": "./dist/number/index.d.mts"
       },
       "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "default": "./dist/number/index.js",
+        "types": "./dist/number/index.d.ts"
+      }
+    },
+    "./math": {
+      "import": {
+        "default": "./dist/math/index.mjs",
+        "types": "./dist/math/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/math/index.js",
+        "types": "./dist/math/index.d.ts"
       }
     }
   }
