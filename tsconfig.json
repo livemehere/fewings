@@ -19,6 +19,7 @@
     "strict": true,
     "target": "ES2022",
     "noUnusedParameters": false,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "types": ["vitest/globals"]
   }
 }
