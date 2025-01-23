@@ -1,7 +1,7 @@
 {
   "name": "@fekit/core",
   "author": "livemehere",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "Useful pure functions for frontend development",
@@ -15,16 +15,6 @@
     "package.json"
   ],
   "exports": {
-    "./number": {
-      "import": {
-        "default": "./dist/number/index.mjs",
-        "types": "./dist/number/index.d.mts"
-      },
-      "require": {
-        "default": "./dist/number/index.js",
-        "types": "./dist/number/index.d.ts"
-      }
-    },
     "./math": {
       "import": {
         "default": "./dist/math/index.mjs",
@@ -33,6 +23,46 @@
       "require": {
         "default": "./dist/math/index.js",
         "types": "./dist/math/index.d.ts"
+      }
+    },
+    "./hash": {
+      "import": {
+        "default": "./dist/hash/index.mjs",
+        "types": "./dist/hash/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/hash/index.js",
+        "types": "./dist/hash/index.d.ts"
+      }
+    },
+    "./converter": {
+      "import": {
+        "default": "./dist/converter/index.mjs",
+        "types": "./dist/converter/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/converter/index.js",
+        "types": "./dist/converter/index.d.ts"
+      }
+    },
+    "./color": {
+      "import": {
+        "default": "./dist/color/index.mjs",
+        "types": "./dist/color/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/color/index.js",
+        "types": "./dist/color/index.d.ts"
+      }
+    },
+    "./classes": {
+      "import": {
+        "default": "./dist/classes/index.mjs",
+        "types": "./dist/classes/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/classes/index.js",
+        "types": "./dist/classes/index.d.ts"
       }
     }
   }

@@ -1,7 +1,7 @@
 {
   "name": "@fekit/react",
   "author": "livemehere",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "Useful react components and hooks",
@@ -16,16 +16,6 @@
     "package.json"
   ],
   "exports": {
-    "./ui": {
-      "import": {
-        "default": "./dist/ui/index.mjs",
-        "types": "./dist/ui/index.d.mts"
-      },
-      "require": {
-        "default": "./dist/ui/index.js",
-        "types": "./dist/ui/index.d.ts"
-      }
-    },
     "./hooks": {
       "import": {
         "default": "./dist/hooks/index.mjs",
@@ -35,12 +25,30 @@
         "default": "./dist/hooks/index.js",
         "types": "./dist/hooks/index.d.ts"
       }
+    },
+    ".": {
+      "import": {
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
     }
   },
   "dependencies": {
-    "@fekit/core": "workspace:*"
+    "@fekit/core": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "peerDependencies": {
-    "@fekit/core": "*"
+    "@fekit/core": "*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3"
   }
 }

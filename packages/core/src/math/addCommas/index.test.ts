@@ -1,4 +1,4 @@
-import { addCommas } from ".";
+import { addCommas } from "./index";
 
 describe("core/number", () => {
   describe("addCommas", () => {

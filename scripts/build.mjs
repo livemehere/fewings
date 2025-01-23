@@ -4,7 +4,14 @@ import { resolve, dirname, basename, join } from "path";
 import { globSync } from "glob";
 import { writeFileSync, rm, existsSync } from "fs";
 
-const EXTERNAL_DEPENDENCIES = ["@fekit/*", "react", "react-dom"];
+const EXTERNAL_DEPENDENCIES = [
+  "@fekit/*",
+  "react",
+  "react-dom",
+  "motion",
+  "motion/*",
+  "@emotion/*",
+];
 const BASE_DIR = new URL(".", import.meta.url).pathname;
 const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>
   resolve(BASE_DIR, `../${pkg}`),

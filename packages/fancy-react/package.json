@@ -1,0 +1,59 @@
+{
+  "name": "@fekit/fancy-react",
+  "author": "livemehere",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "description": "react components with fancy style",
+  "keywords": [
+    "react",
+    "react-components",
+    "fancy"
+  ],
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "dependencies": {
+    "@fekit/core": "workspace:*",
+    "@fekit/react": "workspace:*",
+    "@emotion/react": "^11.14.0",
+    "motion": "^12.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "peerDependencies": {
+    "@fekit/core": "*",
+    "@fekit/react": "*",
+    "@emotion/react": "^11.14.0",
+    "motion": "^12.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "exports": {
+    "./layout": {
+      "import": {
+        "default": "./dist/layout/index.mjs",
+        "types": "./dist/layout/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/layout/index.js",
+        "types": "./dist/layout/index.d.ts"
+      }
+    },
+    "./AnimateNumber": {
+      "import": {
+        "default": "./dist/AnimateNumber/index.mjs",
+        "types": "./dist/AnimateNumber/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/AnimateNumber/index.js",
+        "types": "./dist/AnimateNumber/index.d.ts"
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3"
+  }
+}
