@@ -15,6 +15,20 @@
     "dist",
     "package.json"
   ],
+  "dependencies": {
+    "@fekit/core": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "peerDependencies": {
+    "@fekit/core": "*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3"
+  },
   "exports": {
     "./hooks": {
       "import": {
@@ -36,19 +50,5 @@
         "types": "./dist/index.d.ts"
       }
     }
-  },
-  "dependencies": {
-    "@fekit/core": "workspace:*",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
-  "peerDependencies": {
-    "@fekit/core": "*",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
-  "devDependencies": {
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3"
   }
 }
