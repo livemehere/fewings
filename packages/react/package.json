@@ -11,6 +11,14 @@
     "react-ui",
     "react-components"
   ],
+  "homepage": "https://github.com/livemehere/fewings/tree/master/packages/react",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/livemehere/fewings.git"
+  },
+  "bugs": {
+    "url": "https://github.com/livemehere/fewings/issues"
+  },
   "files": [
     "dist",
     "package.json"

@@ -1,4 +1,4 @@
-# @fewings/react
+# @fewings/fancy-react
 
 ## Installation
 
