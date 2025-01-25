@@ -5,7 +5,7 @@ import { globSync } from "glob";
 import { writeFileSync, rm, existsSync } from "fs";
 
 const EXTERNAL_DEPENDENCIES = [
-  "fewings/*",
+  "@fewings/*",
   "react",
   "react-dom",
   "motion",
