@@ -7,12 +7,12 @@ import React, {
 } from "react";
 import { Wrappable } from "@fewings/react/types";
 
-export type TAccordionContextValue = {
+type TAccordionContextValue = {
   open: boolean;
   setOpen: (v: boolean) => void;
 };
 
-export const AccordionContext = createContext<TAccordionContextValue>({
+const AccordionContext = createContext<TAccordionContextValue>({
   open: false,
   setOpen: (() => {}) as (v: boolean) => void,
 });

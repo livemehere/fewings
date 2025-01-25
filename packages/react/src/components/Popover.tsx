@@ -12,7 +12,7 @@ import { useClickOutside } from "@fewings/react/hooks";
 import { Wrappable } from "@fewings/react/types";
 
 type TriggerType = "click" | "hover";
-export type TPopoverContextValue = {
+type TPopoverContextValue = {
   open: boolean;
   setOpen: (v: boolean) => void;
   triggerRef: RefObject<HTMLElement | null>;
@@ -35,7 +35,7 @@ type Anchor =
   | "right-top"
   | "right-bottom";
 
-export const PopoverContext = createContext<TPopoverContextValue>({
+const PopoverContext = createContext<TPopoverContextValue>({
   open: false,
   setOpen: (() => {}) as (v: boolean) => void,
   triggerRef: { current: null },
