@@ -20,6 +20,11 @@
     "target": "ES2022",
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "paths": {
+      "@fewings/react/*": ["packages/react/src/*"],
+      "@fewings/core/*": ["packages/core/src/*"],
+      "@fewings/fancy-react/*": ["packages/fancy-react/src/*"],
+    }
   }
 }
