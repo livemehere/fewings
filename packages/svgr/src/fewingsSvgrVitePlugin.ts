@@ -1,8 +1,8 @@
 import type { PluginOption } from "vite";
 import { build as buildFiles } from "./core/build.mjs";
 import { debounce } from "@fewings/core/fp";
-import fs from "fs";
 import path from "path";
+import { watch, FSWatcher } from "chokidar";
 
 type Options = {
   svgPath: string; // Path to the SVG files
@@ -13,7 +13,7 @@ type Options = {
   componentName?: string; // Optional component name
 };
 
-let watcher: fs.FSWatcher;
+let watcher: FSWatcher;
 export const fewingsSvgrVitePlugin = (options: Options): PluginOption => {
   const build = () => {
     buildFiles({
@@ -38,13 +38,8 @@ export const fewingsSvgrVitePlugin = (options: Options): PluginOption => {
           watcher.close();
           console.log("🚀 @fewings/svgr watcher closed");
         }
-        watcher = fs.watch(
-          path.resolve(process.cwd(), options.svgPath),
-          {},
-          () => {
-            delayBuild();
-          },
-        );
+        watcher = watch(path.resolve(process.cwd(), options.svgPath));
+        watcher.on("all", () => delayBuild());
         console.log("🚀 @fewings/svgr watcher started");
       },
     },

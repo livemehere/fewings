@@ -6,7 +6,7 @@ Code generation for Svg files to use in React with type support.
 
 ```bash
 yarn add @fewings/svgr # core
-yarn add @fewings/core # peerDependencies
+yarn add @fewings/core chokidar # peerDependencies
 ```
 
 There is two ways to use this package:

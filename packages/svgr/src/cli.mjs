@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 import { parseArgv } from "@fewings/core/converter";
-import fs from "fs";
 import path from "path";
 import { build as buildFiles } from "./core/build.mjs";
 import { debounce } from "@fewings/core/fp";
+import { watch } from "chokidar";
 
 /**
  * @description every path are resolved width process.cwd()
@@ -45,5 +45,6 @@ const delayBuild = debounce(build, 100);
 
 if (opts.watch) {
   console.log("✨ svgr map builder watch start...");
-  fs.watch(path.resolve(process.cwd(), opts.svgPath), {}, (e) => delayBuild());
+  const wc = watch(path.resolve(process.cwd(), opts.svgPath));
+  wc.on("all", () => delayBuild());
 }

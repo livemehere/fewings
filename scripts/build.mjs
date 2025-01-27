@@ -16,6 +16,7 @@ const EXTERNAL_DEPENDENCIES = [
   "node:*",
   "fs",
   "path",
+  "chokidar",
 ];
 const BASE_DIR = new URL(".", import.meta.url).pathname;
 const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>

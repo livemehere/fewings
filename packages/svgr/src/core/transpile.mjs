@@ -1,25 +1,34 @@
 import { toPascalCase } from "@fewings/core/converter";
 import { constMapTemplate, iconComponentTemplate } from "./templates.mjs";
 
-/**e
- * @param files {Array<String>} - list of file names .svg
- * @param importBase {String} - base path for import
- * @param constName {String} - name of the constant
- * @param typeName {String} - name of the type
+/**
+ * Generates a constant map file content with imports and mappings.
+ *
+ * @param files {Array<{ key: string, path: string }>} - List of files with `key` and `path`.
+ * @param importBase {String} - Base path for import.
+ * @param constName {String} - Name of the constant.
+ * @param typeName {String} - Name of the type.
  * @returns {string}
  */
 export function transpileConstMap({ files, importBase, constName, typeName }) {
-  const names = files.map((f) => /(.+)(\.svg)/g.exec(f)).map((res) => res[1]);
-
-  const imports = names
+  // Map to PascalCase and create imports
+  const resolveCompName = (name) => toPascalCase(name).replaceAll("/", "_");
+  const imports = files
     .map(
-      (n) =>
-        `import ${toPascalCase(n)}Icon from '${importBase}/${n}.svg?react';`,
+      (file) =>
+        `import ${resolveCompName(file.key)}Icon from '${importBase}/${file.key}.svg?react';`,
     )
     .join("\n");
-  const keys = names.map((n) => `'${n}'`).join(" | ");
-  const map = names.map((n) => `'${n}':${toPascalCase(n)}Icon`).join(",\n");
 
+  // Generate type keys
+  const keys = files.map((file) => `'${file.key}'`).join(" | ");
+
+  // Generate icon map
+  const map = files
+    .map((file) => `'${file.key}': ${resolveCompName(file.key)}Icon`)
+    .join(",\n");
+
+  // Replace template placeholders
   return constMapTemplate
     .replaceAll("__TYPE_NAME__", typeName)
     .replaceAll("__CONST_NAME__", constName)
@@ -29,9 +38,11 @@ export function transpileConstMap({ files, importBase, constName, typeName }) {
 }
 
 /**
- * @param constName {String}
- * @param typeName {String}
- * @param componentName {String}
+ * Generates the icon component file content.
+ *
+ * @param constName {String} - Name of the constant.
+ * @param typeName {String} - Name of the type.
+ * @param componentName {String} - Name of the component.
  * @returns {string}
  */
 export function transpileIconComponent({ constName, componentName, typeName }) {
