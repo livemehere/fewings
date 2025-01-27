@@ -1,8 +1,8 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Page2 from "./pages/Page2.tsx";
-import Home from "./pages/Home.tsx";
-import Layout from "./pages/Layout.tsx";
+import Page2 from "./pages/Page2";
+import Home from "./pages/Home";
+import Layout from "./pages/Layout";
 
 function App() {
   return (
