@@ -6,7 +6,7 @@ Code generation for Svg files to use in React with type support.
 
 ```bash
 yarn add @fewings/svgr # core
-yarn add @fewings/core chokidar # peerDependencies
+yarn add @fewings/core chokidar vite-plugin-svgr # peerDependencies
 ```
 
 There is two ways to use this package:
@@ -37,6 +37,7 @@ watch on dev mode.
 ```ts
 import { defineConfig } from "vite";
 import { fewingsSvgrVitePlugin } from "@fewings/svgr";
+import svgr from "vite-plugin-svgr";
 
 type Options = {
     svgPath: string;
@@ -49,6 +50,7 @@ type Options = {
 
 export default defineConfig({
   plugins: [
+    svgr(),
     fewingsSvgrVitePlugin({
       svgPath: "./public/assets/svg",
       outDir: "./src/Icon",
