@@ -25,6 +25,7 @@
       "@fewings/react/*": ["packages/react/src/*"],
       "@fewings/core/*": ["packages/core/src/*"],
       "@fewings/fancy-react/*": ["packages/fancy-react/src/*"],
+      "@fewings/react-qs/*": ["packages/react-qs/src/*"],
     }
   }
 }

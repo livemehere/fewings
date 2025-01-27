@@ -11,6 +11,7 @@ const EXTERNAL_DEPENDENCIES = [
   "motion",
   "motion/*",
   "@emotion/*",
+  "react-router",
 ];
 const BASE_DIR = new URL(".", import.meta.url).pathname;
 const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>

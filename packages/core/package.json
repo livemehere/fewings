@@ -26,6 +26,16 @@
     "publish": "npm publish --access public"
   },
   "exports": {
+    "./qs": {
+      "import": {
+        "default": "./dist/qs/index.mjs",
+        "types": "./dist/qs/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/qs/index.js",
+        "types": "./dist/qs/index.d.ts"
+      }
+    },
     "./math": {
       "import": {
         "default": "./dist/math/index.mjs",
