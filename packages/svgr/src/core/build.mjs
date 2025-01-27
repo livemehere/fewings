@@ -1,6 +1,7 @@
 import { transpileConstMap, transpileIconComponent } from "./transpile.mjs";
 import fs from "fs";
 import path from "path";
+import { getRelativePath } from "@fewings/core/path";
 
 /**
  *
@@ -27,13 +28,7 @@ export function build(options) {
 
   // Read all files and folders recursively
   const svgFilesWithKeys = readFilesRecursively(svgDirPath);
-  const basePathOfDirs = findCommonPath(svgDirPath, outDirPath);
-  const relPathFromOutDir = path.normalize(
-    [
-      path.relative(outDirPath, rootPath),
-      svgDirPath.replace(basePathOfDirs, ""),
-    ].join("/"),
-  );
+  const relPathFromOutDir = getRelativePath(outDirPath, svgDirPath);
 
   if (!fs.existsSync(outDirPath)) {
     fs.mkdirSync(outDirPath, { recursive: true });
@@ -85,30 +80,4 @@ function readFilesRecursively(dirPath, parentKey = "") {
   });
 
   return files;
-}
-
-/**
- * Find the common path between two paths
- * @param path1 {string}
- * @param path2 {string}
- * @returns {string}
- */
-function findCommonPath(path1, path2) {
-  const path1Segments = path1.split("/");
-  const path2Segments = path2.split("/");
-  const commonSegments = [];
-
-  for (
-    let i = 0;
-    i < Math.min(path1Segments.length, path2Segments.length);
-    i++
-  ) {
-    if (path1Segments[i] === path2Segments[i]) {
-      commonSegments.push(path1Segments[i]);
-    } else {
-      break;
-    }
-  }
-
-  return commonSegments.join("/");
 }
