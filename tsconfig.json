@@ -18,14 +18,17 @@
     "sourceMap": true,
     "strict": true,
     "target": "ES2022",
+    "module": "ES2022",
     "noUnusedParameters": false,
     "noUnusedLocals": true,
+    "allowJs": true,
     "types": ["vitest/globals"],
     "paths": {
       "@fewings/react/*": ["packages/react/src/*"],
       "@fewings/core/*": ["packages/core/src/*"],
       "@fewings/fancy-react/*": ["packages/fancy-react/src/*"],
       "@fewings/react-qs/*": ["packages/react-qs/src/*"],
+      "@fewings/svgr/*": ["packages/svgr/src/*"]
     }
   }
 }
