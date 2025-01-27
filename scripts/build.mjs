@@ -12,6 +12,10 @@ const EXTERNAL_DEPENDENCIES = [
   "motion/*",
   "@emotion/*",
   "react-router",
+  "vite",
+  "node:*",
+  "fs",
+  "path",
 ];
 const BASE_DIR = new URL(".", import.meta.url).pathname;
 const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>
@@ -46,6 +50,7 @@ function createEsbuildConfig(entries, outDir, pkg) {
     logLevel: "silent",
     external: EXTERNAL_DEPENDENCIES,
     outbase: join(pkg, "src"),
+    resolveExtensions: [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"],
   };
 }
 

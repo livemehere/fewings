@@ -56,6 +56,16 @@
         "types": "./dist/hash/index.d.ts"
       }
     },
+    "./fp": {
+      "import": {
+        "default": "./dist/fp/index.mjs",
+        "types": "./dist/fp/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/fp/index.js",
+        "types": "./dist/fp/index.d.ts"
+      }
+    },
     "./converter": {
       "import": {
         "default": "./dist/converter/index.mjs",

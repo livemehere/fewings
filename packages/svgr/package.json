@@ -1,0 +1,53 @@
+{
+  "name": "@fewings/svgr",
+  "author": "livemehere",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "description": "Cli for generating svg files to type and constants.",
+  "keywords": [
+    "react",
+    "cli",
+    "svgr"
+  ],
+  "homepage": "https://github.com/livemehere/fewings/tree/master/packages/react",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/livemehere/fewings.git"
+  },
+  "bugs": {
+    "url": "https://github.com/livemehere/fewings/issues"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "src/core",
+    "src/cli.mjs"
+  ],
+  "bin": {
+    "fewings-svgr": "./src/cli.mjs"
+  },
+  "dependencies": {
+    "@fewings/core": "workspace:*",
+    "vite": "^6.0.11"
+  },
+  "peerDependencies": {
+    "@fewings/core": "*",
+    "vite": "^6.0.0"
+  },
+  "scripts": {
+    "publish": "npm publish --access public"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  }
+}
