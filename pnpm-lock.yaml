@@ -190,7 +190,7 @@ importers:
         version: registry.npmjs.org/typescript-eslint@8.22.0(eslint@9.19.0)(typescript@5.6.3)
       vite:
         specifier: ^6.0.11
-        version: registry.npmjs.org/vite@6.0.11(@types/node@22.10.10)
+        version: registry.npmjs.org/vite@6.0.11
       vite-plugin-svgr:
         specifier: ^4.3.0
         version: registry.npmjs.org/vite-plugin-svgr@4.3.0(typescript@5.6.3)(vite@6.0.11)
@@ -1812,7 +1812,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': registry.npmjs.org/@babel/plugin-transform-react-jsx-source@7.25.9(@babel/core@7.26.7)
       '@types/babel__core': registry.npmjs.org/@types/babel__core@7.20.5
       react-refresh: registry.npmjs.org/react-refresh@0.14.2
-      vite: registry.npmjs.org/vite@6.0.11(@types/node@22.10.10)
+      vite: registry.npmjs.org/vite@6.0.11
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4047,7 +4047,7 @@ packages:
       '@rollup/pluginutils': registry.npmjs.org/@rollup/pluginutils@5.1.4
       '@svgr/core': registry.npmjs.org/@svgr/core@8.1.0(typescript@5.6.3)
       '@svgr/plugin-jsx': registry.npmjs.org/@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0)
-      vite: registry.npmjs.org/vite@6.0.11(@types/node@22.10.10)
+      vite: registry.npmjs.org/vite@6.0.11
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -4072,6 +4072,55 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
+    dev: true
+
+  registry.npmjs.org/vite@6.0.11:
+    resolution: {integrity: sha512-4VL9mQPKoHy4+FE0NnRE/kbY51TOfaknxAjt3fJbGJxhIpBZiqVzlZDEesWWsuREXHwNdAoOFZ9MkPEVXczHwg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/vite/-/vite-6.0.11.tgz}
+    name: vite
+    version: 6.0.11
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
+      jiti: '>=1.21.0'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      sass-embedded: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.16.0
+      tsx: ^4.8.1
+      yaml: ^2.4.2
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      jiti:
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
+        optional: true
+    dependencies:
+      esbuild: registry.npmjs.org/esbuild@0.24.2
+      postcss: registry.npmjs.org/postcss@8.5.1
+      rollup: registry.npmjs.org/rollup@4.32.0
+    optionalDependencies:
+      fsevents: registry.npmjs.org/fsevents@2.3.3
     dev: true
 
   registry.npmjs.org/vite@6.0.11(@types/node@22.10.10):
