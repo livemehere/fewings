@@ -1,7 +1,7 @@
 {
   "name": "@fewings/react",
   "author": "livemehere",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "Useful react components and hooks",
@@ -41,6 +41,16 @@
     "@types/react-dom": "^19.0.3"
   },
   "exports": {
+    "./useFileInput": {
+      "import": {
+        "default": "./dist/useFileInput/index.mjs",
+        "types": "./dist/useFileInput/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/useFileInput/index.js",
+        "types": "./dist/useFileInput/index.d.ts"
+      }
+    },
     "./overlay": {
       "import": {
         "default": "./dist/overlay/index.mjs",
