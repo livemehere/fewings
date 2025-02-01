@@ -1,7 +1,7 @@
 {
   "name": "@fewings/core",
   "author": "livemehere",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/index.js",
   "homepage": "https://github.com/livemehere/fewings/tree/master/packages/core",
@@ -74,6 +74,16 @@
       "require": {
         "default": "./dist/fp/index.js",
         "types": "./dist/fp/index.d.ts"
+      }
+    },
+    "./dom": {
+      "import": {
+        "default": "./dist/dom/index.mjs",
+        "types": "./dist/dom/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/dom/index.js",
+        "types": "./dist/dom/index.d.ts"
       }
     },
     "./converter": {
