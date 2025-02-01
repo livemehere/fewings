@@ -1,2 +1,50 @@
 # Emitter
 
+The `Emitter` class is an `abstract class` that provides the ability to register event listeners, dispatch events, and remove listeners.
+
+
+## Methods
+
+The Emitter class is an abstract class that provides the ability to:
+
+| Method               | Description                                |
+|----------------------|--------------------------------------------|
+| `on`                 | Register event listeners                   |
+| `once`               | Register one-time event listeners          |
+| `dispatch`           | Dispatch events                            |
+| `removeAllListeners` | Remove all listeners                       |
+
+## Example
+
+To use Emitter, extend it with a specific event map.
+
+```ts showLineNumbers copy
+import { Emitter } from '@fewings/core/classes';
+
+type MyEvents = {
+  click: (x: number, y: number) => void;
+  message: (text: string) => void;
+};
+
+class MyEmitter extends Emitter<MyEvents> {}
+
+const emitter = new MyEmitter();
+
+// Register event listeners
+const offClick = emitter.on('click', (x, y) => {
+  console.log('click', x, y);
+});
+
+const offMessage = emitter.on('message', (text) => {
+  console.log('message', text);
+});
+
+// Dispatch events
+emitter.dispatch('click', 10, 20);
+emitter.dispatch('message', 'Hello, World!');
+
+// Remove the event listeners
+offClick();
+offMessage();
+
+```
