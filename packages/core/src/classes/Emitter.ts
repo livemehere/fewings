@@ -2,7 +2,7 @@ export type EventMap = Record<string, (...args: any[]) => void>;
 export type TListener<M extends EventMap, K extends keyof M> = M[K];
 export type TPayLoad<M extends EventMap, K extends keyof M> = Parameters<
   TListener<M, K>
->[0];
+>;
 
 export abstract class Emitter<T extends EventMap> {
   listener: Partial<Record<keyof T, TListener<T, keyof T>[]>> = {};
@@ -30,15 +30,15 @@ export abstract class Emitter<T extends EventMap> {
     return off;
   }
 
-  dispatch<E extends keyof T>(event: E, payload?: TPayLoad<T, E>) {
+  dispatch<E extends keyof T>(event: E, ...payload: TPayLoad<T, E>) {
     const listeners = this.listener[event];
     if (!listeners) {
       return;
     }
-    listeners.forEach((listener) => listener(payload));
+    listeners.forEach((listener) => listener(...payload));
   }
 
-  protected removeAllListeners() {
+  removeAllListeners() {
     this.listener = {};
   }
 }

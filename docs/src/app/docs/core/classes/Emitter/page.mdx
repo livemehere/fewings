@@ -1,11 +1,11 @@
 # Emitter
 
-The `Emitter` class is an `abstract class` that provides the ability to register event listeners, dispatch events, and remove listeners.
+The `Emitter` class is an `abstract class` that provides the ability to register event listeners, dispatch events.
 
 
 ## Methods
 
-The Emitter class is an abstract class that provides the ability to:
+The `Emitter` class provides the following methods:
 
 | Method               | Description                                |
 |----------------------|--------------------------------------------|
@@ -26,7 +26,11 @@ type MyEvents = {
   message: (text: string) => void;
 };
 
-class MyEmitter extends Emitter<MyEvents> {}
+class MyEmitter extends Emitter<MyEvents> {
+    constructor() {
+        super();
+    }
+}
 
 const emitter = new MyEmitter();
 
@@ -47,4 +51,6 @@ emitter.dispatch('message', 'Hello, World!');
 offClick();
 offMessage();
 
+// removeAllListeners
+emitter.removeAllListeners();
 ```
