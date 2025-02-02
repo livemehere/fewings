@@ -1,11 +1,25 @@
+import { Sandpack } from '@/components/Sandpack';
+
 # Emitter
 
 The `Emitter` class is an `abstract class` that provides the ability to register event listeners, dispatch events.
 
 
-## Methods
+## API
 
-The `Emitter` class provides the following methods:
+```ts
+type EventMap = Record<string, (...args: any[]) => void>;
+type TListener<M extends EventMap, K extends keyof M> = M[K];
+type TPayLoad<M extends EventMap, K extends keyof M> = Parameters<TListener<M, K>>;
+
+declare abstract class Emitter<T extends EventMap> {
+    listener: Partial<Record<keyof T, TListener<T, keyof T>[]>>;
+    on<E extends keyof T>(event: E, listener: TListener<T, E>): () => void;
+    once<E extends keyof T>(event: E, listener: TListener<T, E>): () => void;
+    dispatch<E extends keyof T>(event: E, ...payload: TPayLoad<T, E>): void;
+    removeAllListeners(): void;
+}
+```
 
 | Method               | Description                                |
 |----------------------|--------------------------------------------|
@@ -18,12 +32,25 @@ The `Emitter` class provides the following methods:
 
 To use Emitter, extend it with a specific event map.
 
-```ts
+<Sandpack>
+```tsx App.js
+import { emitter } from './MyEmitter';
+
+
+export default function App(){
+    return (
+        <div>
+            <button onClick={() => emitter.dispatch('click', 10, 20)}>Click</button>
+        </div>
+    )
+}
+```
+```ts MyEmitter.ts
 import { Emitter } from '@fewings/core/classes';
 
 type MyEvents = {
-  click: (x: number, y: number) => void;
-  message: (text: string) => void;
+    click: (x: number, y: number) => void;
+    message: (text: string) => void;
 };
 
 class MyEmitter extends Emitter<MyEvents> {
@@ -31,26 +58,11 @@ class MyEmitter extends Emitter<MyEvents> {
         super();
     }
 }
+export const emitter = new MyEmitter();
 
-const emitter = new MyEmitter();
-
-// Register event listeners
-const offClick = emitter.on('click', (x, y) => {
-  console.log('click', x, y);
+emitter.on('click', (x, y) => {
+    console.log('click', x, y);
 });
 
-const offMessage = emitter.on('message', (text) => {
-  console.log('message', text);
-});
-
-// Dispatch events
-emitter.dispatch('click', 10, 20);
-emitter.dispatch('message', 'Hello, World!');
-
-// Remove the event listeners
-offClick();
-offMessage();
-
-// removeAllListeners
-emitter.removeAllListeners();
 ```
+</Sandpack>

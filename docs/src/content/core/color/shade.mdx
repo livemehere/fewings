@@ -3,13 +3,21 @@ import ShadeExample from "./ShadeExample";
 # shade
 
 `shade` is a function that generates a color by darkening or lightening a base color.
+- `weight > 0` : lighten the color
+- `weight < 0` : darken the color
 
-## Signature
-
-
+## API
 
 ```ts
-function shade(color: string, weight: number): string;
+/**
+ * Adjusts a HEX color's brightness, supporting 3-character (#RGB), 6-character (#RRGGBB),
+ * and 8-character (#RRGGBBAA) formats.
+ * @param color - The HEX color to adjust (e.g., "#RGB", "#RRGGBB", "#RRGGBBAA").
+ * @param weight - The amount to adjust the brightness (-100 to 100).
+ *                 Positive values make the color brighter, negative values make it darker.
+ * @returns The adjusted HEX color.
+ */
+declare function shade(color: string, weight: number): string;
 ```
 
 ## Example
@@ -20,16 +28,16 @@ import { shade } from "@fewings/core/color";
 const originColor = "#de4343";
 const colors = [
   {
+    color: shade(originColor, -30),
+    value: -30,
+  },
+  {
     color: shade(originColor, 0),
     value: 0,
   },
   {
     color: shade(originColor, 30),
     value: 30,
-  },
-  {
-    color: shade(originColor, -30),
-    value: -30,
   },
 ];
 

@@ -3,16 +3,16 @@ import { shade } from "@fewings/core/color";
 const originColor = "#de4343";
 const colors = [
   {
+    color: shade(originColor, -30),
+    value: -30,
+  },
+  {
     color: shade(originColor, 0),
     value: 0,
   },
   {
     color: shade(originColor, 30),
     value: 30,
-  },
-  {
-    color: shade(originColor, -30),
-    value: -30,
   },
 ];
 
@@ -46,7 +46,7 @@ const ShadeExample = () => {
               fontSize: 14,
             }}
           >
-            shade({originColor},{value})
+            {value}
           </div>
         </div>
       ))}
