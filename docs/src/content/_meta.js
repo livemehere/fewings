@@ -1,4 +1,4 @@
-export default {
+const meta = {
   index: "Introduction",
   core: {
     title: "@fewings/core",
@@ -16,3 +16,5 @@ export default {
     title: "@fewings/svgr",
   },
 };
+
+export default meta;

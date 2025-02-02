@@ -28,6 +28,7 @@ const ShadeExample = () => {
     >
       {colors.map(({ color, value }) => (
         <div
+          key={value}
           style={{
             backgroundColor: color,
             color: "white",

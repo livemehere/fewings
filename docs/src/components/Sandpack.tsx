@@ -13,7 +13,7 @@ export const Sandpack = ({
   children: React.ReactNode;
 }) => {
   return (
-    // @ts-ignore
+    // @ts-expect-error - children handle with `remark` plugin in `next.config.ts`
     <_Sandpack
       theme={"dark"}
       template={"react"}
