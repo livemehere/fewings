@@ -13,10 +13,7 @@ import {
   useContextSelector,
 } from "@fewings/react/contextSelector";
 import { map, snap } from "@fewings/core/math";
-import {
-  DragStyle,
-  useDragPosition,
-} from "@fewings/react/hooks/useDragPosition";
+import { DragStyle, useDragPosition } from "@fewings/react/hooks";
 import { percentToRatio, ratioToPercent } from "@fewings/core/converter";
 
 interface SliderContextValue {

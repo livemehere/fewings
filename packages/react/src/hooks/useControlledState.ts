@@ -1,6 +1,5 @@
 import { SetStateAction, useEffect, useState } from "react";
-import { usePrevState } from "@fewings/react/hooks/usePrevState";
-import { useCallbackRef } from "@fewings/react/hooks/useCallbackRef";
+import { usePrevState, useCallbackRef } from "@fewings/react/hooks";
 
 interface TControlledState<T> {
   value?: T;

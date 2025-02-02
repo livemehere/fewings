@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useControlledState } from "@fewings/react/hooks/useControlledState";
+import { useControlledState } from "@fewings/react/hooks";
 
 export interface DragStyle {
   position: "absolute";
