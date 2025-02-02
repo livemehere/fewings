@@ -40,11 +40,16 @@ jobs:
         with:
           version: 8.6.12
 
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Debug dependencies
+        run: pnpm list --depth=1
+
       - name: Build static files
         id: build
         run: |
           cd docs
-          pnpm install
           pnpm build
 
       - name: Upload static files as artifact
