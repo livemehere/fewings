@@ -1,0 +1,37 @@
+import AnimateNumberExample from "./AnimateNumberExample";
+
+# AnimateNumber
+
+> Fancy counting animation component
+
+## API
+
+```tsx
+type Props = {
+    value: number;
+    countDur?: number;
+    sizeDur?: number;
+    format?: (value: number) => string;
+};
+declare const AnimateNumber: ({ value, countDur, sizeDur, format }: Props => React.ReactNode;
+```
+
+## Example
+
+<AnimateNumberExample/>
+
+```tsx
+import AnimateNumber from "@fewings/fancy-react";
+import { withCommas } from "@fewings/core/converter";
+
+<AnimateNumber
+  value={value}
+  countDur={countDur}
+  sizeDur={sizeDur}
+  format={(v) => withCommas(v)}
+  style={{
+    fontSize: 38,
+    fontWeight: "bold",
+  }}
+/>
+```
