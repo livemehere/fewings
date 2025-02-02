@@ -58,6 +58,7 @@ const AnimateNumberExample = () => {
           style={{
             fontSize: 38,
             fontWeight: "bold",
+            lineHeight: "100%",
           }}
         />
       </HStack>
