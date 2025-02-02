@@ -10,6 +10,10 @@ export const Space = ({
       style={{
         width: x,
         height: y,
+        minWidth: x,
+        minHeight: y,
+        maxWidth: x,
+        maxHeight: y,
       }}
     />
   );

@@ -1,7 +1,7 @@
 {
   "name": "@fewings/fancy-react",
   "author": "livemehere",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "react components with fancy style",
@@ -46,16 +46,6 @@
     "@types/react-dom": "^19.0.3"
   },
   "exports": {
-    "./layout": {
-      "import": {
-        "default": "./dist/layout/index.mjs",
-        "types": "./dist/layout/index.d.mts"
-      },
-      "require": {
-        "default": "./dist/layout/index.js",
-        "types": "./dist/layout/index.d.ts"
-      }
-    },
     "./AnimateNumber": {
       "import": {
         "default": "./dist/AnimateNumber/index.mjs",
