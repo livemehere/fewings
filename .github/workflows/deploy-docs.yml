@@ -47,15 +47,15 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Build all packages
-        run: |
-          pnpm build:all
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --recursive
 
       - name: Debug dependencies
         run: pnpm list --depth=1
+
+      - name: Build all packages
+        run: |
+          pnpm build:all
 
       - name: Build static files
         id: build
