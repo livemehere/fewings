@@ -45,8 +45,8 @@ jobs:
       - name: Build static files
         id: build
         run: |
-          cd docs
           pnpm install
+          cd docs
           pnpm build
 
       - name: Upload static files as artifact
