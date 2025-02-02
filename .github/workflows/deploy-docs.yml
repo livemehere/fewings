@@ -38,7 +38,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 8.6.12
+          version: 9.15.4
           run_install: false
 
       - name: Install Node.js
