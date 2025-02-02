@@ -1,0 +1,20 @@
+# snap
+
+> `snap` is a function that snaps a value to the nearest multiple of a snap size.
+
+## API
+
+```ts
+declare function snap(value: number, snapSize: number): number;
+```
+
+## Example
+
+```ts
+import { snap } from '@fewings/core/math';
+
+console.log(snap(5, 10)); // 10
+console.log(snap(15, 10)); // 20
+```
+
+

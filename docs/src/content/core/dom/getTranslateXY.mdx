@@ -1,0 +1,27 @@
+# getTranslateXY
+
+> Get computed `translateX` and `translateY` values from an element.
+
+## API
+
+```ts
+declare function getTranslateXY(element: HTMLElement): {
+    translateX: number;
+    translateY: number;
+};
+```
+
+## Example
+
+```ts
+import { getTranslateXY } from '@fewings/core/dom';
+
+const element = document.createElement('div');
+element.style.transform = 'translate(10px, 20px)';
+document.body.appendChild(element);
+
+const { translateX, translateY } = getTranslateXY(element);
+
+console.log(translateX); // 10
+console.log(translateY); // 20
+```

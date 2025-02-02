@@ -1,0 +1,20 @@
+# getDepthFrom
+
+> return the depth of the path from the start path
+
+## API
+
+```ts
+declare function getDepthFrom(start: string, path: string): number;
+```
+
+## Example
+
+```ts
+import { getDepthFrom } from '@fewings/core/path';
+
+console.log(getDepthFrom( "/Users/repo/fekit/playground", "/Users/repo/fekit/playground/public")); // 1
+console.log(getDepthFrom( "/Users/repo/fekit/playground", "/Users/repo/fekit/playground/public/assets/svg")); // 3
+```
+
+

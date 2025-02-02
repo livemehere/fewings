@@ -1,0 +1,29 @@
+# parse
+
+> Parse a query string into an object.
+
+- `?` is optional
+- if value is `,` separated, it will be parsed into an array and vice versa
+
+## API
+
+```ts
+declare function parse(str: string): Record<string, string | string[]>;
+```
+
+## Example
+
+```ts
+import { parse } from '@fewings/core/qs';
+
+console.log(parse('?name=kong&idx=3%2C4&serviceId=430011481&serverId=5&placementId=1'))
+/**
+    * {
+    *   name: 'kong',
+    *   idx: ['3', '4'],
+    *   serviceId: '430011481',
+    *   serverId: '5',
+    *   placementId: '1'
+    * }
+*/
+```

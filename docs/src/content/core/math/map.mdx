@@ -1,0 +1,20 @@
+# map
+
+> The `map` function maps a number from one range to another.
+
+## API
+
+```ts
+declare function map(value: number, min: number, max: number, newMin: number, newMax: number): number;
+```
+
+## Example
+
+```ts
+import { map } from '@fewings/core/math';
+
+console.log(map(50,0,100,0,1)); // 0.5
+console.log(map(50,0,100,0,10)); // 5
+console.log(map(50,0,100,0,1000)); // 500
+```
+

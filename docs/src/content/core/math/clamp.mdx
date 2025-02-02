@@ -1,0 +1,20 @@
+# clamp
+
+> `clamp` a number within a specified range.
+
+## API
+
+```ts
+declare function clamp(value: number, min: number, max: number): number;
+```
+
+## Example
+
+```ts
+import { clamp } from '@fewings/core/math';
+
+console.log(clamp(5, 0, 10)); // 5
+console.log(clamp(-5, 0, 10)); // 0
+console.log(clamp(15, 0, 10)); // 10
+```
+
