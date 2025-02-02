@@ -1,8 +1,5 @@
 export default {
-  index: "Intro",
-  "--": {
-    type: "separator",
-  },
+  index: "Introduction",
   core: {
     title: "@fewings/core",
   },
