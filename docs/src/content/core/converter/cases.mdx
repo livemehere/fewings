@@ -1,0 +1,40 @@
+# cases
+
+> functions to convert string to different cases
+
+## API
+
+```ts
+declare const toPascalCase: (str: string) => string;
+declare const toCamelCase: (str: string) => string;
+declare const toKebabCase: (str: string) => string;
+```
+
+## Example
+
+```ts
+import { toPascalCase, toCamelCase, toKebabCase } from "@fewings/core/converter";
+
+const str = "to my case";
+const str2 = "to-my-case";
+const str3 = "toMyCase";
+const str4 = "to_my_case";
+
+console.log(toPascalCase(str)); // ToMyCase
+console.log(toPascalCase(str2)); // ToMyCase
+console.log(toPascalCase(str3)); // ToMyCase
+console.log(toPascalCase(str4)); // ToMyCase
+
+console.log(toCamelCase(str)); // toMyCase
+console.log(toCamelCase(str2)); // toMyCase
+console.log(toCamelCase(str3)); // toMyCase
+console.log(toCamelCase(str4)); // toMyCase
+
+console.log(toKebabCase(str)); // to-my-case
+console.log(toKebabCase(str2)); // to-my-case
+console.log(toKebabCase(str3)); // to-my-case
+console.log(toKebabCase(str4)); // to-my-case
+````
+
+
+

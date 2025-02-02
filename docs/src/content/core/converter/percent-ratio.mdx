@@ -1,0 +1,19 @@
+# percent-ratio
+
+> Convert percentage to ratio and vice versa.
+
+## API
+
+```ts
+declare const percentToRatio: (percent: number | string) => number;
+declare const ratioToPercent: (ratio: number, fixed?: number) => string;
+```
+
+## Usage
+
+```ts
+import { percentToRatio, ratioToPercent } from '@fewings/core/converter';
+
+percentToRatio('50%'); // 0.5 (number)
+ratioToPercent(0.5); // '50%' (string)
+```

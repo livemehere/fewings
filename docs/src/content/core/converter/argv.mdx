@@ -1,0 +1,42 @@
+# argv
+
+> `argv` is a converter that converts command line arguments to a JavaScript object.
+
+## API
+
+```ts
+declare function parseArgv(argv: string[]): Record<string, string | boolean>;
+```
+
+## Node Example
+
+```ts
+import { parseArgv } from "@fewings/core/converter";
+
+const argv = process.argv.slice(2);
+const result = parseArgv(argv);
+
+console.log(result);
+/**
+* node index.js --name fekit --age 18
+* { name: 'fekit', age: '18' }
+*/
+```
+
+## Test
+
+```ts
+describe("core/converter/argv", () => {
+  it("parse", () => {
+    const argv = ["node", "index.js", "--name", "fekit", "--age", "18"];
+    const result = parseArgv(argv);
+    expect(result).toEqual({ name: "fekit", age: "18" });
+  });
+
+  it("parse boolean", () => {
+    const argv = ["node", "index.js", "--name", "--age", "18"];
+    const result = parseArgv(argv);
+    expect(result).toEqual({ name: true, age: "18" });
+  });
+});
+```
