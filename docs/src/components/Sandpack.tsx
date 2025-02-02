@@ -15,6 +15,12 @@ export const Sandpack = ({
   return (
     // @ts-ignore
     <_Sandpack
+      theme={"dark"}
+      template={"react"}
+      options={{
+        showConsole: true,
+        showConsoleButton: true,
+      }}
       customSetup={{
         dependencies: {
           "@fewings/core": "latest",
