@@ -1,13 +1,7 @@
-import {
-  PropsWithChildren,
-  ComponentProps,
-  JSX,
-  JSXElementConstructor,
-} from "react";
 import { resolveCssValue } from "@fewings/core/converter";
 
-type Props<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> =
-  PropsWithChildren<{
+type Props<T extends keyof React.JSX.IntrinsicElements> =
+  React.PropsWithChildren<{
     position?: "absolute" | "fixed" | "relative" | "sticky";
     top?: number | string;
     right?: number | string;
@@ -16,11 +10,9 @@ type Props<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> =
     zIndex?: number;
     as?: T;
   }> &
-    ComponentProps<T>;
+    React.ComponentProps<"div">;
 
-export const Float = <
-  T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,
->({
+export const Float = <T extends keyof React.JSX.IntrinsicElements>({
   children,
   position = "absolute",
   top,
@@ -29,9 +21,10 @@ export const Float = <
   left,
   zIndex,
   style = {},
-  as: Tag = "div",
+  as = "div" as T,
   ...props
 }: Props<T>) => {
+  const Tag: any = as;
   return (
     <Tag
       style={{

@@ -1,13 +1,7 @@
-import {
-  PropsWithChildren,
-  ComponentProps,
-  JSX,
-  JSXElementConstructor,
-} from "react";
 import { resolveCssValue } from "@fewings/core/converter";
 
-type Props<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> =
-  PropsWithChildren<{
+type Props<T extends keyof React.JSX.IntrinsicElements> =
+  React.PropsWithChildren<{
     gap?: number | string;
     align?: "start" | "center" | "end" | "stretch" | "baseline";
     justify?:
@@ -20,20 +14,19 @@ type Props<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> =
     padding?: number | string;
     as?: T;
   }> &
-    ComponentProps<T>;
+    React.ComponentProps<"div">;
 
-export const HStack = <
-  T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,
->({
+export const HStack = <T extends keyof React.JSX.IntrinsicElements>({
   children,
   gap = 0,
   align = "stretch",
   justify = "start",
   padding,
   style = {},
-  as: Tag = "div",
+  as = "div" as T,
   ...props
 }: Props<T>) => {
+  const Tag: any = as;
   return (
     <Tag
       style={{
