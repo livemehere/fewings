@@ -1,28 +1,61 @@
-import { HStack, VStack } from "@fewings/react/components";
+import { AnimatePresence, motion } from "motion/react";
+// import { Popover, Accordion } from "../../../packages/react/src/components";
+import { css } from "@emotion/react";
+import { useState } from "react";
+import { Accordion } from "@fewings/react/components";
 
 const Home = () => {
+  const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   return (
-    <div>
+    <div
+      css={css`
+        height: 200vh;
+      `}
+    >
       <h1>Playground</h1>
-      <VStack gap={4}>
-        <HStack
-          justify={"center"}
-          gap={20}
-          style={{
-            padding: 20,
-            background: "#eee",
-            color: "black",
+      <Accordion.Root disabled={disabled} initialOpen={true}>
+        <Accordion.Trigger>
+          <button>Trigger</button>
+        </Accordion.Trigger>
+        <Accordion.Panel wrapper={AnimatePresence}>
+          <motion.ul
+            animate={{
+              scale: [0, 1],
+            }}
+            exit={{
+              scale: [2, 0],
+            }}
+            css={css`
+              margin: 0;
+              background: #6a737d;
+            `}
+          >
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+          </motion.ul>
+        </Accordion.Panel>
+      </Accordion.Root>
+      <div>
+        <p>open : {open ? "true" : "false"}</p>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            setOpen(!open);
           }}
         >
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-        </HStack>
-        <HStack>htllo</HStack>
-        <HStack>htllo</HStack>
-        <HStack>htllo</HStack>
-        <HStack>htllo</HStack>
-      </VStack>
+          TOGGLE
+        </button>
+        <button
+          onClick={() => {
+            setDisabled(!disabled);
+          }}
+        >
+          DISABLE
+        </button>
+      </div>
     </div>
   );
 };

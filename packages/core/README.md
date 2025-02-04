@@ -3,5 +3,5 @@
 ## Installation
 
 ```bash
-yarn add @fewings/core # core - no other peerDependencies
+yarn add @fewings/core
 ```

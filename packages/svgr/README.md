@@ -5,7 +5,7 @@ Code generation for Svg files to `SVGR` components.
 ## Installation
 
 ```bash
-yarn add @fewings/svgr # core
+yarn add @fewings/svgr
 ```
 
 There is two ways to use this package:

@@ -3,6 +3,5 @@
 ## Installation
 
 ```bash
-yarn add @fewings/fancy-react # core
-yarn add @fewings/core @fewings/react motion @emotion/react # peerDependencies
+yarn add @fewings/fancy-react motion
 ```

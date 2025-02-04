@@ -1,7 +1,7 @@
 {
   "name": "@fewings/fancy-react",
   "author": "livemehere",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "react components with fancy style",
@@ -27,12 +27,12 @@
   },
   "dependencies": {
     "@fewings/core": "workspace:*",
-    "@fewings/react": "workspace:*",
-    "motion": "^12.0.3"
+    "@fewings/react": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "motion": "^12.0.3"
   },
   "devDependencies": {
     "@types/react": "^19.0.8",
