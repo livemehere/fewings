@@ -1,6 +1,7 @@
 import * as esbuild from "esbuild";
 import * as tsup from "tsup";
 import { resolve, dirname, basename, join } from "path";
+import { fileURLToPath, pathToFileURL } from "url";
 import { globSync } from "glob";
 import { writeFileSync, rm, existsSync } from "fs";
 
@@ -18,9 +19,10 @@ const EXTERNAL_DEPENDENCIES = [
   "path",
   "chokidar",
 ];
-const BASE_DIR = new URL(".", import.meta.url).pathname;
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>
-  resolve(BASE_DIR, `../${pkg}`),
+  resolve(__dirname, `../${pkg}`),
 );
 
 async function cleanOutputDirectory(outDir) {
@@ -87,7 +89,8 @@ async function buildWithTsup(entries, outDir) {
 
 async function updatePackageJsonExports(pkg, entries) {
   const pkgJsonPath = resolve(pkg, "package.json");
-  const { default: pkgJson } = await import(pkgJsonPath, {
+  const pkgJsonUrl = pathToFileURL(pkgJsonPath).href;
+  const { default: pkgJson } = await import(pkgJsonUrl, {
     assert: { type: "json" },
   });
 
@@ -150,7 +153,10 @@ async function processPackage(pkg) {
   await buildWithEsbuild(entries, outDir, pkg);
 
   // Build TypeScript declarations
-  await buildWithTsup(entries, outDir);
+  await buildWithTsup(
+    entries.map((entry) => entry.replace(/\\/g, "/")),
+    outDir,
+  );
 
   // Update package.json exports
   await updatePackageJsonExports(pkg, entries);
