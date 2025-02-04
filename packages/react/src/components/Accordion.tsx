@@ -1,11 +1,11 @@
 import React, {
   createContext,
-  useState,
   useContext,
   cloneElement,
   Children,
 } from "react";
 import { Wrappable } from "@fewings/react/types";
+import { useControlledState } from "@fewings/react/hooks";
 
 type TAccordionContextValue = {
   open: boolean;
@@ -20,11 +20,19 @@ const AccordionContext = createContext<TAccordionContextValue>({
 const Root = ({
   children,
   initialOpen = false,
+  open: openProp,
+  onChangeOpen,
 }: {
   children: React.ReactNode;
+  open?: boolean;
+  onChangeOpen?: (v: boolean) => void;
   initialOpen?: boolean;
 }) => {
-  const [open, setOpen] = useState(initialOpen);
+  const [open = false, setOpen] = useControlledState({
+    value: openProp,
+    defaultValue: initialOpen,
+    onChange: onChangeOpen,
+  });
   return (
     <AccordionContext.Provider value={{ open, setOpen }}>
       {children}
