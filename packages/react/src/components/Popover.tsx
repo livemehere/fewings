@@ -11,6 +11,7 @@ import React, {
 
 import {
   useClickOutside,
+  useControlledState,
   useForceUpdate,
   useIsomorphicLayoutEffect,
 } from "@fewings/react/hooks";
@@ -27,6 +28,7 @@ type TPopoverContextValue = {
   closeOnClickOutSide: boolean;
   type: TriggerType;
   scrollLock?: boolean;
+  controlled?: boolean;
 };
 
 type Anchor =
@@ -51,24 +53,35 @@ const PopoverContext = createContext<TPopoverContextValue>({
   closeOnClickOutSide: true,
   type: "click",
   scrollLock: true,
+  controlled: false,
 });
 
 const Root = ({
   children,
-  initialOpen = false,
   closeOnClickOutSide = true,
   type = "click",
   scrollLock = true,
+  initialOpen,
+  open: openProp,
+  onChangeOpen,
 }: {
   children: React.ReactNode;
-  initialOpen?: boolean;
   closeOnClickOutSide?: boolean;
   type?: TriggerType;
   scrollLock?: boolean;
+  open?: boolean;
+  onChangeOpen?: (v: boolean) => void;
+  initialOpen?: boolean;
 }) => {
   const triggerRef = useRef<HTMLElement | null>(null);
   const panelRef = useRef<HTMLElement | null>(null);
-  const [open, setOpen] = useState(initialOpen);
+  const [open = false, setOpen] = useControlledState({
+    value: openProp,
+    defaultValue: initialOpen,
+    onChange: onChangeOpen,
+  });
+  const controlled = openProp !== undefined;
+
   return (
     <PopoverContext.Provider
       value={{
@@ -79,6 +92,7 @@ const Root = ({
         closeOnClickOutSide,
         type,
         scrollLock,
+        controlled,
       }}
     >
       {children}
@@ -88,10 +102,17 @@ const Root = ({
 Root.displayName = "PopoverRoot";
 
 const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
-  const { open, setOpen, triggerRef, panelRef, closeOnClickOutSide, type } =
-    useContext(PopoverContext);
+  const {
+    open,
+    setOpen,
+    triggerRef,
+    panelRef,
+    closeOnClickOutSide,
+    type,
+    controlled,
+  } = useContext(PopoverContext);
   const ref = useClickOutside(() => {
-    if (closeOnClickOutSide) {
+    if (closeOnClickOutSide && !controlled) {
       setOpen(false);
     }
   }, panelRef);
