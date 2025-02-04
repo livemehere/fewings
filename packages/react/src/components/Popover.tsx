@@ -64,6 +64,7 @@ const Root = ({
   initialOpen,
   open: openProp,
   onChangeOpen,
+  disabled,
 }: {
   children: React.ReactNode;
   closeOnClickOutSide?: boolean;
@@ -72,6 +73,7 @@ const Root = ({
   open?: boolean;
   onChangeOpen?: (v: boolean) => void;
   initialOpen?: boolean;
+  disabled?: boolean;
 }) => {
   const triggerRef = useRef<HTMLElement | null>(null);
   const panelRef = useRef<HTMLElement | null>(null);
@@ -86,7 +88,7 @@ const Root = ({
     <PopoverContext.Provider
       value={{
         open,
-        setOpen,
+        setOpen: disabled ? () => {} : setOpen,
         triggerRef,
         panelRef,
         closeOnClickOutSide,

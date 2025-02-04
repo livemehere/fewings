@@ -22,11 +22,13 @@ const Root = ({
   initialOpen = false,
   open: openProp,
   onChangeOpen,
+  disabled,
 }: {
   children: React.ReactNode;
   open?: boolean;
   onChangeOpen?: (v: boolean) => void;
   initialOpen?: boolean;
+  disabled?: boolean;
 }) => {
   const [open = false, setOpen] = useControlledState({
     value: openProp,
@@ -34,7 +36,9 @@ const Root = ({
     onChange: onChangeOpen,
   });
   return (
-    <AccordionContext.Provider value={{ open, setOpen }}>
+    <AccordionContext.Provider
+      value={{ open, setOpen: disabled ? () => {} : setOpen }}
+    >
       {children}
     </AccordionContext.Provider>
   );
