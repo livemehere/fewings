@@ -5,20 +5,7 @@ import { fileURLToPath, pathToFileURL } from "url";
 import { globSync } from "glob";
 import { writeFileSync, rm, existsSync } from "fs";
 
-const EXTERNAL_DEPENDENCIES = [
-  "@fewings/*",
-  "react",
-  "react-dom",
-  "motion",
-  "motion/*",
-  "@emotion/*",
-  "react-router",
-  "vite",
-  "node:*",
-  "fs",
-  "path",
-  "chokidar",
-];
+const EXTERNAL_DEPENDENCIES = ["@fewings/*"];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>
@@ -53,6 +40,7 @@ function createEsbuildConfig(entries, outDir, pkg) {
     logLevel: "silent",
     external: EXTERNAL_DEPENDENCIES,
     outbase: join(pkg, "src"),
+    packages: "external",
     resolveExtensions: [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"],
   };
 }
