@@ -1,12 +1,11 @@
 # @fewings/svgr
 
-Code generation for Svg files to use in React with type support.
+Code generation for Svg files to `SVGR` components.
 
 ## Installation
 
 ```bash
 yarn add @fewings/svgr # core
-yarn add @fewings/core chokidar vite-plugin-svgr # peerDependencies
 ```
 
 There is two ways to use this package:
