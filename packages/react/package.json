@@ -27,7 +27,8 @@
     "publish": "pnpm publish --access public --no-git-checks"
   },
   "dependencies": {
-    "@fewings/core": "workspace:*"
+    "@fewings/core": "workspace:*",
+    "react-remove-scroll": "^2.6.3"
   },
   "peerDependencies": {
     "react": "^19.0.0",

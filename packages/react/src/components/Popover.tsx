@@ -6,10 +6,17 @@ import React, {
   useRef,
   cloneElement,
   Children,
+  useEffect,
 } from "react";
 
-import { useClickOutside } from "@fewings/react/hooks";
+import {
+  useClickOutside,
+  useForceUpdate,
+  useIsomorphicLayoutEffect,
+} from "@fewings/react/hooks";
 import { Wrappable } from "@fewings/react/types";
+import { createPortal } from "react-dom";
+import { RemoveScroll } from "react-remove-scroll";
 
 type TriggerType = "click" | "hover";
 type TPopoverContextValue = {
@@ -19,6 +26,7 @@ type TPopoverContextValue = {
   panelRef: RefObject<HTMLElement | null>;
   closeOnClickOutSide: boolean;
   type: TriggerType;
+  scrollLock?: boolean;
 };
 
 type Anchor =
@@ -42,6 +50,7 @@ const PopoverContext = createContext<TPopoverContextValue>({
   panelRef: { current: null },
   closeOnClickOutSide: true,
   type: "click",
+  scrollLock: true,
 });
 
 const Root = ({
@@ -49,18 +58,28 @@ const Root = ({
   initialOpen = false,
   closeOnClickOutSide = true,
   type = "click",
+  scrollLock = true,
 }: {
   children: React.ReactNode;
   initialOpen?: boolean;
   closeOnClickOutSide?: boolean;
   type?: TriggerType;
+  scrollLock?: boolean;
 }) => {
   const triggerRef = useRef<HTMLElement | null>(null);
   const panelRef = useRef<HTMLElement | null>(null);
   const [open, setOpen] = useState(initialOpen);
   return (
     <PopoverContext.Provider
-      value={{ open, setOpen, triggerRef, panelRef, closeOnClickOutSide, type }}
+      value={{
+        open,
+        setOpen,
+        triggerRef,
+        panelRef,
+        closeOnClickOutSide,
+        type,
+        scrollLock,
+      }}
     >
       {children}
     </PopoverContext.Provider>
@@ -125,107 +144,136 @@ const Panel = ({
   anchor?: Anchor;
   zIndex?: number;
 } & Wrappable) => {
+  const { scrollLock } = useContext(PopoverContext);
   const [_, setPanel] = useState<HTMLElement | null>(null);
+  const update = useForceUpdate();
 
   const Wrapper = wrapper || React.Fragment;
+  const ScrollLockWrapper = scrollLock ? RemoveScroll : React.Fragment;
   const { open, triggerRef, panelRef, type, setOpen } =
     useContext(PopoverContext);
-  const tBounds = triggerRef.current?.getBoundingClientRect();
-  const pBounds = panelRef.current?.getBoundingClientRect();
 
-  const pos = (() => {
-    if (!tBounds) return {};
-    switch (anchor) {
-      case "bottom-right":
-        return {
-          top: tBounds.bottom,
-          right: window.innerWidth - tBounds.right,
-        };
-      case "bottom-left":
-        return {
-          top: tBounds.bottom,
-          left: tBounds.left,
-        };
-      case "bottom-center":
-        return {
-          top: tBounds.bottom,
-          left: tBounds.left + tBounds.width / 2 - (pBounds?.width || 0) / 2,
-        };
-      case "top-right":
-        return {
-          bottom: window.innerHeight - tBounds.top,
-          right: window.innerWidth - tBounds.right,
-        };
-      case "top-left":
-        return {
-          bottom: window.innerHeight - tBounds.top,
-          left: tBounds.left,
-        };
-      case "top-center":
-        return {
-          bottom: window.innerHeight - tBounds.top,
-          left: tBounds.left + tBounds.width / 2 - (pBounds?.width || 0) / 2,
-        };
-      case "left-top":
-        return {
-          top: tBounds.top,
-          right: window.innerWidth - tBounds.left,
-        };
-      case "left-center":
-        return {
-          top: tBounds.top + tBounds.height / 2 - (pBounds?.height || 0) / 2,
-          right: window.innerWidth - tBounds.left,
-        };
-      case "left-bottom":
-        return {
-          bottom: window.innerHeight - tBounds.bottom,
-          right: window.innerWidth - tBounds.left,
-        };
-      case "right-top":
-        return {
-          top: tBounds.top,
-          left: tBounds.right,
-        };
-      case "right-center":
-        return {
-          top: tBounds.top + tBounds.height / 2 - (pBounds?.height || 0) / 2,
-          left: tBounds.right,
-        };
-      case "right-bottom":
-        return {
-          bottom: window.innerHeight - tBounds.bottom,
-          left: tBounds.right,
-        };
-      default:
-        throw new Error("Invalid anchor");
+  const pos = useRef({});
+  const setPos = () => {
+    const tBounds = triggerRef.current?.getBoundingClientRect();
+    const pBounds = panelRef.current?.getBoundingClientRect();
+    pos.current = (() => {
+      if (!tBounds) return {};
+      switch (anchor) {
+        case "bottom-right":
+          return {
+            top: tBounds.bottom,
+            right: window.innerWidth - tBounds.right,
+          };
+        case "bottom-left":
+          return {
+            top: tBounds.bottom,
+            left: tBounds.left,
+          };
+        case "bottom-center":
+          return {
+            top: tBounds.bottom,
+            left: tBounds.left + tBounds.width / 2 - (pBounds?.width || 0) / 2,
+          };
+        case "top-right":
+          return {
+            bottom: window.innerHeight - tBounds.top,
+            right: window.innerWidth - tBounds.right,
+          };
+        case "top-left":
+          return {
+            bottom: window.innerHeight - tBounds.top,
+            left: tBounds.left,
+          };
+        case "top-center":
+          return {
+            bottom: window.innerHeight - tBounds.top,
+            left: tBounds.left + tBounds.width / 2 - (pBounds?.width || 0) / 2,
+          };
+        case "left-top":
+          return {
+            top: tBounds.top,
+            right: window.innerWidth - tBounds.left,
+          };
+        case "left-center":
+          return {
+            top: tBounds.top + tBounds.height / 2 - (pBounds?.height || 0) / 2,
+            right: window.innerWidth - tBounds.left,
+          };
+        case "left-bottom":
+          return {
+            bottom: window.innerHeight - tBounds.bottom,
+            right: window.innerWidth - tBounds.left,
+          };
+        case "right-top":
+          return {
+            top: tBounds.top,
+            left: tBounds.right,
+          };
+        case "right-center":
+          return {
+            top: tBounds.top + tBounds.height / 2 - (pBounds?.height || 0) / 2,
+            left: tBounds.right,
+          };
+        case "right-bottom":
+          return {
+            bottom: window.innerHeight - tBounds.bottom,
+            left: tBounds.right,
+          };
+        default:
+          throw new Error("Invalid anchor");
+      }
+    })();
+  };
+  useIsomorphicLayoutEffect(() => {
+    if (open) {
+      setPos();
     }
-  })();
+  });
 
-  return (
+  useEffect(() => {
+    const handler = () => {
+      if (open) {
+        setPos();
+        update();
+      }
+    };
+    window.addEventListener("resize", handler);
+    window.addEventListener("scroll", handler);
+    return () => {
+      window.removeEventListener("resize", handler);
+      window.removeEventListener("scroll", handler);
+    };
+  }, [open]);
+
+  return createPortal(
     <Wrapper>
       {open && (
-        <div
-          ref={(el) => {
-            panelRef.current = el;
-            setPanel(el);
-          }}
-          style={{
-            position: "fixed",
-            zIndex,
-            width: "fit-content",
-            height: "fit-content",
-            ...pos,
-          }}
-          onPointerLeave={() => {
-            if (type === "hover") {
-              setOpen(false);
-            }
-          }}
-        >
-          {children}
-        </div>
+        <ScrollLockWrapper>
+          <div
+            ref={(el) => {
+              panelRef.current = el;
+              setPanel(el);
+            }}
+            style={{
+              position: "fixed",
+              zIndex,
+              width: "fit-content",
+              height: "fit-content",
+              ...pos.current,
+            }}
+            onPointerLeave={() => {
+              if (type === "hover") {
+                setOpen(false);
+              }
+            }}
+          >
+            {children}
+          </div>
+        </ScrollLockWrapper>
       )}
-    </Wrapper>
+    </Wrapper>,
+    document.body,
   );
 };
 Panel.displayName = "PopoverPanel";
