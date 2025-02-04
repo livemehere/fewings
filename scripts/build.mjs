@@ -12,6 +12,8 @@ const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>
   resolve(__dirname, `../${pkg}`),
 );
 
+const tasks = [];
+
 async function cleanOutputDirectory(outDir) {
   if (existsSync(outDir)) {
     return new Promise((resolve) => {
@@ -95,10 +97,7 @@ async function updatePackageJsonExports(pkg, entries) {
     expectedKeys.length !== existingKeys.length ||
     !expectedKeys.every((key) => existingKeys.includes(key));
 
-  if (!shouldRewrite) {
-    console.log(`No need to rewrite exports for ${pkg}`);
-    return;
-  }
+  if (!shouldRewrite) return;
 
   const newExports = entries.reduce((acc, entry) => {
     const subPkgName = basename(dirname(entry));
@@ -138,16 +137,18 @@ async function processPackage(pkg) {
   }
 
   // Build with esbuild
-  await buildWithEsbuild(entries, outDir, pkg);
+  tasks.push(buildWithEsbuild(entries, outDir, pkg));
 
   // Build TypeScript declarations
-  await buildWithTsup(
-    entries.map((entry) => entry.replace(/\\/g, "/")),
-    outDir,
+  tasks.push(
+    buildWithTsup(
+      entries.map((entry) => entry.replace(/\\/g, "/")),
+      outDir,
+    ),
   );
 
   // Update package.json exports
-  await updatePackageJsonExports(pkg, entries);
+  tasks.push(updatePackageJsonExports(pkg, entries));
 }
 
 // Main Execution
@@ -155,4 +156,8 @@ async function processPackage(pkg) {
   for (const pkg of TARGET_PACKAGES) {
     await processPackage(pkg);
   }
+
+  await Promise.all(tasks);
+
+  console.log("Build completed");
 })();
