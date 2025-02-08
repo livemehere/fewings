@@ -149,7 +149,7 @@ importers:
         version: 19.0.0
       react-dom:
         specifier: ^19.0.0
-        version: https://registry.npmjs.org/react-dom/-/react-dom-19.0.0.tgz(react@19.0.0)
+        version: 19.0.0(react@19.0.0)
       react-remove-scroll:
         specifier: ^2.6.3
         version: 2.6.3(@types/react@19.0.8)(react@19.0.0)
@@ -3805,13 +3805,6 @@ packages:
     peerDependencies:
       react: ^19.0.0
 
-  react-dom@https://registry.npmjs.org/react-dom/-/react-dom-19.0.0.tgz:
-    resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/react-dom/-/react-dom-19.0.0.tgz}
-    name: react-dom
-    version: 19.0.0
-    peerDependencies:
-      react: ^19.0.0
-
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==, tarball: https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz}
 
@@ -3870,12 +3863,6 @@ packages:
 
   react@19.0.0:
     resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==, tarball: https://registry.npmjs.org/react/-/react-19.0.0.tgz}
-    engines: {node: '>=0.10.0'}
-
-  react@https://registry.npmjs.org/react/-/react-19.0.0.tgz:
-    resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/react/-/react-19.0.0.tgz}
-    name: react
-    version: 19.0.0
     engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
@@ -4043,11 +4030,6 @@ packages:
 
   scheduler@0.25.0:
     resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==, tarball: https://registry.npmjs.org/scheduler/-/scheduler-0.25.0.tgz}
-
-  scheduler@https://registry.npmjs.org/scheduler/-/scheduler-0.25.0.tgz:
-    resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/scheduler/-/scheduler-0.25.0.tgz}
-    name: scheduler
-    version: 0.25.0
 
   scroll-into-view-if-needed@3.1.0:
     resolution: {integrity: sha512-49oNpRjWRvnU8NyGVmUaYG4jtTkNonFZI86MmGRDqBphEK2EXT9gdEUoQPZhuBM8yWHxCWbobltqYO5M4XrUvQ==, tarball: https://registry.npmjs.org/scroll-into-view-if-needed/-/scroll-into-view-if-needed-3.1.0.tgz}
@@ -8965,11 +8947,6 @@ snapshots:
       react: 19.0.0
       scheduler: 0.25.0
 
-  react-dom@https://registry.npmjs.org/react-dom/-/react-dom-19.0.0.tgz(react@19.0.0):
-    dependencies:
-      react: https://registry.npmjs.org/react/-/react-19.0.0.tgz
-      scheduler: https://registry.npmjs.org/scheduler/-/scheduler-0.25.0.tgz
-
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -9019,8 +8996,6 @@ snapshots:
       '@types/react': 19.0.8
 
   react@19.0.0: {}
-
-  react@https://registry.npmjs.org/react/-/react-19.0.0.tgz: {}
 
   read-cache@1.0.0:
     dependencies:
@@ -9323,8 +9298,6 @@ snapshots:
   safer-buffer@2.1.2: {}
 
   scheduler@0.25.0: {}
-
-  scheduler@https://registry.npmjs.org/scheduler/-/scheduler-0.25.0.tgz: {}
 
   scroll-into-view-if-needed@3.1.0:
     dependencies:
