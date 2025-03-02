@@ -18,6 +18,7 @@
     "@fewings/react-qs": "workspace:*",
     "@fewings/svgr": "workspace:*",
     "emotion-reset": "^3.0.1",
+    "jotai": "^2.12.1",
     "motion": "^12.0.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
