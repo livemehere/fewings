@@ -14,7 +14,7 @@ export interface ICustomShapeProps<T extends Record<any, any>>
 }
 
 export class CustomShape<T extends Record<any, any>> extends Shape {
-  type: TModelType = ModelTypeMap.CUSTOM;
+  readonly type: TModelType = ModelTypeMap.CUSTOM;
   state: T = {} as T;
   constructor(props: ICustomShapeProps<T>) {
     const renderer = new CustomRenderer<T>();

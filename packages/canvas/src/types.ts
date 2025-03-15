@@ -49,22 +49,6 @@ export interface IShape {
   type: TModelType;
   model: IBoxModel;
   renderer: IRenderer;
+  tags: Set<string>;
   render(context: CanvasRenderingContext2D): void;
-}
-
-export interface IStage {
-  shapes: IShape[];
-  render(context: CanvasRenderingContext2D): void;
-  addShape(shape: IShape): void;
-  removeShape(shape: IShape): void;
-  getShape(id: string): IShape | undefined;
-  updateShape(shape: IShape): void;
-  removeShape(shape: IShape): void;
-}
-
-export interface ICanvasApp {
-  stage: IStage;
-  canvas: HTMLCanvasElement;
-  ctx: CanvasRenderingContext2D;
-  render(): void;
 }

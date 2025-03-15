@@ -3,7 +3,7 @@ import { Renderer } from "../Renderers";
 import { IBoxModel, ModelTypeMap, TModelType } from "../types";
 
 export class RectShape extends Shape {
-  type: TModelType = ModelTypeMap.RECT;
+  readonly type: TModelType = ModelTypeMap.RECT;
   constructor(props: TPrimitiveShapeProps) {
     const renderer = new RectRenderer();
     super({ ...props, renderer });

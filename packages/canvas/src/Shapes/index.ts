@@ -9,18 +9,29 @@ export interface IShapeProps {
   height: number;
   drawOptions?: Partial<IDrawOptions>;
   renderer: IRenderer;
+  tags?: string[];
 }
 export type TPrimitiveShapeProps = Omit<IShapeProps, "renderer">;
 
 export abstract class Shape implements IShape {
-  id: string;
-  model: BoxModel;
-  renderer: IRenderer;
+  readonly id: string;
+  readonly model: BoxModel;
+  readonly renderer: IRenderer;
+  readonly tags: Set<string>;
   abstract type: TModelType;
-  constructor({ x, y, width, height, drawOptions, renderer }: IShapeProps) {
+  constructor({
+    x,
+    y,
+    width,
+    height,
+    drawOptions,
+    renderer,
+    tags,
+  }: IShapeProps) {
     this.id = getRandomId();
     this.model = new BoxModel(x, y, width, height, drawOptions);
     this.renderer = renderer;
+    this.tags = new Set(tags);
   }
 
   render(ctx: CanvasRenderingContext2D): void {

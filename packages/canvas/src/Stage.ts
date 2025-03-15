@@ -1,6 +1,6 @@
-import { IShape, IStage } from "./types";
+import { IShape } from "./types";
 
-export class Stage implements IStage {
+export class Stage {
   private _shapes: IShape[] = [];
 
   constructor() {}
@@ -27,8 +27,12 @@ export class Stage implements IStage {
     }
   }
 
-  getShape(id: string): IShape | undefined {
+  getShapeById(id: string): IShape | undefined {
     return this._shapes.find((shape) => shape.id === id);
+  }
+
+  getShapesByTag(tag: string): IShape[] {
+    return this._shapes.filter((shape) => shape.tags.has(tag));
   }
 
   updateShape(shape: IShape): void {

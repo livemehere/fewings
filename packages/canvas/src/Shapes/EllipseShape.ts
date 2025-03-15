@@ -3,7 +3,7 @@ import { Renderer } from "../Renderers";
 import { IBoxModel, ModelTypeMap, TModelType } from "../types";
 
 export class EllipseShape extends Shape {
-  type: TModelType = ModelTypeMap.ELLIPSE;
+  readonly type: TModelType = ModelTypeMap.ELLIPSE;
   constructor(props: TPrimitiveShapeProps) {
     const renderer = new EllipseRenderer();
     super({ ...props, renderer });
