@@ -1,0 +1,44 @@
+{
+  "name": "@fewings/canvas",
+  "author": "livemehere",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "description": "Canvas utility library for creating and manipulating canvas elements.",
+  "keywords": [
+    "canvas",
+    "drawing",
+    "graphics",
+    "animation"
+  ],
+  "homepage": "https://github.com/livemehere/fewings/tree/master/packages/canvas",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/livemehere/fewings.git"
+  },
+  "bugs": {
+    "url": "https://github.com/livemehere/fewings/issues"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "dependencies": {
+    "@fewings/core": "workspace:*"
+  },
+  "scripts": {
+    "publish": "pnpm publish --access public --no-git-checks"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  }
+}
