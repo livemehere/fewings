@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
+    "@fewings/canvas": "workspace:*",
     "@fewings/core": "workspace:*",
     "@fewings/fancy-react": "workspace:*",
     "@fewings/react": "workspace:*",
