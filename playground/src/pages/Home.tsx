@@ -23,7 +23,7 @@ const Home = () => {
       drawOptions: {
         fillStyle: "red",
         strokeStyle: "blue",
-        strokeWidth: 2,
+        strokeWidth: 10,
         opacity: 0.5,
         scaleX: 2,
         scaleY: 2,
@@ -34,6 +34,7 @@ const Home = () => {
         shadowOffsetY: 10,
         lineDash: [10, 5],
         lineDashOffset: 10,
+        round: [30, 10, 10, 30],
       },
     });
     app.stage.addShape(rect);

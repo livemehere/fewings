@@ -27,6 +27,9 @@ export class BoxModel implements IBoxModel {
   lineDash?: number[];
   lineDashOffset?: number;
 
+  // round for rect, polygon
+  round?: number[];
+
   constructor(
     x: number,
     y: number,
@@ -51,5 +54,6 @@ export class BoxModel implements IBoxModel {
     this.shadowOffsetY = drawOptions?.shadowOffsetY;
     this.lineDash = drawOptions?.lineDash;
     this.lineDashOffset = drawOptions?.lineDashOffset;
+    this.round = drawOptions?.round;
   }
 }

@@ -13,7 +13,11 @@ export class RectShape extends Shape {
 class RectRenderer extends Renderer {
   drawPath(ctx: CanvasRenderingContext2D, model: IBoxModel): void {
     ctx.beginPath();
-    ctx.rect(model.x, model.y, model.width, model.height);
+    if (model.round !== undefined) {
+      ctx.roundRect(model.x, model.y, model.width, model.height, model.round);
+    } else {
+      ctx.rect(model.x, model.y, model.width, model.height);
+    }
     ctx.fill();
     ctx.stroke();
     ctx.closePath();

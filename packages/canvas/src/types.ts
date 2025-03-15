@@ -20,6 +20,12 @@ export interface IDrawOptions {
   shadowOffsetY?: number;
   lineDash?: number[];
   lineDashOffset?: number;
+  /**
+   * @description match to order of edges
+   * @example RectShape [topLeft, topRight, bottomRight, bottomLeft]
+   * @example PolygonShape [first edge, second edge, third edge, fourth edge...]
+   */
+  round?: number[];
 }
 
 export interface IBoxModel extends IDrawOptions {
