@@ -112,4 +112,8 @@ export abstract class CNode
   clearTags() {
     this.tags.clear();
   }
+
+  toString() {
+    return `CNode(${this.id})`;
+  }
 }

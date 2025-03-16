@@ -6,8 +6,8 @@ interface IGroupProps {
   rotate?: number;
   scaleX?: number;
   scaleY?: number;
-  translateX?: number;
-  translateY?: number;
+  x?: number;
+  y?: number;
   renderBounds?: boolean;
 }
 
@@ -17,17 +17,13 @@ export class Group extends Container {
   rotate: number;
   scaleX: number;
   scaleY: number;
-  translateX: number;
-  translateY: number;
   renderBounds: boolean;
 
   constructor(props?: IGroupProps) {
-    super();
+    super(props?.x, props?.y);
     this.rotate = props?.rotate ?? 0;
     this.scaleX = props?.scaleX ?? 1;
     this.scaleY = props?.scaleY ?? 1;
-    this.translateX = props?.translateX ?? 0;
-    this.translateY = props?.translateY ?? 0;
     this.renderBounds = props?.renderBounds ?? false;
   }
 
@@ -85,7 +81,7 @@ export class Group extends Container {
     ctx.translate(centerX, centerY);
     ctx.rotate(this.rotate);
     ctx.scale(this.scaleX, this.scaleY);
-    ctx.translate(-centerX + this.translateX, -centerY + this.translateY);
+    ctx.translate(-centerX + this.x, -centerY + this.y);
     renderCallback();
     ctx.restore();
   }

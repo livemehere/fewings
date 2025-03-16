@@ -1,3 +1,5 @@
+import { Box, Point } from "./types";
+
 export interface IBoundsProps {
   x?: number;
   y?: number;
@@ -8,7 +10,7 @@ export interface IBoundsProps {
   scaleY?: number;
 }
 
-export class Bounds {
+export class Bounds implements Point, Box {
   x: number;
   y: number;
   width: number;
