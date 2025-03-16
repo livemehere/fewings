@@ -28,7 +28,7 @@ export abstract class CNode
 
   visible: boolean;
   parent: Container | null;
-  interactive: boolean;
+  isStatic: boolean;
   constructor() {
     super();
     CNode.totalNodes++;
@@ -40,7 +40,7 @@ export abstract class CNode
     this.visible = true;
     this.parent = null;
     this.tags = new Set();
-    this.interactive = false;
+    this.isStatic = false;
   }
   abstract getBounds(): Bounds;
   abstract render(ctx: CanvasRenderingContext2D): void;

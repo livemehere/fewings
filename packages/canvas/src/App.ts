@@ -18,7 +18,7 @@ interface IAppProps {
    * @description enable pointer events, panning, zooming
    * @default false
    */
-  interactive?: boolean;
+  isStatic?: boolean;
   fps?: number;
   debug?: boolean;
 }
@@ -30,7 +30,7 @@ export class App extends Emitter<IAppEvents> {
   private _width: number;
   private _height: number;
   readonly dpr: number;
-  interactive: boolean;
+  isStatic: boolean;
   globalScale: number;
   readonly globalPan: {
     x: number;
@@ -52,10 +52,10 @@ export class App extends Emitter<IAppEvents> {
     this.canvas = props.canvas;
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
     this.debug = props.debug ?? false;
-    this.interactive = props.interactive ?? false;
+    this.isStatic = props.isStatic ?? false;
 
     this.stage = new Group();
-    this.stage.interactive = this.interactive;
+    this.stage.isStatic = this.isStatic;
 
     this.loops = new Set();
     this.rafId = null;
@@ -70,7 +70,7 @@ export class App extends Emitter<IAppEvents> {
       x: 0,
       y: 0,
     };
-    if (this.interactive) {
+    if (!this.isStatic) {
       this.interactionManager = new InteractionManager(this, {
         debug: this.debug,
       });

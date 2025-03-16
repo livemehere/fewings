@@ -159,7 +159,7 @@ export class InteractionManager {
     const hex = rgbToHex(pixel.data[0], pixel.data[1], pixel.data[2]);
     const node = CNode.idMap.get(hex);
 
-    if (node && node.interactive) {
+    if (node && !node.isStatic) {
       node.dispatch("pointermove", {
         type: "pointermove",
         pointerState: this.pointerState,

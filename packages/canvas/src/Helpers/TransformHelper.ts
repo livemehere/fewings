@@ -3,6 +3,9 @@ import { CNode } from "../CNode";
 import { Shape } from "../Shapes/Shape";
 
 export class TransformHelper {
+  static isDraggable = (node: CNode) => {
+    return node instanceof Shape && node.isStatic;
+  };
   static draggable(app: App, node: CNode, axis: "x" | "y" | "xy") {
     let startY: number | null = null;
     let startX: number | null = null;
