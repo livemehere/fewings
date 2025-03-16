@@ -1,7 +1,14 @@
-import { InteractionManager } from "./InteractionManager";
+import { InteractionManager, IPointerEvent } from "./InteractionManager";
 import { Group } from "./Containers/Group";
+import { Emitter } from "packages/core/dist/classes";
 
 type Loop = (deltaTime: number) => void;
+
+type IAppEvents = {
+  pointermove: (e: Omit<IPointerEvent, "target" | "currentTarget">) => void;
+  pointerup: (e: Omit<IPointerEvent, "target" | "currentTarget">) => void;
+  pointerdown: (e: Omit<IPointerEvent, "target" | "currentTarget">) => void;
+};
 
 interface IAppProps {
   canvas: HTMLCanvasElement;
@@ -13,10 +20,11 @@ interface IAppProps {
    */
   interactive?: boolean;
   fps?: number;
+  debug?: boolean;
 }
 
-export class App {
-  readonly root: Group;
+export class App extends Emitter<IAppEvents> {
+  readonly stage: Group;
   readonly canvas: HTMLCanvasElement;
   readonly ctx: CanvasRenderingContext2D;
   private _width: number;
@@ -28,7 +36,7 @@ export class App {
     x: number;
     y: number;
   };
-  readonly interactionManager?: InteractionManager;
+  private readonly interactionManager?: InteractionManager;
   /**
    * @description if this not set, it follows the monitor's refresh rate.
    * Use this to limit the fps or use deltaTime to make it independent of the monitor's refresh rate.
@@ -38,11 +46,17 @@ export class App {
   private lastTime: number;
   readonly loops: Set<Loop>;
   private rafId: number | null;
-
+  debug?: boolean;
   constructor(props: IAppProps) {
+    super();
     this.canvas = props.canvas;
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
-    this.root = new Group();
+    this.debug = props.debug ?? false;
+    this.interactive = props.interactive ?? false;
+
+    this.stage = new Group();
+    this.stage.interactive = this.interactive;
+
     this.loops = new Set();
     this.rafId = null;
     this.fps = props.fps;
@@ -56,9 +70,10 @@ export class App {
       x: 0,
       y: 0,
     };
-    this.interactive = props.interactive ?? false;
     if (this.interactive) {
-      this.interactionManager = new InteractionManager(this, { debug: true });
+      this.interactionManager = new InteractionManager(this, {
+        debug: this.debug,
+      });
     }
   }
 
@@ -93,7 +108,7 @@ export class App {
   render() {
     this.ctx.save();
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.root.render(this.ctx);
+    this.stage.render(this.ctx);
     this.ctx.restore();
   }
 

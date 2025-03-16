@@ -1,9 +1,9 @@
 import { App } from "./App";
-import { CNode } from "./CNode";
+import { CNode, ICNodeEvents } from "./CNode";
 import { rgbToHex } from "./utils";
 
 export type IPointerEvent = {
-  type: "pointerdown" | "pointermove" | "pointerup";
+  type: keyof ICNodeEvents;
   pointerState: IPointerState;
   /** node that triggered the event */
   target: CNode;
@@ -24,11 +24,12 @@ export type IPointerState = {
 export class InteractionManager {
   private app: App;
 
-  hitCanvas: HTMLCanvasElement;
-  hitCtx: CanvasRenderingContext2D;
+  private hitCanvas: HTMLCanvasElement;
+  private hitCtx: CanvasRenderingContext2D;
   debug?: boolean;
 
-  pointerState: IPointerState;
+  private pointerState: IPointerState;
+  private currentHoverNode: CNode | null;
 
   constructor(app: App, options?: { debug?: boolean }) {
     this.app = app;
@@ -55,6 +56,7 @@ export class InteractionManager {
       downY: null,
       downTime: null,
     };
+    this.currentHoverNode = null;
     this.app.canvas.addEventListener("pointerdown", this.handlePointerDown);
     this.app.canvas.addEventListener("pointermove", this.handlePointerMove);
     this.app.canvas.addEventListener("pointerup", this.handlePointerUp);
@@ -70,7 +72,7 @@ export class InteractionManager {
   hitMapRender() {
     this.hitCtx.save();
     this.hitCtx.clearRect(0, 0, this.hitCanvas.width, this.hitCanvas.height);
-    this.app.root.hitMapRender(this.hitCtx);
+    this.app.stage.hitMapRender(this.hitCtx);
     if (this.debug) {
       // this.renderPointer();
     }
@@ -93,6 +95,15 @@ export class InteractionManager {
 
   handlePointerDown = (event: PointerEvent) => {
     this.pointerState.downTime = Date.now();
+    this.app.dispatch("pointerdown", {
+      type: "pointerdown",
+      pointerState: this.pointerState,
+      originalEvent: event,
+      stopPropagation() {
+        this._propagationStopped = true;
+      },
+      _propagationStopped: false,
+    });
     if (this.pointerState.downX && this.pointerState.downY) {
       const pixel = this.hitCtx.getImageData(
         this.pointerState.downX,
@@ -105,7 +116,9 @@ export class InteractionManager {
       if (node) {
         node.dispatch("pointerdown", {
           type: "pointerdown",
-          pointerState: this.pointerState,
+          pointerState: {
+            ...this.pointerState,
+          },
           target: node,
           currentTarget: node,
           originalEvent: event,
@@ -118,13 +131,89 @@ export class InteractionManager {
     }
   };
 
+  /**
+   * update pointer position
+   * FIXME: need to improve performance (cache system, ...etc)
+   * TODO: detach hover system to each CNode
+   */
   handlePointerMove = (event: PointerEvent) => {
     const rect = this.app.canvas.getBoundingClientRect();
     this.pointerState.downX = (event.clientX - rect.left) * this.app.dpr;
     this.pointerState.downY = (event.clientY - rect.top) * this.app.dpr;
+    this.app.dispatch("pointermove", {
+      type: "pointermove",
+      pointerState: this.pointerState,
+      originalEvent: event,
+      stopPropagation() {
+        this._propagationStopped = true;
+      },
+      _propagationStopped: false,
+    });
+
+    const pixel = this.hitCtx.getImageData(
+      this.pointerState.downX,
+      this.pointerState.downY,
+      1,
+      1
+    );
+    const hex = rgbToHex(pixel.data[0], pixel.data[1], pixel.data[2]);
+    const node = CNode.idMap.get(hex);
+
+    if (node && node.interactive) {
+      node.dispatch("pointermove", {
+        type: "pointermove",
+        pointerState: this.pointerState,
+        target: node,
+        currentTarget: node,
+        originalEvent: event,
+        stopPropagation() {
+          this._propagationStopped = true;
+        },
+        _propagationStopped: false,
+      });
+      if (this.currentHoverNode !== node) {
+        // new node dispatch pointerenter
+        node.dispatch("pointerenter", {
+          type: "pointerenter",
+          pointerState: this.pointerState,
+          target: node,
+          currentTarget: node,
+          originalEvent: event,
+          stopPropagation() {
+            this._propagationStopped = true;
+          },
+          _propagationStopped: false,
+        });
+
+        if (this.currentHoverNode) {
+          // old node dispatch pointerleave if exist
+          this.currentHoverNode.dispatch("pointerleave", {
+            type: "pointerleave",
+            pointerState: this.pointerState,
+            target: this.currentHoverNode,
+            currentTarget: this.currentHoverNode,
+            originalEvent: event,
+            stopPropagation() {
+              this._propagationStopped = true;
+            },
+            _propagationStopped: false,
+          });
+        }
+        this.currentHoverNode = node;
+      }
+    }
   };
 
   handlePointerUp = (event: PointerEvent) => {
+    this.app.dispatch("pointerup", {
+      type: "pointerup",
+      pointerState: this.pointerState,
+      originalEvent: event,
+      stopPropagation() {
+        this._propagationStopped = true;
+      },
+      _propagationStopped: false,
+    });
     this.pointerState.downX = null;
     this.pointerState.downY = null;
     this.pointerState.downTime = null;

@@ -7,6 +7,10 @@ import { IPointerEvent } from "./InteractionManager";
 
 export type ICNodeEvents = {
   pointerdown: (e: IPointerEvent) => void;
+  pointermove: (e: IPointerEvent) => void;
+  pointerup: (e: IPointerEvent) => void;
+  pointerenter: (e: IPointerEvent) => void;
+  pointerleave: (e: IPointerEvent) => void;
 };
 
 export abstract class CNode
@@ -24,6 +28,7 @@ export abstract class CNode
 
   visible: boolean;
   parent: Container | null;
+  interactive: boolean;
   constructor() {
     super();
     CNode.totalNodes++;
@@ -35,6 +40,7 @@ export abstract class CNode
     this.visible = true;
     this.parent = null;
     this.tags = new Set();
+    this.interactive = false;
   }
   abstract getBounds(): Bounds;
   abstract render(ctx: CanvasRenderingContext2D): void;
