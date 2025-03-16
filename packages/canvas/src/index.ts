@@ -1,15 +1,11 @@
 export * from "./types";
-export * from "./Stage";
+export * from "./Containers/Group";
 export * from "./App";
 
 export * from "./Helpers/Math";
 
-export * from "./Models/BoxModel";
-
-export * from "./Renderers/index";
-
 export * from "./utils/index";
 
-export * from "./Shapes/RectShape";
+export * from "./Shapes/Rect";
 export * from "./Shapes/CustomShape";
-export * from "./Shapes/EllipseShape";
+export * from "./Shapes/Ellipse";

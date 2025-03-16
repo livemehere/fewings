@@ -1,45 +1,26 @@
-import { Shape, TPrimitiveShapeProps } from ".";
-import { BoxModel } from "../Models/BoxModel";
-import { Renderer } from "../Renderers";
+import { IShapeProps, Shape } from "./Shape";
 import { ModelTypeMap, TModelType } from "../types";
+import { DrawAttrs } from "../DrawAttrs";
+import { Bounds } from "../Bounds";
 
-export interface ICustomShapeProps<T extends Record<any, any>>
-  extends TPrimitiveShapeProps {
-  state?: T;
+export interface ICustomShapeProps extends IShapeProps {
   drawPath: (
-    this: CustomShape<T>,
     ctx: CanvasRenderingContext2D,
-    model: BoxModel
+    bounds: Bounds,
+    attrs: DrawAttrs
   ) => void;
 }
 
 export class CustomShape<T extends Record<any, any>> extends Shape {
   readonly type: TModelType = ModelTypeMap.CUSTOM;
-  state: T = {} as T;
-  constructor(props: ICustomShapeProps<T>) {
-    const renderer = new CustomRenderer<T>();
-
-    super({ ...props, renderer });
-
-    this.state = props.state || ({} as T);
-    renderer.drawPath = props.drawPath.bind(this);
-  }
-
-  render(ctx: CanvasRenderingContext2D): void {
-    this.renderer.render(ctx, this.model);
-  }
-}
-
-/**
- * Specially `drawPath` is bind to `this` of `CustomShape` because it has custom state.
- */
-class CustomRenderer<T extends Record<any, any>> extends Renderer {
-  drawPath!: (
-    this: CustomShape<T>,
+  drawPath: (
     ctx: CanvasRenderingContext2D,
-    model: BoxModel
+    bounds: Bounds,
+    attrs: DrawAttrs
   ) => void;
-  constructor() {
-    super();
+
+  constructor(props: ICustomShapeProps) {
+    super(props);
+    this.drawPath = props.drawPath;
   }
 }
