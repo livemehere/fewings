@@ -2,8 +2,17 @@ import { djb2 } from "packages/core/dist/hash";
 import { Bounds } from "./Bounds";
 import { IHitMapRenderer, IRenderer, TModelType } from "./types";
 import { Container } from "./Containers/Container";
+import { Emitter } from "packages/core/dist/classes";
+import { IPointerEvent } from "./InteractionManager";
 
-export abstract class CNode implements IRenderer, IHitMapRenderer {
+export type ICNodeEvents = {
+  pointerdown: (e: IPointerEvent) => void;
+};
+
+export abstract class CNode
+  extends Emitter<ICNodeEvents>
+  implements IRenderer, IHitMapRenderer
+{
   static idSeq = 0;
   static idMap = new Map<string, CNode>();
 
@@ -14,7 +23,9 @@ export abstract class CNode implements IRenderer, IHitMapRenderer {
   visible: boolean;
   parent: Container | null;
   constructor() {
-    this.id = (0x1000000 + djb2(`${CNode.idSeq++}`))
+    super();
+    CNode.idSeq += 2;
+    this.id = (0x1000000 + djb2(`${CNode.idSeq}`))
       .toString(16)
       .replace(/^1/, "#");
     CNode.idMap.set(this.id, this);
@@ -25,6 +36,35 @@ export abstract class CNode implements IRenderer, IHitMapRenderer {
   abstract getBounds(): Bounds;
   abstract render(ctx: CanvasRenderingContext2D): void;
   abstract hitMapRender(ctx: CanvasRenderingContext2D): void;
+
+  /**
+   * @description dispatch event to parent node
+   * @description this override made to bubble pointerdown event. you can use the way `event delegation`
+   * @param event - event name
+   * @param payload - event payload
+   */
+  override dispatch<E extends keyof ICNodeEvents>(
+    event: E,
+    ...payload: Parameters<ICNodeEvents[E]>
+  ): void {
+    super.dispatch(event, ...payload);
+    if (this.parent) {
+      if (event === "pointerdown") {
+        const pointerEvent = payload[0] as IPointerEvent;
+        const bubbledEvent: IPointerEvent = {
+          ...pointerEvent,
+          currentTarget: this.parent,
+          target: this,
+        };
+        if (!pointerEvent._propagationStopped) {
+          this.parent.dispatch(
+            event,
+            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>)
+          );
+        }
+      }
+    }
+  }
 
   addTag(tag: string | string[]) {
     if (Array.isArray(tag)) {

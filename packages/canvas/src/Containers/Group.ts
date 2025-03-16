@@ -67,6 +67,7 @@ export class Group extends Container {
 
   hitMapRender(ctx: CanvasRenderingContext2D): void {
     this.renderRoutine(ctx, () => {
+      this.hitMapDrawBounds(ctx);
       this.children.forEach((shape) => {
         shape.hitMapRender(ctx);
       });
@@ -93,5 +94,12 @@ export class Group extends Container {
     const bounds = this.getBounds();
     ctx.strokeStyle = "red";
     ctx.strokeRect(bounds.x, bounds.y, bounds.width, bounds.height);
+  }
+
+  protected hitMapDrawBounds(ctx: CanvasRenderingContext2D): void {
+    const bounds = this.getBounds();
+    ctx.beginPath();
+    ctx.fillStyle = this.id;
+    ctx.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
   }
 }

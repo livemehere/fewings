@@ -7,6 +7,7 @@ export abstract class Container extends CNode {
   }
   addChild(child: CNode): void {
     this.children.push(child);
+    child.parent = this;
   }
 
   removeChild(child: CNode): void {

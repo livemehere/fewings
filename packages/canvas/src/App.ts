@@ -85,6 +85,9 @@ export class App {
     this.canvas.height = this._height * this.dpr;
     this.canvas.style.width = `${this._width}px`;
     this.canvas.style.height = `${this._height}px`;
+    if (this.interactionManager) {
+      this.interactionManager.resize();
+    }
   }
 
   render() {
@@ -154,6 +157,9 @@ export class App {
   private executeLoops(deltaTime: number): void {
     this.loops.forEach((loop) => loop(deltaTime));
     this.render();
+    if (this.interactionManager) {
+      this.interactionManager.hitMapRender();
+    }
   }
 
   stopLoop() {
