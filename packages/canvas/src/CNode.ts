@@ -15,6 +15,8 @@ export abstract class CNode
 {
   static idSeq = 0;
   static idMap = new Map<string, CNode>();
+  static totalNodes = 0;
+  static totalListeners = 0;
 
   readonly id: string;
   readonly tags: Set<string>;
@@ -24,6 +26,7 @@ export abstract class CNode
   parent: Container | null;
   constructor() {
     super();
+    CNode.totalNodes++;
     CNode.idSeq += 2;
     this.id = (0x1000000 + djb2(`${CNode.idSeq}`))
       .toString(16)
@@ -64,6 +67,20 @@ export abstract class CNode
         }
       }
     }
+  }
+
+  override on<E extends keyof ICNodeEvents>(
+    event: E,
+    listener: ICNodeEvents[E]
+  ): () => void {
+    super.on(event, listener);
+    CNode.totalListeners++;
+    return () => {
+      this.listener[event] = this.listener[event]?.filter(
+        (l) => l !== listener
+      );
+      CNode.totalListeners--;
+    };
   }
 
   addTag(tag: string | string[]) {

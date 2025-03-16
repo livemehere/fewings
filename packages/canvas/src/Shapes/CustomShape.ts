@@ -11,7 +11,7 @@ export interface ICustomShapeProps extends IShapeProps {
   ) => void;
 }
 
-export class CustomShape<T extends Record<any, any>> extends Shape {
+export class CustomShape extends Shape {
   readonly type: TModelType = ModelTypeMap.CUSTOM;
   drawPath: (
     ctx: CanvasRenderingContext2D,
