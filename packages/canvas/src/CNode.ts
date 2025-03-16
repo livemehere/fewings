@@ -1,4 +1,5 @@
 import { djb2 } from "packages/core/dist/hash";
+import { Bounds } from "./Bounds";
 import { IHitMapRenderer, IRenderer, TModelType } from "./types";
 import { Container } from "./Containers/Container";
 
@@ -21,6 +22,7 @@ export abstract class CNode implements IRenderer, IHitMapRenderer {
     this.parent = null;
     this.tags = new Set();
   }
+  abstract getBounds(): Bounds;
   abstract render(ctx: CanvasRenderingContext2D): void;
   abstract hitMapRender(ctx: CanvasRenderingContext2D): void;
 

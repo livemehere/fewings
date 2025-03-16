@@ -23,6 +23,10 @@ export abstract class Shape extends CNode implements IShape {
     this.parent = parent ?? null;
   }
 
+  override getBounds(): Bounds {
+    return this.bounds;
+  }
+
   abstract drawPath(
     ctx: CanvasRenderingContext2D,
     bounds: Bounds,
@@ -57,7 +61,7 @@ export abstract class Shape extends CNode implements IShape {
     );
   }
 
-  renderRoutine(
+  protected renderRoutine(
     ctx: CanvasRenderingContext2D,
     renderCallback: () => void,
     bounds: Bounds,

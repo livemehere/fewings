@@ -19,6 +19,10 @@ export class Frame extends Container {
     this.overflowClip = props.overflowClip ?? true;
   }
 
+  override getBounds(): Bounds {
+    return this.bounds;
+  }
+
   // TODO: implement render bound and clipping
   render(ctx: CanvasRenderingContext2D): void {
     this.children.forEach((child) => {
