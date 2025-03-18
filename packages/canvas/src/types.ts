@@ -1,4 +1,3 @@
-import { Bounds } from "./Bounds";
 import { DrawAttrs } from "./DrawAttrs";
 
 export const ModelTypeMap = {
@@ -21,6 +20,8 @@ export interface Box {
   width: number;
   height: number;
 }
+
+export interface Bounds extends Point, Box {}
 
 export interface IRenderer {
   render(ctx: CanvasRenderingContext2D, bounds: Bounds): void;

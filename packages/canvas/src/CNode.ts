@@ -1,6 +1,5 @@
 import { djb2 } from "packages/core/dist/hash";
-import { Bounds } from "./Bounds";
-import { IHitMapRenderer, IRenderer, TModelType } from "./types";
+import { Bounds, IHitMapRenderer, IRenderer, TModelType } from "./types";
 import { Container } from "./Containers/Container";
 import { Emitter } from "packages/core/dist/classes";
 import { IPointerEvent } from "./InteractionManager";
@@ -12,6 +11,10 @@ export type ICNodeEvents = {
   pointerenter: (e: IPointerEvent) => void;
   pointerleave: (e: IPointerEvent) => void;
 };
+
+export interface ICNodeProps {
+  debug?: boolean;
+}
 
 export abstract class CNode
   extends Emitter<ICNodeEvents>
@@ -29,7 +32,8 @@ export abstract class CNode
   visible: boolean;
   parent: Container | null;
   isStatic: boolean;
-  constructor() {
+  debug: boolean;
+  constructor(props: ICNodeProps) {
     super();
     CNode.totalNodes++;
     CNode.idSeq += 2;
@@ -41,10 +45,12 @@ export abstract class CNode
     this.parent = null;
     this.tags = new Set();
     this.isStatic = false;
+    this.debug = props.debug ?? false;
   }
   abstract getBounds(): Bounds;
   abstract render(ctx: CanvasRenderingContext2D): void;
   abstract hitMapRender(ctx: CanvasRenderingContext2D): void;
+  protected abstract drawDebug(ctx: CanvasRenderingContext2D): void;
 
   abstract get x(): number;
   abstract get y(): number;

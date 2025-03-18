@@ -1,10 +1,9 @@
-import { CNode } from "../CNode";
-import { Point } from "../types";
+import { CNode, ICNodeProps } from "../CNode";
 
 export abstract class Container extends CNode {
   children: CNode[] = [];
-  constructor() {
-    super();
+  constructor(props: ICNodeProps) {
+    super(props);
   }
 
   addChild(child: CNode): void {

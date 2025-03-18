@@ -1,56 +1,92 @@
-import { IShape } from "../types";
-import { CNode } from "../CNode";
+import { Bounds, IShape } from "../types";
+import { CNode, ICNodeProps } from "../CNode";
 import { DrawAttrs, IDrawAttrsProps } from "../DrawAttrs";
-import { Bounds, IBoundsProps } from "../Bounds";
 import { Container } from "../Containers/Container";
 
-export interface IShapeProps {
-  bounds?: IBoundsProps;
+export interface IShapeProps extends ICNodeProps, Bounds {
   attrs?: IDrawAttrsProps;
   visible?: boolean;
   parent?: Container | null;
+  rotate?: number;
 }
 
 export abstract class Shape extends CNode implements IShape {
   readonly attrs: DrawAttrs;
-  readonly bounds: Bounds;
-  rotate: number;
+  protected _x: number;
+  protected _y: number;
+  protected _width: number;
+  protected _height: number;
+  protected _rotate: number;
 
-  constructor({ visible, parent, bounds, attrs }: IShapeProps) {
-    super();
-    this.bounds = new Bounds(bounds);
+  constructor({
+    visible,
+    parent,
+    x,
+    y,
+    width,
+    height,
+    attrs,
+    debug,
+    rotate,
+  }: IShapeProps) {
+    super({ debug });
+    this._x = x ?? 0;
+    this._y = y ?? 0;
+    this._width = width ?? 100;
+    this._height = height ?? 100;
     this.attrs = new DrawAttrs(attrs);
     this.visible = visible ?? true;
     this.parent = parent ?? null;
-    this.rotate = 0;
+    this._rotate = rotate ?? 0;
   }
 
   override get x(): number {
-    return this.bounds.x;
+    return this._x;
   }
 
   override get y(): number {
-    return this.bounds.y;
+    return this._y;
   }
 
   override set x(x: number) {
-    this.bounds.x = x;
+    this._x = x;
   }
 
   override set y(y: number) {
-    this.bounds.y = y;
+    this._y = y;
   }
 
   override get width(): number {
-    return this.bounds.width;
+    return this._width;
   }
 
   override get height(): number {
-    return this.bounds.height;
+    return this._height;
+  }
+
+  override set width(width: number) {
+    this._width = width;
+  }
+
+  override set height(height: number) {
+    this._height = height;
+  }
+
+  override get rotate(): number {
+    return this._rotate;
+  }
+
+  override set rotate(rotate: number) {
+    this._rotate = rotate;
   }
 
   override getBounds(): Bounds {
-    return this.bounds;
+    return {
+      x: this._x,
+      y: this._y,
+      width: this._width,
+      height: this._height,
+    };
   }
 
   abstract drawPath(
@@ -59,18 +95,62 @@ export abstract class Shape extends CNode implements IShape {
     attrs: DrawAttrs
   ): void;
 
+  protected override drawDebug(ctx: CanvasRenderingContext2D): void {
+    ctx.save();
+    ctx.strokeStyle = "red";
+    ctx.fillStyle = "red";
+    ctx.strokeRect(this._x, this._y, this._width, this._height);
+
+    const gap = this._width / 2;
+    const yGap = this._height / 3;
+    const fontSize = this._height / 3;
+    ctx.font = `${fontSize}px Arial`;
+    ctx.fillText(this.id, this._x + this._width + gap, this._y);
+    ctx.fillText(
+      `x: ${this._x.toFixed(2)}`,
+      this._x + this._width + gap,
+      this._y + yGap
+    );
+    ctx.fillText(
+      `y: ${this._y.toFixed(2)}`,
+      this._x + this._width + gap,
+      this._y + yGap * 2
+    );
+    ctx.fillText(
+      `w: ${this._width.toFixed(2)}`,
+      this._x + this._width + gap,
+      this._y + yGap * 3
+    );
+    ctx.fillText(
+      `h: ${this._height.toFixed(2)}`,
+      this._x + this._width + gap,
+      this._y + yGap * 4
+    );
+    ctx.fillText(
+      `rotate: ${this.rotate.toFixed(2)}`,
+      this._x + this._width + gap,
+      this._y + yGap * 5
+    );
+    ctx.restore();
+  }
+
   override render(ctx: CanvasRenderingContext2D): void {
+    const bounds = this.getBounds();
     this.renderRoutine(
       ctx,
       () => {
-        this.drawPath(ctx, this.bounds, this.attrs);
+        this.drawPath(ctx, bounds, this.attrs);
       },
-      this.bounds,
+      bounds,
       this.attrs
     );
+    if (this.debug) {
+      this.drawDebug(ctx);
+    }
   }
 
   override hitMapRender(ctx: CanvasRenderingContext2D): void {
+    const bounds = this.getBounds();
     const hitMapAttrs = {
       ...this.attrs,
       fillStyle: this.id,
@@ -80,9 +160,9 @@ export abstract class Shape extends CNode implements IShape {
     this.renderRoutine(
       ctx,
       () => {
-        this.drawPath(ctx, this.bounds, hitMapAttrs);
+        this.drawPath(ctx, bounds, hitMapAttrs);
       },
-      this.bounds,
+      bounds,
       hitMapAttrs
     );
   }

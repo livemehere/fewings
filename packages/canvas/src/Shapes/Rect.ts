@@ -1,7 +1,6 @@
 import { Shape, IShapeProps } from "./Shape";
-import { ModelTypeMap, TModelType } from "../types";
+import { Bounds, ModelTypeMap, TModelType } from "../types";
 import { DrawAttrs } from "../DrawAttrs";
-import { Bounds } from "../Bounds";
 
 export class Rect extends Shape {
   readonly type: TModelType = ModelTypeMap.RECT;

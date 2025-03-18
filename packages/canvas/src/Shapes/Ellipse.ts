@@ -1,6 +1,5 @@
 import { IShapeProps, Shape } from "./Shape";
-import { ModelTypeMap, TModelType } from "../types";
-import { Bounds } from "../Bounds";
+import { Bounds, ModelTypeMap, TModelType } from "../types";
 import { DrawAttrs } from "../DrawAttrs";
 
 export class Ellipse extends Shape {

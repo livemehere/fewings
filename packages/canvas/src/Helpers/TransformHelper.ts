@@ -29,8 +29,8 @@ export class TransformHelper {
       startY = e.pointerState.downY;
 
       if (node instanceof Shape) {
-        startBoundsX = node.bounds.x;
-        startBoundsY = node.bounds.y;
+        startBoundsX = node.x;
+        startBoundsY = node.y;
       } else if (node instanceof Container) {
         // Group, Frame
         startBoundsX = node.x;
@@ -38,7 +38,6 @@ export class TransformHelper {
 
         // Store initial positions of children
         node.children.forEach((child) => {
-          console.log(child);
           childStartPositions.set(child, { x: child.x, y: child.y });
         });
       }
@@ -58,7 +57,7 @@ export class TransformHelper {
 
       if (axis.includes("x")) {
         if (node instanceof Shape) {
-          node.bounds.x = startBoundsX! + dx;
+          node.x = startBoundsX! + dx;
         } else if (node instanceof Group) {
           childStartPositions.forEach((pos, child) => {
             child.x = pos.x + dx;
@@ -67,7 +66,7 @@ export class TransformHelper {
       }
       if (axis.includes("y")) {
         if (node instanceof Shape) {
-          node.bounds.y = startBoundsY! + dy;
+          node.y = startBoundsY! + dy;
         } else if (node instanceof Group) {
           childStartPositions.forEach((pos, child) => {
             child.y = pos.y + dy;

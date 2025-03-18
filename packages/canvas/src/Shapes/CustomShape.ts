@@ -1,7 +1,6 @@
 import { IShapeProps, Shape } from "./Shape";
-import { ModelTypeMap, TModelType } from "../types";
+import { Bounds, ModelTypeMap, TModelType } from "../types";
 import { DrawAttrs } from "../DrawAttrs";
-import { Bounds } from "../Bounds";
 
 export interface ICustomShapeProps extends IShapeProps {
   drawPath: (
