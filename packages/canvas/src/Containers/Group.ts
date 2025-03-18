@@ -1,19 +1,21 @@
 import { ICNodeProps } from "../CNode";
-import { Bounds, ModelTypeMap, TModelType } from "../types";
+import { Bounds, ModelTypeMap, Point, TModelType } from "../types";
 import { Container } from "./Container";
 
 interface IGroupProps extends ICNodeProps {
   renderBounds?: boolean;
+  rotate?: number;
 }
 
 export class Group extends Container {
   readonly type: TModelType = ModelTypeMap.GROUP;
 
   renderBounds: boolean;
-
+  private _rotate: number;
   constructor(props: IGroupProps = { debug: false }) {
     super(props);
     this.renderBounds = props?.renderBounds ?? false;
+    this._rotate = props?.rotate ?? 0;
   }
 
   override get x(): number {
@@ -39,9 +41,6 @@ export class Group extends Container {
   override set y(y: number) {
     throw new Error("Group does not support set y");
   }
-  override get rotate(): number {
-    throw new Error("Group does not support rotate");
-  }
 
   override set width(width: number) {
     //TODO: increase each of children's width 현재 비율을 유지하면서
@@ -51,8 +50,12 @@ export class Group extends Container {
     //TODO: increase each of children's height 현재 비율을 유지하면서
   }
 
-  override set rotate(rotate: number) {
-    //TODO: rotate all children from the center of the group (it need to rotate and repositioning)
+  override get rotate(): number {
+    return this._rotate;
+  }
+
+  override set rotate(angle: number) {
+    this._rotate = angle;
   }
 
   // TODO: need to optimize
@@ -92,32 +95,54 @@ export class Group extends Container {
     ctx.fillText(`y: ${bounds.y.toFixed(2)}`, baseX, baseY + gap * 2);
     ctx.fillText(`w: ${bounds.width.toFixed(2)}`, baseX, baseY + gap * 3);
     ctx.fillText(`h: ${bounds.height.toFixed(2)}`, baseX, baseY + gap * 4);
+    ctx.fillText(`rotate: ${this._rotate.toFixed(2)}`, baseX, baseY + gap * 5);
+    ctx.restore();
+  }
+
+  renderRoutine(
+    ctx: CanvasRenderingContext2D,
+    renderCallback: () => void
+  ): void {
+    ctx.save();
+    const bounds = this.getBounds();
+    const centerX = bounds.x + bounds.width / 2;
+    const centerY = bounds.y + bounds.height / 2;
+    ctx.translate(centerX, centerY);
+    ctx.rotate(this._rotate);
+    ctx.translate(-centerX, -centerY);
+    renderCallback();
     ctx.restore();
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    this.children.forEach((shape) => {
-      shape.render(ctx);
+    this.renderRoutine(ctx, () => {
+      this.children.forEach((shape) => {
+        shape.render(ctx);
+      });
+      if (this.renderBounds) {
+        this.drawBounds(ctx);
+      }
     });
-    if (this.renderBounds) {
-      this.drawBounds(ctx);
-    }
+
     if (this.debug) {
       this.drawDebug(ctx);
     }
   }
 
   hitMapRender(ctx: CanvasRenderingContext2D): void {
-    this.hitMapDrawBounds(ctx);
-    this.children.forEach((shape) => {
-      shape.hitMapRender(ctx);
+    this.renderRoutine(ctx, () => {
+      this.hitMapDrawBounds(ctx);
+      this.children.forEach((shape) => {
+        shape.hitMapRender(ctx);
+      });
     });
   }
 
   protected drawBounds(ctx: CanvasRenderingContext2D): void {
-    const bounds = this.getBounds();
+    ctx.beginPath();
     ctx.strokeStyle = "red";
-    ctx.strokeRect(bounds.x, bounds.y, bounds.width, bounds.height);
+    ctx.lineWidth = 2;
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
   }
 
   protected hitMapDrawBounds(ctx: CanvasRenderingContext2D): void {

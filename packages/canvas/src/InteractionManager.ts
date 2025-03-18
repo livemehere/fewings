@@ -19,6 +19,8 @@ export type IPointerState = {
   downX: number | null;
   downY: number | null;
   downTime: number | null;
+  x: number;
+  y: number;
 };
 
 export class InteractionManager {
@@ -59,6 +61,8 @@ export class InteractionManager {
       downX: null,
       downY: null,
       downTime: null,
+      x: 0,
+      y: 0,
     };
     this.currentHoverNode = null;
     this.app.canvas.addEventListener("pointerdown", this.handlePointerDown);
@@ -98,10 +102,14 @@ export class InteractionManager {
   }
 
   handlePointerDown = (event: PointerEvent) => {
+    const rect = this.app.canvas.getBoundingClientRect();
+    this.pointerState.downX = (event.clientX - rect.left) * this.app.dpr;
+    this.pointerState.downY = (event.clientY - rect.top) * this.app.dpr;
     this.pointerState.downTime = Date.now();
+
     this.app.dispatch("pointerdown", {
       type: "pointerdown",
-      pointerState: this.pointerState,
+      pointerState: { ...this.pointerState },
       originalEvent: event,
       stopPropagation() {
         this._propagationStopped = true;
@@ -142,11 +150,11 @@ export class InteractionManager {
    */
   handlePointerMove = (event: PointerEvent) => {
     const rect = this.app.canvas.getBoundingClientRect();
-    this.pointerState.downX = (event.clientX - rect.left) * this.app.dpr;
-    this.pointerState.downY = (event.clientY - rect.top) * this.app.dpr;
+    this.pointerState.x = (event.clientX - rect.left) * this.app.dpr;
+    this.pointerState.y = (event.clientY - rect.top) * this.app.dpr;
     this.app.dispatch("pointermove", {
       type: "pointermove",
-      pointerState: this.pointerState,
+      pointerState: { ...this.pointerState },
       originalEvent: event,
       stopPropagation() {
         this._propagationStopped = true;
@@ -155,8 +163,8 @@ export class InteractionManager {
     });
 
     const pixel = this.hitCtx.getImageData(
-      this.pointerState.downX,
-      this.pointerState.downY,
+      this.pointerState.x,
+      this.pointerState.y,
       1,
       1
     );
@@ -166,7 +174,7 @@ export class InteractionManager {
     if (node && !node.isStatic) {
       node.dispatch("pointermove", {
         type: "pointermove",
-        pointerState: this.pointerState,
+        pointerState: { ...this.pointerState },
         target: node,
         currentTarget: node,
         originalEvent: event,
@@ -179,7 +187,7 @@ export class InteractionManager {
         // new node dispatch pointerenter
         node.dispatch("pointerenter", {
           type: "pointerenter",
-          pointerState: this.pointerState,
+          pointerState: { ...this.pointerState },
           target: node,
           currentTarget: node,
           originalEvent: event,
@@ -193,7 +201,7 @@ export class InteractionManager {
           // old node dispatch pointerleave if exist
           this.currentHoverNode.dispatch("pointerleave", {
             type: "pointerleave",
-            pointerState: this.pointerState,
+            pointerState: { ...this.pointerState },
             target: this.currentHoverNode,
             currentTarget: this.currentHoverNode,
             originalEvent: event,
@@ -211,7 +219,7 @@ export class InteractionManager {
   handlePointerUp = (event: PointerEvent) => {
     this.app.dispatch("pointerup", {
       type: "pointerup",
-      pointerState: this.pointerState,
+      pointerState: { ...this.pointerState },
       originalEvent: event,
       stopPropagation() {
         this._propagationStopped = true;
