@@ -46,6 +46,17 @@ export abstract class CNode
   abstract render(ctx: CanvasRenderingContext2D): void;
   abstract hitMapRender(ctx: CanvasRenderingContext2D): void;
 
+  abstract get x(): number;
+  abstract get y(): number;
+  abstract set x(x: number);
+  abstract set y(y: number);
+  abstract get width(): number;
+  abstract get height(): number;
+  abstract set width(width: number);
+  abstract set height(height: number);
+  abstract get rotate(): number;
+  abstract set rotate(rotate: number);
+
   /**
    * @description dispatch event to parent node
    * @description this override made to bubble pointerdown event. you can use the way `event delegation`

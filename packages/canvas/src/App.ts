@@ -50,7 +50,9 @@ export class App extends Emitter<IAppEvents> {
   constructor(props: IAppProps) {
     super();
     this.canvas = props.canvas;
-    this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+    this.ctx = this.canvas.getContext("2d", {
+      desynchronized: true,
+    }) as CanvasRenderingContext2D;
     this.debug = props.debug ?? false;
     this.isStatic = props.isStatic ?? false;
 

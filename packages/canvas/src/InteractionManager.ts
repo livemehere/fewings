@@ -35,7 +35,11 @@ export class InteractionManager {
     this.app = app;
     this.hitCanvas = document.createElement("canvas");
     this.hitCanvas.id = "interaction-manager";
-    this.hitCtx = this.hitCanvas.getContext("2d") as CanvasRenderingContext2D;
+    this.hitCtx = this.hitCanvas.getContext("2d", {
+      willReadFrequently: true,
+      alpha: false,
+      desynchronized: true,
+    }) as CanvasRenderingContext2D;
     this.hitCtx.imageSmoothingEnabled = false;
     this.hitCanvas.style.position = "absolute";
     this.hitCanvas.style.right = "0";

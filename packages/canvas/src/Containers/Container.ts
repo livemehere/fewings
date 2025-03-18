@@ -1,15 +1,12 @@
 import { CNode } from "../CNode";
 import { Point } from "../types";
 
-export abstract class Container extends CNode implements Point {
+export abstract class Container extends CNode {
   children: CNode[] = [];
-  x: number;
-  y: number;
-  constructor(x?: number, y?: number) {
+  constructor() {
     super();
-    this.x = x ?? 0;
-    this.y = y ?? 0;
   }
+
   addChild(child: CNode): void {
     this.children.push(child);
     child.parent = this;

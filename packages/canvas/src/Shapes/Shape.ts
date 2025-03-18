@@ -14,6 +14,7 @@ export interface IShapeProps {
 export abstract class Shape extends CNode implements IShape {
   readonly attrs: DrawAttrs;
   readonly bounds: Bounds;
+  rotate: number;
 
   constructor({ visible, parent, bounds, attrs }: IShapeProps) {
     super();
@@ -21,6 +22,31 @@ export abstract class Shape extends CNode implements IShape {
     this.attrs = new DrawAttrs(attrs);
     this.visible = visible ?? true;
     this.parent = parent ?? null;
+    this.rotate = 0;
+  }
+
+  override get x(): number {
+    return this.bounds.x;
+  }
+
+  override get y(): number {
+    return this.bounds.y;
+  }
+
+  override set x(x: number) {
+    this.bounds.x = x;
+  }
+
+  override set y(y: number) {
+    this.bounds.y = y;
+  }
+
+  override get width(): number {
+    return this.bounds.width;
+  }
+
+  override get height(): number {
+    return this.bounds.height;
   }
 
   override getBounds(): Bounds {
@@ -86,16 +112,9 @@ export abstract class Shape extends CNode implements IShape {
     const centerY = bounds.y + bounds.height / 2;
 
     // Handle rotation
-    if (bounds.rotate !== undefined) {
+    if (this.rotate !== undefined) {
       ctx.translate(centerX, centerY);
-      ctx.rotate(bounds.rotate % (Math.PI * 2)); // for performance restrict to 2pi
-      ctx.translate(-centerX, -centerY);
-    }
-
-    // Handle scaling
-    if (bounds.scaleX !== undefined || bounds.scaleY !== undefined) {
-      ctx.translate(centerX, centerY);
-      ctx.scale(bounds.scaleX || 1, bounds.scaleY || 1);
+      ctx.rotate(this.rotate % (Math.PI * 2)); // for performance restrict to 2pi
       ctx.translate(-centerX, -centerY);
     }
 

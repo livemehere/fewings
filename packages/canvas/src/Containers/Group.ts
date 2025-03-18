@@ -3,28 +3,65 @@ import { ModelTypeMap, TModelType } from "../types";
 import { Container } from "./Container";
 
 interface IGroupProps {
-  rotate?: number;
-  scaleX?: number;
-  scaleY?: number;
-  x?: number;
-  y?: number;
   renderBounds?: boolean;
 }
 
 export class Group extends Container {
   readonly type: TModelType = ModelTypeMap.GROUP;
 
-  rotate: number;
-  scaleX: number;
-  scaleY: number;
   renderBounds: boolean;
 
   constructor(props?: IGroupProps) {
-    super(props?.x, props?.y);
-    this.rotate = props?.rotate ?? 0;
-    this.scaleX = props?.scaleX ?? 1;
-    this.scaleY = props?.scaleY ?? 1;
+    super();
     this.renderBounds = props?.renderBounds ?? false;
+  }
+
+  override get x(): number {
+    return this.getBounds().x;
+  }
+
+  override get y(): number {
+    return this.getBounds().y;
+  }
+
+  override get width(): number {
+    return this.getBounds().width;
+  }
+
+  override get height(): number {
+    return this.getBounds().height;
+  }
+
+  override set x(x: number) {
+    this.children.forEach((child) => {
+      child.x = x;
+    });
+  }
+
+  override set y(y: number) {
+    this.children.forEach((child) => {
+      child.y = y;
+    });
+  }
+
+  override set width(width: number) {
+    this.children.forEach((child) => {
+      child.width = width;
+    });
+  }
+
+  override set height(height: number) {
+    this.children.forEach((child) => {
+      child.height = height;
+    });
+  }
+
+  override get rotate(): number {
+    throw new Error("Group does not support rotate");
+  }
+
+  override set rotate(rotate: number) {
+    //TODO: rotate all children from the center of the group (it need to rotate and repositioning)
   }
 
   // TODO: need to optimize
@@ -74,16 +111,16 @@ export class Group extends Container {
     ctx: CanvasRenderingContext2D,
     renderCallback: () => void
   ): void {
-    const bounds = this.getBounds();
-    const centerX = bounds.width / 2;
-    const centerY = bounds.height / 2;
-    ctx.save();
-    ctx.translate(centerX, centerY);
-    ctx.rotate(this.rotate);
-    ctx.scale(this.scaleX, this.scaleY);
-    ctx.translate(-centerX + this.x, -centerY + this.y);
+    // const bounds = this.getBounds();
+    // const centerX = bounds.width / 2;
+    // const centerY = bounds.height / 2;
+    // ctx.save();
+    // ctx.translate(centerX, centerY);
+    // ctx.rotate(this.rotate);
+    // ctx.scale(this.scaleX, this.scaleY);
+    // ctx.translate(-centerX + this.x, -centerY + this.y);
     renderCallback();
-    ctx.restore();
+    // ctx.restore();
   }
 
   protected drawBounds(ctx: CanvasRenderingContext2D): void {

@@ -20,12 +20,14 @@ export class TransformHelper {
     let startBoundsY: number | null = null;
 
     let isDown = false;
+    const childStartPositions = new Map<CNode, { x: number; y: number }>();
 
     const offDown = node.on("pointerdown", (e) => {
       e.stopPropagation(); // prevent concurrently dragging Shape and Container
       isDown = true;
       startX = e.pointerState.downX;
       startY = e.pointerState.downY;
+
       if (node instanceof Shape) {
         startBoundsX = node.bounds.x;
         startBoundsY = node.bounds.y;
@@ -33,6 +35,12 @@ export class TransformHelper {
         // Group, Frame
         startBoundsX = node.x;
         startBoundsY = node.y;
+
+        // Store initial positions of children
+        node.children.forEach((child) => {
+          console.log(child);
+          childStartPositions.set(child, { x: child.x, y: child.y });
+        });
       }
     });
 
@@ -40,6 +48,7 @@ export class TransformHelper {
       isDown = false;
       startX = null;
       startY = null;
+      childStartPositions.clear(); // Clear positions on mouse up
     });
 
     const offMove = app.on("pointermove", (e) => {
@@ -51,14 +60,18 @@ export class TransformHelper {
         if (node instanceof Shape) {
           node.bounds.x = startBoundsX! + dx;
         } else if (node instanceof Group) {
-          node.x = startBoundsX! + dx;
+          childStartPositions.forEach((pos, child) => {
+            child.x = pos.x + dx;
+          });
         }
       }
       if (axis.includes("y")) {
         if (node instanceof Shape) {
           node.bounds.y = startBoundsY! + dy;
         } else if (node instanceof Group) {
-          node.y = startBoundsY! + dy;
+          childStartPositions.forEach((pos, child) => {
+            child.y = pos.y + dy;
+          });
         }
       }
     });
