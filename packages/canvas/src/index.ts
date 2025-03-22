@@ -1,6 +1,6 @@
 export * from "./types";
 export * from "./Containers/Group";
-export * from "./App";
+export * from "./Core/App";
 
 export * from "./Helpers/MathHelper";
 export * from "./Helpers/TransformHelper";

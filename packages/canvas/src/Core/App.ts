@@ -1,6 +1,6 @@
 import { InteractionManager, IPointerEvent } from "./InteractionManager";
-import { Group } from "./Containers/Group";
-import { Emitter } from "packages/core/dist/classes";
+import { Group } from "../Containers/Group";
+import { Emitter } from "@fewings/core/classes/Emitter";
 
 type Loop = (deltaTime: number) => void;
 
@@ -14,11 +14,6 @@ interface IAppProps {
   canvas: HTMLCanvasElement;
   width: number;
   height: number;
-  /**
-   * @description enable pointer events, panning, zooming
-   * @default false
-   */
-  isStatic?: boolean;
   fps?: number;
   debug?: boolean;
 }
@@ -27,16 +22,19 @@ export class App extends Emitter<IAppEvents> {
   readonly stage: Group;
   readonly canvas: HTMLCanvasElement;
   readonly ctx: CanvasRenderingContext2D;
+  readonly dpr: number;
+
   private _width: number;
   private _height: number;
-  readonly dpr: number;
-  isStatic: boolean;
-  globalScale: number;
-  readonly globalPan: {
-    x: number;
-    y: number;
-  };
-  private readonly interactionManager?: InteractionManager;
+
+  scale: number;
+  panX: number;
+  panY: number;
+
+  debug: boolean;
+
+  private readonly interactionManager: InteractionManager;
+
   /**
    * @description if this not set, it follows the monitor's refresh rate.
    * Use this to limit the fps or use deltaTime to make it independent of the monitor's refresh rate.
@@ -44,39 +42,35 @@ export class App extends Emitter<IAppEvents> {
    */
   fps?: number;
   private lastTime: number;
-  readonly loops: Set<Loop>;
   private rafId: number | null;
-  debug?: boolean;
+  private readonly loops: Set<Loop>;
+
   constructor(props: IAppProps) {
     super();
     this.canvas = props.canvas;
     this.ctx = this.canvas.getContext("2d", {
       desynchronized: true,
     }) as CanvasRenderingContext2D;
+
     this.debug = props.debug ?? false;
-    this.isStatic = props.isStatic ?? false;
+    this.dpr = window.devicePixelRatio;
 
     this.stage = new Group();
-    this.stage.isStatic = this.isStatic;
 
+    this.fps = props.fps;
     this.loops = new Set();
     this.rafId = null;
-    this.fps = props.fps;
     this.lastTime = Date.now();
-    this.dpr = window.devicePixelRatio;
+
     this._width = props.width;
     this._height = props.height;
+    this.scale = 1;
+    this.panX = 0;
+    this.panY = 0;
+    this.interactionManager = new InteractionManager(this, {
+      debug: this.debug,
+    });
     this.resize();
-    this.globalScale = 1;
-    this.globalPan = {
-      x: 0,
-      y: 0,
-    };
-    if (!this.isStatic) {
-      this.interactionManager = new InteractionManager(this, {
-        debug: this.debug,
-      });
-    }
   }
 
   get width() {
@@ -97,27 +91,28 @@ export class App extends Emitter<IAppEvents> {
     this.resize();
   }
 
-  resize() {
+  private resize() {
     this.canvas.width = this._width * this.dpr;
     this.canvas.height = this._height * this.dpr;
     this.canvas.style.width = `${this._width}px`;
     this.canvas.style.height = `${this._height}px`;
-    if (this.interactionManager) {
-      this.interactionManager.resize();
-    }
+    this.interactionManager.resize();
   }
 
   render() {
     this.ctx.save();
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.scale(this.scale, this.scale);
+    this.ctx.translate(this.panX, this.panY);
     this.stage.render(this.ctx);
     this.ctx.restore();
+    this.interactionManager.hitMapRender();
   }
 
   addLoop(cb: Loop) {
     this.loops.add(cb);
     if (!this.isLooping()) {
-      this.start();
+      this.startLoop();
     }
 
     return () => {
@@ -139,7 +134,7 @@ export class App extends Emitter<IAppEvents> {
     }
   }
 
-  start() {
+  startLoop() {
     this.rafId = requestAnimationFrame(() => {
       const now = Date.now();
       const { shouldUpdate, deltaTime } = this.shouldUpdate(now);
@@ -149,8 +144,15 @@ export class App extends Emitter<IAppEvents> {
         this.executeLoops(deltaTime);
       }
 
-      this.start();
+      this.startLoop();
     });
+  }
+
+  stopLoop() {
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
   }
 
   private shouldUpdate(now: number): {
@@ -174,16 +176,6 @@ export class App extends Emitter<IAppEvents> {
   private executeLoops(deltaTime: number): void {
     this.loops.forEach((loop) => loop(deltaTime));
     this.render();
-    if (this.interactionManager) {
-      this.interactionManager.hitMapRender();
-    }
-  }
-
-  stopLoop() {
-    if (this.rafId) {
-      cancelAnimationFrame(this.rafId);
-      this.rafId = null;
-    }
   }
 
   isLooping() {

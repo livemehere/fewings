@@ -1,6 +1,6 @@
 import { App } from "./App";
 import { CNode, ICNodeEvents } from "./CNode";
-import { rgbToHex } from "./utils";
+import { rgbToHex } from "../utils";
 
 export type IPointerEvent = {
   type: keyof ICNodeEvents;
@@ -73,13 +73,15 @@ export class InteractionManager {
   resize() {
     this.hitCanvas.width = this.app.width * this.app.dpr;
     this.hitCanvas.height = this.app.height * this.app.dpr;
-    this.hitCanvas.style.width = `${this.app.width}px`;
-    this.hitCanvas.style.height = `${this.app.height}px`;
+    this.hitCanvas.style.width = `${this.app.width / 2}px`;
+    this.hitCanvas.style.height = `${this.app.height / 2}px`;
   }
 
   hitMapRender() {
     this.hitCtx.save();
     this.hitCtx.clearRect(0, 0, this.hitCanvas.width, this.hitCanvas.height);
+    this.hitCtx.translate(this.app.panX, this.app.panY);
+    this.hitCtx.scale(this.app.scale, this.app.scale);
     this.app.stage.hitMapRender(this.hitCtx);
     if (this.debug) {
       // this.renderPointer();

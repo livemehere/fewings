@@ -1,7 +1,7 @@
-import { CNode, ICNodeProps } from "../CNode";
-
+import { CNode, ICNodeProps } from "../Core/CNode";
 export abstract class Container extends CNode {
   children: CNode[] = [];
+
   constructor(props: ICNodeProps) {
     super(props);
   }
@@ -16,22 +16,34 @@ export abstract class Container extends CNode {
     if (index !== -1) {
       this.children.splice(index, 1);
     }
+    child.parent = null;
   }
 
-  getChildById(id: string): CNode | undefined {
-    return this.children.find((shape) => shape.id === id);
+  findById(id: string): CNode | null {
+    let result: CNode | null = null;
+
+    this.traverse((node) => {
+      if (node.id === id) {
+        result = node;
+      }
+    });
+
+    return result;
   }
 
-  getChildrenByTag(tag: string): CNode[] {
-    return this.children.filter((node) => node.tags.has(tag));
-  }
+  findByTag(tag: string): CNode[] {
+    const result: CNode[] = [];
 
-  getChildByTag(tag: string): CNode | undefined {
-    return this.children.find((node) => node.tags.has(tag));
+    this.traverse((node) => {
+      if (node.tags.has(tag)) {
+        result.push(node);
+      }
+    });
+
+    return result;
   }
 
   traverse(callback: (node: CNode) => void): void {
-    callback(this);
     for (const child of this.children) {
       if (child instanceof Container) {
         child.traverse(callback);
@@ -41,51 +53,13 @@ export abstract class Container extends CNode {
     }
   }
 
-  findAll(predicate: (node: CNode) => boolean): CNode[] {
+  findAll(predicate: (node: CNode) => boolean = () => true): CNode[] {
     const result: CNode[] = [];
-
     this.traverse((node) => {
       if (predicate(node)) {
         result.push(node);
       }
     });
-
     return result;
-  }
-
-  findNodeById(id: string): CNode | undefined {
-    if (this.id === id) {
-      return this;
-    }
-
-    for (const child of this.children) {
-      if (child instanceof Container) {
-        const found = child.findNodeById(id);
-        if (found) {
-          return found;
-        }
-      } else if (child.id === id) {
-        return child;
-      }
-    }
-
-    return undefined;
-  }
-
-  findAllByTag(tag: string): CNode[] {
-    return this.findAll((node) => node.tags.has(tag));
-  }
-
-  traverseBFS(callback: (node: CNode) => void): void {
-    const queue: CNode[] = [this];
-
-    while (queue.length > 0) {
-      const current = queue.shift()!;
-      callback(current);
-
-      if (current instanceof Container) {
-        queue.push(...current.children);
-      }
-    }
   }
 }

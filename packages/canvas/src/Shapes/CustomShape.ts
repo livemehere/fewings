@@ -1,25 +1,20 @@
 import { IShapeProps, Shape } from "./Shape";
-import { Bounds, ModelTypeMap, TModelType } from "../types";
-import { DrawAttrs } from "../DrawAttrs";
+import { IPoint, ModelTypeMap, TModelType } from "../types";
 
 export interface ICustomShapeProps extends IShapeProps {
-  drawPath: (
-    ctx: CanvasRenderingContext2D,
-    bounds: Bounds,
-    attrs: DrawAttrs
-  ) => void;
+  drawPath: (ctx: CanvasRenderingContext2D) => void;
 }
 
 export class CustomShape extends Shape {
   readonly type: TModelType = ModelTypeMap.CUSTOM;
-  drawPath: (
-    ctx: CanvasRenderingContext2D,
-    bounds: Bounds,
-    attrs: DrawAttrs
-  ) => void;
+  drawPath: (ctx: CanvasRenderingContext2D) => void;
 
   constructor(props: ICustomShapeProps) {
     super(props);
     this.drawPath = props.drawPath;
+  }
+
+  override createVertices(): IPoint[] {
+    return [];
   }
 }

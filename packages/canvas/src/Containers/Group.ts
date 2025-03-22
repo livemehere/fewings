@@ -1,21 +1,20 @@
-import { ICNodeProps } from "../CNode";
-import { Bounds, ModelTypeMap, Point, TModelType } from "../types";
+import { ICNodeProps } from "../Core/CNode";
+import { MathHelper } from "../Helpers/MathHelper";
+import { Shape } from "../Shapes/Shape";
+import { Bounds, ModelTypeMap, TModelType } from "../types";
 import { Container } from "./Container";
 
 interface IGroupProps extends ICNodeProps {
-  renderBounds?: boolean;
-  rotate?: number;
+  showBounds?: boolean;
 }
 
 export class Group extends Container {
   readonly type: TModelType = ModelTypeMap.GROUP;
 
   renderBounds: boolean;
-  private _rotate: number;
-  constructor(props: IGroupProps = { debug: false }) {
+  constructor(props: IGroupProps = { debug: false, showBounds: false }) {
     super(props);
-    this.renderBounds = props?.renderBounds ?? false;
-    this._rotate = props?.rotate ?? 0;
+    this.renderBounds = props?.showBounds ?? false;
   }
 
   override get x(): number {
@@ -35,15 +34,43 @@ export class Group extends Container {
   }
 
   override set x(x: number) {
-    throw new Error("Group does not support set x");
+    const deltaX = x - this.x;
+    this.children.forEach((child) => {
+      child.x += deltaX;
+    });
+    this.pivot.x += deltaX;
   }
 
   override set y(y: number) {
-    throw new Error("Group does not support set y");
+    const deltaY = y - this.y;
+    this.children.forEach((child) => {
+      child.y += deltaY;
+    });
+    this.pivot.y += deltaY;
   }
 
   override set width(width: number) {
-    //TODO: increase each of children's width 현재 비율을 유지하면서
+    const currentWidth = this.width;
+    const deltaWidth = width - currentWidth;
+
+    if (currentWidth === 0 || deltaWidth === 0) return;
+
+    const scale = width / currentWidth;
+    const bounds = this.getBounds();
+    const centerX = bounds.x + bounds.width / 2;
+
+    this.children.forEach((child) => {
+      // 중심으로부터의 거리를 비율에 맞게 조정
+      const childDistanceFromCenter = child.x - centerX;
+      const scaledDistance = childDistanceFromCenter * scale;
+
+      // 너비 조정
+      child.width *= scale;
+
+      // 위치 조정 (중심점 기준으로 비율에 맞게)
+      child.x = centerX + scaledDistance;
+    });
+    this.pivot.x += deltaWidth / 2;
   }
 
   override set height(height: number) {
@@ -55,7 +82,21 @@ export class Group extends Container {
   }
 
   override set rotate(angle: number) {
+    const prevRotate = this._rotate;
     this._rotate = angle;
+    const deltaRotate = angle - prevRotate;
+
+    this.children.forEach((child) => {
+      if (child instanceof Shape) {
+        child.vertices = MathHelper.rotateMatrix(
+          child.vertices,
+          deltaRotate,
+          this.pivot
+        );
+      } else {
+        child.rotate += deltaRotate;
+      }
+    });
   }
 
   // TODO: need to optimize
@@ -81,7 +122,7 @@ export class Group extends Container {
     };
   }
 
-  override drawDebug(ctx: CanvasRenderingContext2D): void {
+  override debugRender(ctx: CanvasRenderingContext2D): void {
     const bounds = this.getBounds();
     // fill text each position
     const gap = bounds.height / 15;
@@ -99,57 +140,48 @@ export class Group extends Container {
     ctx.restore();
   }
 
-  renderRoutine(
-    ctx: CanvasRenderingContext2D,
-    renderCallback: () => void
-  ): void {
-    ctx.save();
-    const bounds = this.getBounds();
-    const centerX = bounds.x + bounds.width / 2;
-    const centerY = bounds.y + bounds.height / 2;
-    ctx.translate(centerX, centerY);
-    ctx.rotate(this._rotate);
-    ctx.translate(-centerX, -centerY);
-    renderCallback();
-    ctx.restore();
-  }
-
   render(ctx: CanvasRenderingContext2D): void {
-    this.renderRoutine(ctx, () => {
-      this.children.forEach((shape) => {
-        shape.render(ctx);
-      });
-      if (this.renderBounds) {
-        this.drawBounds(ctx);
-      }
+    this.children.forEach((shape) => {
+      shape.render(ctx);
     });
+    if (this.renderBounds) {
+      this.drawBounds(ctx);
+    }
 
     if (this.debug) {
-      this.drawDebug(ctx);
+      this.debugRender(ctx);
     }
   }
 
   hitMapRender(ctx: CanvasRenderingContext2D): void {
-    this.renderRoutine(ctx, () => {
-      this.hitMapDrawBounds(ctx);
-      this.children.forEach((shape) => {
-        shape.hitMapRender(ctx);
-      });
+    this.hitMapDrawBounds(ctx);
+    this.children.forEach((shape) => {
+      shape.hitMapRender(ctx);
     });
   }
 
-  protected drawBounds(ctx: CanvasRenderingContext2D): void {
+  private drawBoundsVerticesPath(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(this.x + this.width, this.y);
+    ctx.lineTo(this.x + this.width, this.y + this.height);
+    ctx.lineTo(this.x, this.y + this.height);
+    ctx.closePath();
+  }
+
+  protected drawBounds(ctx: CanvasRenderingContext2D): void {
+    ctx.save();
+    this.drawBoundsVerticesPath(ctx);
+    ctx.stroke();
+    ctx.restore();
   }
 
   protected hitMapDrawBounds(ctx: CanvasRenderingContext2D): void {
-    const bounds = this.getBounds();
-    ctx.beginPath();
+    ctx.save();
+    this.drawBoundsVerticesPath(ctx);
     ctx.fillStyle = this.id;
-    ctx.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+    ctx.fill();
+    ctx.restore();
   }
 
   addX(x: number): void {

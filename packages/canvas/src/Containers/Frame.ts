@@ -1,8 +1,8 @@
-import { ICNodeProps } from "../CNode";
-import { Bounds, ModelTypeMap, TModelType } from "../types";
+import { ICNodeProps } from "../Core/CNode";
+import { Bounds, IPoint, ModelTypeMap, TModelType } from "../types";
 import { Container } from "./Container";
 
-export interface IFrameProps extends ICNodeProps, Bounds {
+export interface IFrameProps extends ICNodeProps {
   overflowClip?: boolean;
   rotate?: number;
 }
@@ -82,7 +82,7 @@ export class Frame extends Container {
     });
   }
 
-  protected drawDebug(ctx: CanvasRenderingContext2D): void {
+  protected debugRender(ctx: CanvasRenderingContext2D): void {
     ctx.save();
     ctx.translate(this._x, this._y);
     ctx.rotate(this._rotate);

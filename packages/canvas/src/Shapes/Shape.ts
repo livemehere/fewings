@@ -1,75 +1,83 @@
-import { Bounds, IShape } from "../types";
-import { CNode, ICNodeProps } from "../CNode";
-import { DrawAttrs, IDrawAttrsProps } from "../DrawAttrs";
-import { Container } from "../Containers/Container";
+import { Bounds, IPoint, IShape } from "../types";
+import { CNode, ICNodeProps } from "../Core/CNode";
+import { MathHelper } from "../Helpers/MathHelper";
 
-export interface IShapeProps extends ICNodeProps, Bounds {
-  attrs?: IDrawAttrsProps;
-  visible?: boolean;
-  parent?: Container | null;
-  rotate?: number;
-}
+export type IShapeProps = ICNodeProps & Bounds;
 
 export abstract class Shape extends CNode implements IShape {
-  readonly attrs: DrawAttrs;
-  protected _x: number;
-  protected _y: number;
-  protected _width: number;
-  protected _height: number;
-  protected _rotate: number;
+  vertices: IPoint[];
 
-  constructor({
-    visible,
-    parent,
-    x,
-    y,
-    width,
-    height,
-    attrs,
-    debug,
-    rotate,
-  }: IShapeProps) {
-    super({ debug });
-    this._x = x ?? 0;
-    this._y = y ?? 0;
-    this._width = width ?? 100;
-    this._height = height ?? 100;
-    this.attrs = new DrawAttrs(attrs);
-    this.visible = visible ?? true;
-    this.parent = parent ?? null;
-    this._rotate = rotate ?? 0;
+  constructor(props: IShapeProps) {
+    super(props);
+    this.vertices = this.createVertices(
+      props.x,
+      props.y,
+      props.width,
+      props.height
+    );
+    this.pivot = this.getCenterPoint();
   }
 
+  abstract createVertices(
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  ): IPoint[];
+
   override get x(): number {
-    return this._x;
+    return Math.min(...this.vertices.map((v) => v.x));
   }
 
   override get y(): number {
-    return this._y;
+    return Math.min(...this.vertices.map((v) => v.y));
   }
 
   override set x(x: number) {
-    this._x = x;
+    const dx = x - this.x;
+    this.vertices.forEach((v) => {
+      v.x = v.x + dx;
+    });
+    this.pivot.x = this.pivot.x + dx;
   }
 
   override set y(y: number) {
-    this._y = y;
+    const dy = y - this.y;
+    this.vertices.forEach((v) => {
+      v.y = v.y + dy;
+    });
+    this.pivot.y = this.pivot.y + dy;
   }
 
   override get width(): number {
-    return this._width;
+    return Math.max(...this.vertices.map((v) => v.x)) - this.x;
   }
 
   override get height(): number {
-    return this._height;
+    return Math.max(...this.vertices.map((v) => v.y)) - this.y;
   }
 
   override set width(width: number) {
-    this._width = width;
+    const dw = width - this.width;
+    const center = this.getCenterPoint();
+
+    this.vertices.forEach((v) => {
+      if (v.x >= center.x) {
+        v.x = v.x + dw;
+      }
+    });
+    this.pivot.x = this.pivot.x + dw / 2;
   }
 
   override set height(height: number) {
-    this._height = height;
+    const dh = height - this.height;
+    const center = this.getCenterPoint();
+    this.vertices.forEach((v) => {
+      if (v.y >= center.y) {
+        v.y = v.y + dh;
+      }
+    });
+    this.pivot.y = this.pivot.y + dh / 2;
   }
 
   override get rotate(): number {
@@ -77,145 +85,128 @@ export abstract class Shape extends CNode implements IShape {
   }
 
   override set rotate(rotate: number) {
+    const prevRotate = this._rotate;
     this._rotate = rotate;
+
+    // Calculate rotation from center pivot
+    const center = this.pivot;
+    const deltaRotate = rotate - prevRotate;
+
+    this.vertices = MathHelper.rotateMatrix(this.vertices, deltaRotate, center);
   }
 
   override getBounds(): Bounds {
     return {
-      x: this._x,
-      y: this._y,
-      width: this._width,
-      height: this._height,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
     };
   }
 
-  abstract drawPath(
-    ctx: CanvasRenderingContext2D,
-    bounds: Bounds,
-    attrs: DrawAttrs
-  ): void;
+  abstract drawPath(ctx: CanvasRenderingContext2D): void;
 
-  protected override drawDebug(ctx: CanvasRenderingContext2D): void {
+  protected debugRender(ctx: CanvasRenderingContext2D): void {
     ctx.save();
     ctx.strokeStyle = "red";
     ctx.fillStyle = "red";
-    ctx.strokeRect(this._x, this._y, this._width, this._height);
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
 
-    const gap = this._width / 2;
-    const yGap = this._height / 3;
-    const fontSize = this._height / 3;
+    const gap = this.width / 2;
+    const yGap = this.height / 3;
+    const fontSize = this.height / 3;
     ctx.font = `${fontSize}px Arial`;
-    ctx.fillText(this.id, this._x + this._width + gap, this._y);
+    ctx.fillText(this.id, this.x + this.width + gap, this.y);
     ctx.fillText(
-      `x: ${this._x.toFixed(2)}`,
-      this._x + this._width + gap,
-      this._y + yGap
+      `x: ${this.x.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap
     );
     ctx.fillText(
-      `y: ${this._y.toFixed(2)}`,
-      this._x + this._width + gap,
-      this._y + yGap * 2
+      `y: ${this.y.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap * 2
     );
     ctx.fillText(
-      `w: ${this._width.toFixed(2)}`,
-      this._x + this._width + gap,
-      this._y + yGap * 3
+      `w: ${this.width.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap * 3
     );
     ctx.fillText(
-      `h: ${this._height.toFixed(2)}`,
-      this._x + this._width + gap,
-      this._y + yGap * 4
+      `h: ${this.height.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap * 4
     );
     ctx.fillText(
       `rotate: ${this.rotate.toFixed(2)}`,
-      this._x + this._width + gap,
-      this._y + yGap * 5
+      this.x + this.width + gap,
+      this.y + yGap * 5
     );
     ctx.restore();
   }
 
   override render(ctx: CanvasRenderingContext2D): void {
-    const bounds = this.getBounds();
-    this.renderRoutine(
-      ctx,
-      () => {
-        this.drawPath(ctx, bounds, this.attrs);
-      },
-      bounds,
-      this.attrs
-    );
+    this.renderRoutine(ctx, () => {
+      this.drawPath(ctx);
+    });
     if (this.debug) {
-      this.drawDebug(ctx);
+      this.debugRender(ctx);
     }
   }
 
   override hitMapRender(ctx: CanvasRenderingContext2D): void {
-    const bounds = this.getBounds();
-    const hitMapAttrs = {
-      ...this.attrs,
-      fillStyle: this.id,
-      strokeStyle: this.id,
-      opacity: 1,
-    };
-    this.renderRoutine(
-      ctx,
-      () => {
-        this.drawPath(ctx, bounds, hitMapAttrs);
-      },
-      bounds,
-      hitMapAttrs
-    );
+    this.hitRenderRoutine(ctx, () => {
+      this.drawPath(ctx);
+    });
   }
 
   protected renderRoutine(
     ctx: CanvasRenderingContext2D,
-    renderCallback: () => void,
-    bounds: Bounds,
-    attrs: DrawAttrs
+    renderCallback: () => void
   ): void {
     ctx.save();
     // Apply opacity
-    if (attrs.opacity !== undefined) {
-      ctx.globalAlpha = attrs.opacity;
+    if (this.opacity !== undefined) {
+      ctx.globalAlpha = this.opacity;
     }
 
     // Apply shadows
-    if (attrs.shadowColor) {
-      ctx.shadowColor = attrs.shadowColor;
-      ctx.shadowBlur = attrs.shadowBlur || 0;
-      ctx.shadowOffsetX = attrs.shadowOffsetX || 0;
-      ctx.shadowOffsetY = attrs.shadowOffsetY || 0;
+    if (this.shadowColor) {
+      ctx.shadowColor = this.shadowColor;
+      ctx.shadowBlur = this.shadowBlur || 0;
+      ctx.shadowOffsetX = this.shadowOffsetX || 0;
+      ctx.shadowOffsetY = this.shadowOffsetY || 0;
     }
 
-    // Apply transforms
-    const centerX = bounds.x + bounds.width / 2;
-    const centerY = bounds.y + bounds.height / 2;
-
-    // Handle rotation
-    if (this.rotate !== undefined) {
-      ctx.translate(centerX, centerY);
-      ctx.rotate(this.rotate % (Math.PI * 2)); // for performance restrict to 2pi
-      ctx.translate(-centerX, -centerY);
-    }
-
-    ctx.lineDashOffset = attrs.lineDashOffset || 0;
-    ctx.setLineDash(attrs.lineDash || []);
+    ctx.lineDashOffset = this.lineDashOffset || 0;
+    ctx.setLineDash(this.lineDash);
 
     // Handle fill
-    if (attrs.fillStyle) {
-      ctx.fillStyle = attrs.fillStyle;
+    if (this.fillStyle) {
+      ctx.fillStyle = this.fillStyle;
     }
 
     // Handle stroke
-    if (attrs.strokeStyle) {
-      ctx.strokeStyle = attrs.strokeStyle;
-      if (attrs.strokeWidth !== undefined) {
-        ctx.lineWidth = attrs.strokeWidth;
+    if (this.strokeStyle) {
+      ctx.strokeStyle = this.strokeStyle;
+      if (this.strokeWidth !== undefined) {
+        ctx.lineWidth = this.strokeWidth;
       }
     }
 
     renderCallback();
 
+    ctx.restore();
+  }
+
+  protected hitRenderRoutine(
+    ctx: CanvasRenderingContext2D,
+    renderCallback: () => void
+  ): void {
+    ctx.save();
+    ctx.fillStyle = this.id;
+    ctx.strokeStyle = this.id;
+    renderCallback();
     ctx.restore();
   }
 }

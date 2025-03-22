@@ -1,75 +1,39 @@
-import { App } from "../App";
-import { CNode } from "../CNode";
-import { Container } from "../Containers/Container";
-import { Group } from "../Containers/Group";
-import { Shape } from "../Shapes/Shape";
+import { App } from "../Core/App";
+import { CNode } from "../Core/CNode";
+
+type TAxis = "x" | "y" | "xy";
 
 export class TransformHelper {
-  static isDraggable = (node: CNode) => {
-    return (
-      !node.isStatic && (node instanceof Shape || node instanceof Container)
-    );
-  };
-  static draggable(app: App, node: CNode, axis: "x" | "y" | "xy") {
-    if (!TransformHelper.isDraggable(node)) {
-      throw new Error(`node ${node} is not draggable`);
-    }
-    let startBoundsX: number | null = null;
-    let startBoundsY: number | null = null;
-
+  static draggingNode = new Set<CNode>();
+  static draggable(app: App, node: CNode, axis: TAxis) {
+    let startX: number | null = null;
+    let startY: number | null = null;
     let isDown = false;
-    const childStartPositions = new Map<CNode, { x: number; y: number }>();
 
     const offDown = node.on("pointerdown", (e) => {
       e.stopPropagation(); // prevent concurrently dragging Shape and Container
+      TransformHelper.draggingNode.add(node);
       isDown = true;
 
-      if (node instanceof Shape) {
-        startBoundsX = node.x;
-        startBoundsY = node.y;
-      } else if (node instanceof Container) {
-        // Group, Frame
-        startBoundsX = node.x;
-        startBoundsY = node.y;
-
-        // Store initial positions of children
-        node.children.forEach((child) => {
-          childStartPositions.set(child, { x: child.x, y: child.y });
-        });
-      }
+      startX = node.x;
+      startY = node.y;
     });
 
     const offUp = app.on("pointerup", () => {
       isDown = false;
-      childStartPositions.clear(); // Clear positions on mouse up
+      TransformHelper.draggingNode.delete(node);
     });
 
     const offMove = app.on("pointermove", (e) => {
       if (!isDown) return;
       const dx = e.pointerState.x! - e.pointerState.downX!;
       const dy = e.pointerState.y! - e.pointerState.downY!;
-      const { dx: absoluteDx, dy: absoluteDy } =
-        TransformHelper.resolveAbsoluteDirection(node, dx, dy);
-
-      console.log(e.pointerState.downY, dy);
 
       if (axis.includes("x")) {
-        if (node instanceof Shape) {
-          node.x = startBoundsX! + absoluteDx;
-        } else if (node instanceof Group) {
-          childStartPositions.forEach((pos, child) => {
-            child.x = pos.x + absoluteDx;
-          });
-        }
+        node.x = startX! + dx;
       }
       if (axis.includes("y")) {
-        if (node instanceof Shape) {
-          node.y = startBoundsY! + absoluteDy;
-        } else if (node instanceof Group) {
-          childStartPositions.forEach((pos, child) => {
-            child.y = pos.y + absoluteDy;
-          });
-        }
+        node.y = startY! + dy;
       }
     });
 
@@ -97,5 +61,48 @@ export class TransformHelper {
       parent = parent.parent;
     }
     return { dx: _dx, dy: _dy };
+  }
+
+  static enablePanning(
+    app: App,
+    {
+      axis,
+    }: {
+      axis: TAxis;
+    }
+  ) {
+    let prevPanX = app.panX;
+    let prevPanY = app.panY;
+    const offDown = app.on("pointerdown", (e) => {
+      prevPanX = app.panX;
+      prevPanY = app.panY;
+      document.body.style.cursor = "grabbing";
+    });
+    const offMove = app.on("pointermove", (e) => {
+      const {
+        pointerState: { downX, downY, x, y, downTime },
+      } = e;
+      if (downTime && TransformHelper.draggingNode.size === 0) {
+        if (axis.includes("x")) {
+          const dx = x - downX!;
+          app.panX = prevPanX + dx;
+        }
+        if (axis.includes("y")) {
+          const dy = y - downY!;
+          app.panY = prevPanY + dy;
+        }
+      }
+    });
+    const offUp = app.on("pointerup", () => {
+      prevPanX = app.panX;
+      prevPanY = app.panY;
+      document.body.style.cursor = "grab";
+    });
+
+    return () => {
+      offDown();
+      offMove();
+      offUp();
+    };
   }
 }
