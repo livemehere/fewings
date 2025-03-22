@@ -95,6 +95,11 @@ const Home = () => {
     window.addEventListener("keydown", downHandler);
     window.addEventListener("keyup", upHandler);
 
+    app.on("pointerdown", (e) => {
+      const downX = e.pointerState.downX;
+      console.log(downX, app.toAbsX(downX));
+    });
+
     // app.render();
     app.startLoop();
 
@@ -107,10 +112,10 @@ const Home = () => {
       drawPath: function (ctx) {
         const baseGridSize = 100;
 
-        const scaledPanX = app.panX * app.scale;
-        const scaledPanY = app.panY * app.scale;
+        const scaledPanX = app.resolveScaleV(app.panX);
+        const scaledPanY = app.resolveScaleV(app.panY);
 
-        const gridSize = baseGridSize * app.scale;
+        const gridSize = app.resolveScaleV(baseGridSize);
 
         const offsetX = ((scaledPanX % gridSize) + gridSize) % gridSize;
         const offsetY = ((scaledPanY % gridSize) + gridSize) % gridSize;
@@ -144,7 +149,7 @@ const Home = () => {
         const startCol = Math.floor(-app.panX / baseGridSize);
         const startRow = Math.floor(-app.panY / baseGridSize);
 
-        const step = app.scale * 1;
+        const step = 1;
 
         ctx.save();
         ctx.beginPath();

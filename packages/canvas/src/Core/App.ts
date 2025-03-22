@@ -113,7 +113,7 @@ export class App extends Emitter<IAppEvents> {
   ) {
     ctx.save();
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    ctx.scale(this.scale, this.scale);
+    ctx.scale(this.scale * this.dpr, this.scale * this.dpr);
     ctx.translate(this.panX, this.panY);
     callback();
     ctx.restore();
@@ -200,11 +200,15 @@ export class App extends Emitter<IAppEvents> {
     return this.rafId !== null;
   }
 
+  resolveScaleV(v: number) {
+    return v / this.dpr / this.scale;
+  }
+
   toAbsX(x: number) {
-    return x / this.scale;
+    return this.resolveScaleV(x) + this.panX;
   }
 
   toAbsY(y: number) {
-    return y / this.scale;
+    return this.resolveScaleV(y) + this.panY;
   }
 }

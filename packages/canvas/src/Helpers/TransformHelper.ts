@@ -30,10 +30,10 @@ export class TransformHelper {
       const dy = e.pointerState.y! - e.pointerState.downY!;
 
       if (axis.includes("x")) {
-        node.x = startX! + dx / app.scale;
+        node.x = startX! + app.resolveScaleV(dx);
       }
       if (axis.includes("y")) {
-        node.y = startY! + dy / app.scale;
+        node.y = startY! + app.resolveScaleV(dy);
       }
     });
 
@@ -44,25 +44,6 @@ export class TransformHelper {
     };
   }
 
-  static resolveAbsoluteDirection(node: CNode, dx: number, dy: number) {
-    // node 본인을 제외하고 부모를 찾아가면서 rotate 값을 풀면서 회전되어있는 상태에서도 절대 방향으로 움직이기 위한 값을 변환해서 반환
-    let parent = node.parent;
-    let _dx = dx;
-    let _dy = dy;
-    while (parent) {
-      const radian = parent.rotate;
-      const cos = Math.cos(-radian);
-      const sin = Math.sin(-radian);
-
-      const tempDx = _dx * cos - _dy * sin;
-      const tempDy = _dx * sin + _dy * cos;
-      _dx = tempDx;
-      _dy = tempDy;
-      parent = parent.parent;
-    }
-    return { dx: _dx, dy: _dy };
-  }
-
   static enablePanning(
     app: App,
     {
@@ -71,11 +52,11 @@ export class TransformHelper {
       axis: TAxis;
     }
   ) {
-    let prevPanX = app.panX;
-    let prevPanY = app.panY;
+    let startPanX: number;
+    let startPanY: number;
     const offDown = app.on("pointerdown", (e) => {
-      prevPanX = app.panX;
-      prevPanY = app.panY;
+      startPanX = app.panX;
+      startPanY = app.panY;
       document.body.style.cursor = "grabbing";
     });
     const offMove = app.on("pointermove", (e) => {
@@ -85,17 +66,17 @@ export class TransformHelper {
       if (downTime && TransformHelper.draggingNode.size === 0) {
         if (axis.includes("x")) {
           const dx = x - downX!;
-          app.panX = prevPanX + dx / app.scale;
+          app.panX = startPanX + app.resolveScaleV(dx);
         }
         if (axis.includes("y")) {
           const dy = y - downY!;
-          app.panY = prevPanY + dy / app.scale;
+          app.panY = startPanY + app.resolveScaleV(dy);
         }
       }
     });
     const offUp = app.on("pointerup", () => {
-      prevPanX = app.panX;
-      prevPanY = app.panY;
+      startPanX = app.panX;
+      startPanY = app.panY;
       document.body.style.cursor = "grab";
     });
 
