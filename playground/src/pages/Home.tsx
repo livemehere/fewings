@@ -4,6 +4,7 @@ import {
   Rect,
   Group,
   TransformHelper,
+  CustomShape,
 } from "../../../packages/canvas/src";
 
 const Home = () => {
@@ -29,13 +30,13 @@ const Home = () => {
     app.stage.addChild(group);
     listeners.push(TransformHelper.draggable(app, group, "xy"));
 
-    const n = 5;
+    const n = 3;
     for (let i = 0; i < n; i++) {
       const rect = new Rect({
-        x: Math.random() * 1000,
-        y: Math.random() * 1000,
+        x: 100 + i * 100,
+        y: 100 + i * 100,
         width: 100,
-        height: 200,
+        height: 100,
         fillStyle: "red",
         strokeStyle: "blue",
         strokeWidth: 10,
@@ -47,7 +48,7 @@ const Home = () => {
         // lineDash: [10, 5],
         // lineDashOffset: 10,
         // round: [30, 10, 10, 30],
-        // debug: true,
+        debug: true,
         // rotate: MathHelper.degToRad(45),
       });
       group.addChild(rect);
@@ -97,34 +98,103 @@ const Home = () => {
     // app.render();
     app.startLoop();
 
-    // const grid = new CustomShape({
-    //   x: 0,
-    //   y: 0,
-    //   width: app.canvas.width,
-    //   height: app.canvas.height,
-    //   strokeStyle: "red",
-    //   strokeWidth: 0.5,
-    //   opacity: 0.5,
-    //   drawPath: function (ctx) {
-    //     const rows = app.canvas.width / 50;
-    //     const cols = app.canvas.height / 50;
-    //     ctx.beginPath();
-    //     for (let i = 0; i < rows; i++) {
-    //       ctx.beginPath();
-    //       ctx.moveTo(0, i * 50);
-    //       ctx.lineTo(app.canvas.width, i * 50);
-    //       ctx.stroke();
-    //     }
-    //     for (let j = 0; j < cols; j++) {
-    //       ctx.beginPath();
-    //       ctx.moveTo(j * 50, 0);
-    //       ctx.lineTo(j * 50, app.canvas.height);
-    //       ctx.stroke();
-    //     }
-    //   },
-    // });
-    // app.stage.addChild(grid);
+    const grid = new CustomShape({
+      x: 0,
+      y: 0,
+      width: app.canvas.width,
+      height: app.canvas.height,
+      strokeStyle: "rgba(0, 0, 0, 0.3)",
+      drawPath: function (ctx) {
+        const baseGridSize = 100;
 
+        const scaledPanX = app.panX * app.scale;
+        const scaledPanY = app.panY * app.scale;
+
+        const gridSize = baseGridSize * app.scale;
+
+        const offsetX = ((scaledPanX % gridSize) + gridSize) % gridSize;
+        const offsetY = ((scaledPanY % gridSize) + gridSize) % gridSize;
+
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+
+        for (let x = offsetX; x <= app.canvas.width + gridSize; x += gridSize) {
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, app.canvas.height);
+        }
+
+        for (
+          let y = offsetY;
+          y <= app.canvas.height + gridSize;
+          y += gridSize
+        ) {
+          ctx.moveTo(0, y);
+          ctx.lineTo(app.canvas.width, y);
+        }
+
+        ctx.stroke();
+
+        ctx.font = "12px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        const startCol = Math.floor(-app.panX / baseGridSize);
+        const startRow = Math.floor(-app.panY / baseGridSize);
+
+        const step = app.scale * 1;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = "#3d3d3d";
+        ctx.rect(0, 0, app.canvas.width, 50);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = "#7C7C7C";
+        ctx.font = "25px Arial";
+        for (let x = offsetX; x <= app.canvas.width; x += gridSize * step) {
+          const colIndex = Math.round((x - offsetX) / gridSize);
+          const col = startCol + colIndex;
+
+          ctx.fillText(`${col * baseGridSize}`, x, 24);
+        }
+        ctx.closePath();
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = "#3d3d3d";
+        ctx.rect(0, 50, 50, app.canvas.height - 50);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = "#7C7C7C";
+        ctx.font = "25px Arial";
+        for (let y = offsetY; y <= app.canvas.height; y += gridSize * step) {
+          const rowIndex = Math.round((y - offsetY) / gridSize);
+          const row = startRow + rowIndex;
+          ctx.save();
+          ctx.translate(30, y);
+          ctx.rotate(-Math.PI / 2);
+          ctx.fillText(`${row * baseGridSize}`, 0, 0);
+          ctx.restore();
+        }
+        ctx.closePath();
+        ctx.restore();
+
+        ctx.restore();
+      },
+    });
+    app.stage.addChild(grid);
     // const rect2 = new Rect({
     //   x: 600,
     //   y: 300,
@@ -184,10 +254,16 @@ const Home = () => {
     //   // group.setRotate(center, MathHelper.degToRad(angle));
     // });
 
+    const wheelHandler = (e: WheelEvent) => {
+      app.scale += -e.deltaY / 1000;
+    };
+    app.canvas.addEventListener("wheel", wheelHandler);
+
     return () => {
       listeners.forEach((l) => l());
       window.removeEventListener("keydown", downHandler);
       window.removeEventListener("keyup", upHandler);
+      app.canvas.removeEventListener("wheel", wheelHandler);
     };
   }, []);
   return (

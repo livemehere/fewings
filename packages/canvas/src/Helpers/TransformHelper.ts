@@ -30,10 +30,10 @@ export class TransformHelper {
       const dy = e.pointerState.y! - e.pointerState.downY!;
 
       if (axis.includes("x")) {
-        node.x = startX! + dx;
+        node.x = startX! + dx / app.scale;
       }
       if (axis.includes("y")) {
-        node.y = startY! + dy;
+        node.y = startY! + dy / app.scale;
       }
     });
 
@@ -85,11 +85,11 @@ export class TransformHelper {
       if (downTime && TransformHelper.draggingNode.size === 0) {
         if (axis.includes("x")) {
           const dx = x - downX!;
-          app.panX = prevPanX + dx;
+          app.panX = prevPanX + dx / app.scale;
         }
         if (axis.includes("y")) {
           const dy = y - downY!;
-          app.panY = prevPanY + dy;
+          app.panY = prevPanY + dy / app.scale;
         }
       }
     });

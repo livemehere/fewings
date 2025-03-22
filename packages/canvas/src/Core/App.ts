@@ -27,7 +27,7 @@ export class App extends Emitter<IAppEvents> {
   private _width: number;
   private _height: number;
 
-  scale: number;
+  private _scale: number;
   panX: number;
   panY: number;
 
@@ -64,7 +64,7 @@ export class App extends Emitter<IAppEvents> {
 
     this._width = props.width;
     this._height = props.height;
-    this.scale = 1;
+    this._scale = 1;
     this.panX = 0;
     this.panY = 0;
     this.interactionManager = new InteractionManager(this, {
@@ -91,6 +91,14 @@ export class App extends Emitter<IAppEvents> {
     this.resize();
   }
 
+  get scale() {
+    return this._scale;
+  }
+
+  set scale(scale: number) {
+    this._scale = Math.max(0.1, scale);
+  }
+
   private resize() {
     this.canvas.width = this._width * this.dpr;
     this.canvas.height = this._height * this.dpr;
@@ -99,14 +107,24 @@ export class App extends Emitter<IAppEvents> {
     this.interactionManager.resize();
   }
 
+  private appRenderRoutine(
+    ctx: CanvasRenderingContext2D,
+    callback: () => void
+  ) {
+    ctx.save();
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.scale(this.scale, this.scale);
+    ctx.translate(this.panX, this.panY);
+    callback();
+    ctx.restore();
+  }
   render() {
-    this.ctx.save();
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.scale(this.scale, this.scale);
-    this.ctx.translate(this.panX, this.panY);
-    this.stage.render(this.ctx);
-    this.ctx.restore();
-    this.interactionManager.hitMapRender();
+    this.appRenderRoutine(this.ctx, () => {
+      this.stage.render(this.ctx);
+    });
+    this.appRenderRoutine(this.interactionManager.hitCtx, () => {
+      this.stage.hitMapRender(this.interactionManager.hitCtx);
+    });
   }
 
   addLoop(cb: Loop) {
@@ -180,5 +198,13 @@ export class App extends Emitter<IAppEvents> {
 
   isLooping() {
     return this.rafId !== null;
+  }
+
+  toAbsX(x: number) {
+    return x / this.scale;
+  }
+
+  toAbsY(y: number) {
+    return y / this.scale;
   }
 }

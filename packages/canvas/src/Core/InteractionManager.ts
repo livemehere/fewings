@@ -26,8 +26,8 @@ export type IPointerState = {
 export class InteractionManager {
   private app: App;
 
-  private hitCanvas: HTMLCanvasElement;
-  private hitCtx: CanvasRenderingContext2D;
+  readonly hitCanvas: HTMLCanvasElement;
+  readonly hitCtx: CanvasRenderingContext2D;
   debug?: boolean;
 
   private pointerState: IPointerState;
@@ -75,18 +75,6 @@ export class InteractionManager {
     this.hitCanvas.height = this.app.height * this.app.dpr;
     this.hitCanvas.style.width = `${this.app.width / 2}px`;
     this.hitCanvas.style.height = `${this.app.height / 2}px`;
-  }
-
-  hitMapRender() {
-    this.hitCtx.save();
-    this.hitCtx.clearRect(0, 0, this.hitCanvas.width, this.hitCanvas.height);
-    this.hitCtx.translate(this.app.panX, this.app.panY);
-    this.hitCtx.scale(this.app.scale, this.app.scale);
-    this.app.stage.hitMapRender(this.hitCtx);
-    if (this.debug) {
-      // this.renderPointer();
-    }
-    this.hitCtx.restore();
   }
 
   renderPointer() {
