@@ -29,7 +29,12 @@ export interface IBox {
   height: number;
 }
 
-export type Bounds = IPoint & IBox;
+export type Bounds = {
+  top: number;
+  left: number;
+  right: number;
+  bottom: number;
+};
 
 export interface IDrawAttrs {
   fillStyle?: TFillStyle;
@@ -58,7 +63,7 @@ export interface IContainer extends ICNode {
   children: ICNode[];
 }
 
-export interface ICNode extends IDrawAttrs, Bounds {
+export interface ICNode extends IDrawAttrs, IPoint, IBox {
   id: string;
   type: TModelType;
   parent: Container | null;
@@ -67,5 +72,4 @@ export interface ICNode extends IDrawAttrs, Bounds {
   debug: boolean;
   tags: Set<string>;
   rotate: number;
-  pivot: IPoint;
 }

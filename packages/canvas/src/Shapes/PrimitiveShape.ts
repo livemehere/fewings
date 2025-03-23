@@ -1,4 +1,4 @@
-import { IPoint } from "../types";
+import { Bounds, IPoint } from "../types";
 
 import { IShapeProps } from "./Shape";
 
@@ -17,7 +17,7 @@ export class PrimitiveShape extends Shape {
     x: number,
     y: number,
     width: number,
-    height: number,
+    height: number
   ): IPoint[] {
     return [
       { x: x, y: y },
@@ -32,5 +32,14 @@ export class PrimitiveShape extends Shape {
     ctx.rect(this.x, this.y, this.width, this.height);
     ctx.fill();
     ctx.stroke();
+  }
+
+  override getGlobalBounds(): Bounds {
+    return {
+      left: this.x,
+      top: this.y,
+      right: this.x + this.width,
+      bottom: this.y + this.height,
+    };
   }
 }

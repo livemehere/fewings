@@ -1,3 +1,4 @@
+import { stringify } from "@fewings/core/qs";
 import { djb2 } from "packages/core/dist/hash";
 import {
   IPoint,
@@ -36,25 +37,24 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   readonly tags: Set<string>;
   abstract readonly type: TModelType;
 
-  pivot: IPoint;
-  _rotate: number;
-
-  visible: boolean;
   parent: Container | null;
+  visible: boolean;
   isStatic: boolean;
   debug: boolean;
+  /** @description radian */
+  rotate: number;
 
   fillStyle: TFillStyle;
   strokeStyle: TStrokeStyle;
   strokeWidth: number;
-  opacity: number;
-  shadowColor: string;
-  shadowBlur: number;
-  shadowOffsetX: number;
-  shadowOffsetY: number;
-  lineDash: number[];
-  lineDashOffset: number;
-  round: number[];
+  opacity?: number;
+  shadowColor?: string;
+  shadowBlur?: number;
+  shadowOffsetX?: number;
+  shadowOffsetY?: number;
+  lineDash?: number[];
+  lineDashOffset?: number;
+  round?: number[];
 
   constructor(props: ICNodeProps = {}) {
     super();
@@ -74,19 +74,18 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     this.fillStyle = props.fillStyle ?? "black";
     this.strokeStyle = props.strokeStyle ?? "black";
     this.strokeWidth = props.strokeWidth ?? 1;
-    this.opacity = props.opacity ?? 1;
-    this.shadowColor = props.shadowColor ?? "black";
-    this.shadowBlur = props.shadowBlur ?? 0;
-    this.shadowOffsetX = props.shadowOffsetX ?? 0;
-    this.shadowOffsetY = props.shadowOffsetY ?? 0;
-    this.lineDash = props.lineDash ?? [];
-    this.lineDashOffset = props.lineDashOffset ?? 0;
-    this.round = props.round ?? [];
-    this.pivot = props.pivot ?? { x: 0, y: 0 };
-    this._rotate = props.rotate ?? 0;
+    this.rotate = props.rotate ?? 0;
+
+    this.opacity = props.opacity;
+    this.shadowColor = props.shadowColor;
+    this.shadowBlur = props.shadowBlur;
+    this.shadowOffsetX = props.shadowOffsetX;
+    this.shadowOffsetY = props.shadowOffsetY;
+    this.lineDash = props.lineDash;
+    this.lineDashOffset = props.lineDashOffset;
+    this.round = props.round;
   }
 
-  /** properties */
   abstract get x(): number;
   abstract get y(): number;
   abstract set x(v: number);
@@ -96,54 +95,30 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   abstract set width(v: number);
   abstract set height(v: number);
 
-  /** @description radian */
-  abstract get rotate(): number;
-  abstract set rotate(v: number);
-
   /** methods */
   abstract render(ctx: CanvasRenderingContext2D): void;
   abstract hitMapRender(ctx: CanvasRenderingContext2D): void;
   protected abstract debugRender(ctx: CanvasRenderingContext2D): void;
+  abstract toJSON(): string;
+  abstract fromJSON(json: string): CNode;
+  abstract clone(): CNode;
+  // TODO: implement
+  // abstract toPNG(): string;
+  // abstract toJPEG(quality?: number): string;
+  // abstract toSVG(): string;
+  // abstract toBlob(): Blob;
+
   /**
    * Shape : calculate bounds with vertices
    * Container : calculate bounds with children
    */
   abstract getBounds(): Bounds;
-
-  getCenterPoint(): IPoint {
+  abstract getGlobalBounds(): Bounds;
+  getCenter(): IPoint {
     return {
       x: this.x + this.width / 2,
       y: this.y + this.height / 2,
     };
-  }
-
-  updatePivot(
-    direction:
-      | "top-left"
-      | "top-right"
-      | "bottom-left"
-      | "bottom-right"
-      | "center",
-  ) {
-    switch (direction) {
-      case "center":
-        this.pivot = this.getCenterPoint();
-        break;
-      case "top-left":
-        this.pivot = { x: this.x, y: this.y };
-        break;
-      case "top-right":
-        this.pivot = { x: this.x + this.width, y: this.y };
-        break;
-      case "bottom-left":
-        this.pivot = { x: this.x, y: this.y + this.height };
-        break;
-      case "bottom-right":
-        this.pivot = { x: this.x + this.width, y: this.y + this.height };
-        break;
-      default:
-        throw new Error(`Invalid direction: ${direction}`);
-    }
   }
 
   /**
@@ -168,7 +143,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
         if (!pointerEvent._propagationStopped) {
           this.parent.dispatch(
             event,
-            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>),
+            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>)
           );
         }
       }
@@ -177,13 +152,13 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
 
   override on<E extends keyof ICNodeEvents>(
     event: E,
-    listener: ICNodeEvents[E],
+    listener: ICNodeEvents[E]
   ): () => void {
     super.on(event, listener);
     CNode.totalListeners++;
     return () => {
       this.listener[event] = this.listener[event]?.filter(
-        (l) => l !== listener,
+        (l) => l !== listener
       );
       CNode.totalListeners--;
     };

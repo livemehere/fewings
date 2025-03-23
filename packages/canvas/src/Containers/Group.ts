@@ -18,19 +18,19 @@ export class Group extends Container {
   }
 
   override get x(): number {
-    return this.getBounds().x;
+    return this.getBounds().left;
   }
 
   override get y(): number {
-    return this.getBounds().y;
+    return this.getBounds().top;
   }
 
   override get width(): number {
-    return this.getBounds().width;
+    return this.getBounds().right - this.getBounds().left;
   }
 
   override get height(): number {
-    return this.getBounds().height;
+    return this.getBounds().bottom - this.getBounds().top;
   }
 
   override set x(x: number) {
@@ -91,7 +91,7 @@ export class Group extends Container {
         child.vertices = MathHelper.rotateMatrix(
           child.vertices,
           deltaRotate,
-          this.pivot,
+          this.pivot
         );
       } else {
         child.rotate += deltaRotate;
@@ -108,34 +108,42 @@ export class Group extends Container {
 
     this.children.forEach((node) => {
       const bounds = node.getBounds();
-      if (bounds.x < minX) minX = bounds.x;
-      if (bounds.y < minY) minY = bounds.y;
-      if (bounds.x + bounds.width > maxX) maxX = bounds.x + bounds.width;
-      if (bounds.y + bounds.height > maxY) maxY = bounds.y + bounds.height;
+      if (bounds.left < minX) minX = bounds.left;
+      if (bounds.top < minY) minY = bounds.top;
+      if (bounds.right > maxX) maxX = bounds.right;
+      if (bounds.bottom > maxY) maxY = bounds.bottom;
     });
 
     return {
-      x: minX,
-      y: minY,
-      width: maxX - minX,
-      height: maxY - minY,
+      left: minX,
+      top: minY,
+      right: maxX,
+      bottom: maxY,
     };
   }
 
   override debugRender(ctx: CanvasRenderingContext2D): void {
     const bounds = this.getBounds();
     // fill text each position
-    const gap = bounds.height / 15;
-    const fontSize = bounds.height / 15;
-    const baseX = bounds.x + bounds.width;
-    const baseY = bounds.y;
+    const gap = bounds.bottom - bounds.top / 15;
+    const fontSize = bounds.bottom - bounds.top / 15;
+    const baseX = bounds.left + bounds.right;
+    const baseY = bounds.top;
     ctx.font = `${fontSize}px Arial`;
     ctx.fillStyle = "black";
     ctx.fillText(this.id, baseX, baseY);
-    ctx.fillText(`x: ${bounds.x.toFixed(2)}`, baseX, baseY + gap);
-    ctx.fillText(`y: ${bounds.y.toFixed(2)}`, baseX, baseY + gap * 2);
-    ctx.fillText(`w: ${bounds.width.toFixed(2)}`, baseX, baseY + gap * 3);
-    ctx.fillText(`h: ${bounds.height.toFixed(2)}`, baseX, baseY + gap * 4);
+    ctx.fillText(`x: ${bounds.left.toFixed(2)}`, baseX, baseY + gap);
+    ctx.fillText(`y: ${bounds.top.toFixed(2)}`, baseX, baseY + gap * 2);
+    ctx.fillText(
+      `w: ${(bounds.right - bounds.left).toFixed(2)}`,
+      baseX,
+      baseY + gap * 3
+    );
+    ctx.fillText(
+      `h: ${(bounds.bottom - bounds.top).toFixed(2)}`,
+      baseX,
+      baseY + gap * 4
+    );
     ctx.fillText(`rotate: ${this._rotate.toFixed(2)}`, baseX, baseY + gap * 5);
     ctx.restore();
   }

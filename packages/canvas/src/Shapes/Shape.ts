@@ -1,8 +1,8 @@
-import { Bounds, IPoint, IShape } from "../types";
+import { Bounds, IBox, IPoint, IShape } from "../types";
 import { CNode, ICNodeProps } from "../Core/CNode";
 import { MathHelper } from "../Helpers/MathHelper";
 
-export type IShapeProps = ICNodeProps & Bounds;
+export type IShapeProps = ICNodeProps & IPoint & IBox;
 
 export abstract class Shape extends CNode implements IShape {
   vertices: IPoint[];
@@ -13,16 +13,15 @@ export abstract class Shape extends CNode implements IShape {
       props.x,
       props.y,
       props.width,
-      props.height,
+      props.height
     );
-    this.pivot = this.getCenterPoint();
   }
 
   abstract createVertices(
     x: number,
     y: number,
     width: number,
-    height: number,
+    height: number
   ): IPoint[];
 
   override get x(): number {
@@ -38,7 +37,6 @@ export abstract class Shape extends CNode implements IShape {
     this.vertices.forEach((v) => {
       v.x = v.x + dx;
     });
-    this.pivot.x = this.pivot.x + dx;
   }
 
   override set y(y: number) {
@@ -46,7 +44,6 @@ export abstract class Shape extends CNode implements IShape {
     this.vertices.forEach((v) => {
       v.y = v.y + dy;
     });
-    this.pivot.y = this.pivot.y + dy;
   }
 
   override get width(): number {
@@ -59,48 +56,31 @@ export abstract class Shape extends CNode implements IShape {
 
   override set width(width: number) {
     const dw = width - this.width;
-    const center = this.getCenterPoint();
+    const center = this.getCenter();
 
     this.vertices.forEach((v) => {
       if (v.x >= center.x) {
         v.x = v.x + dw;
       }
     });
-    this.pivot.x = this.pivot.x + dw / 2;
   }
 
   override set height(height: number) {
     const dh = height - this.height;
-    const center = this.getCenterPoint();
+    const center = this.getCenter();
     this.vertices.forEach((v) => {
       if (v.y >= center.y) {
         v.y = v.y + dh;
       }
     });
-    this.pivot.y = this.pivot.y + dh / 2;
-  }
-
-  override get rotate(): number {
-    return this._rotate;
-  }
-
-  override set rotate(rotate: number) {
-    const prevRotate = this._rotate;
-    this._rotate = rotate;
-
-    // Calculate rotation from center pivot
-    const center = this.pivot;
-    const deltaRotate = rotate - prevRotate;
-
-    this.vertices = MathHelper.rotateMatrix(this.vertices, deltaRotate, center);
   }
 
   override getBounds(): Bounds {
     return {
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height,
+      left: this.x,
+      top: this.y,
+      right: this.x + this.width,
+      bottom: this.y + this.height,
     };
   }
 
@@ -120,27 +100,27 @@ export abstract class Shape extends CNode implements IShape {
     ctx.fillText(
       `x: ${this.x.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap,
+      this.y + yGap
     );
     ctx.fillText(
       `y: ${this.y.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap * 2,
+      this.y + yGap * 2
     );
     ctx.fillText(
       `w: ${this.width.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap * 3,
+      this.y + yGap * 3
     );
     ctx.fillText(
       `h: ${this.height.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap * 4,
+      this.y + yGap * 4
     );
     ctx.fillText(
       `rotate: ${this.rotate.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap * 5,
+      this.y + yGap * 5
     );
     ctx.restore();
   }
@@ -162,7 +142,7 @@ export abstract class Shape extends CNode implements IShape {
 
   protected renderRoutine(
     ctx: CanvasRenderingContext2D,
-    renderCallback: () => void,
+    renderCallback: () => void
   ): void {
     ctx.save();
     // Apply opacity
@@ -201,7 +181,7 @@ export abstract class Shape extends CNode implements IShape {
 
   protected hitRenderRoutine(
     ctx: CanvasRenderingContext2D,
-    renderCallback: () => void,
+    renderCallback: () => void
   ): void {
     ctx.save();
     ctx.fillStyle = this.id;
