@@ -110,91 +110,58 @@ const Home = () => {
       height: app.canvas.height,
       strokeStyle: "rgba(0, 0, 0, 0.3)",
       drawPath: function (ctx) {
-        const baseGridSize = 100;
+        const gap = 100;
+        const rulerSize = 30;
 
-        const scaledPanX = app.resolveScaleV(app.panX);
-        const scaledPanY = app.resolveScaleV(app.panY);
+        const startX = app.panX % gap;
+        const startY = app.panY % gap;
+        const totalW = app.canvas.width;
+        const totalH = app.canvas.height;
 
-        const gridSize = app.resolveScaleV(baseGridSize);
-
-        const offsetX = ((scaledPanX % gridSize) + gridSize) % gridSize;
-        const offsetY = ((scaledPanY % gridSize) + gridSize) % gridSize;
+        const offsetX = Math.floor(app.panX / gap);
+        const offsetY = Math.floor(app.panY / gap);
 
         ctx.save();
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        app.resetTransform(ctx);
+
+        /** ruler indicator */
+        ctx.save();
         ctx.beginPath();
-        ctx.lineWidth = 1;
-
-        for (let x = offsetX; x <= app.canvas.width + gridSize; x += gridSize) {
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, app.canvas.height);
-        }
-
-        for (
-          let y = offsetY;
-          y <= app.canvas.height + gridSize;
-          y += gridSize
-        ) {
-          ctx.moveTo(0, y);
-          ctx.lineTo(app.canvas.width, y);
-        }
-
-        ctx.stroke();
-
-        ctx.font = "12px Arial";
+        ctx.rect(0, 0, totalW, rulerSize);
+        ctx.rect(0, 0, rulerSize, totalH);
         ctx.fillStyle = "black";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        const startCol = Math.floor(-app.panX / baseGridSize);
-        const startRow = Math.floor(-app.panY / baseGridSize);
-
-        const step = 1;
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = "#3d3d3d";
-        ctx.rect(0, 0, app.canvas.width, 50);
         ctx.fill();
-        ctx.closePath();
-        ctx.restore();
 
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = "#7C7C7C";
-        ctx.font = "25px Arial";
-        for (let x = offsetX; x <= app.canvas.width; x += gridSize * step) {
-          const colIndex = Math.round((x - offsetX) / gridSize);
-          const col = startCol + colIndex;
-
-          ctx.fillText(`${col * baseGridSize}`, x, 24);
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "red";
+        for (let i = 0; i < totalW; i += 1) {
+          const x = startX + i * gap;
+          const y = rulerSize / 1.5;
+          const v = (i - offsetX) * gap;
+          ctx.fillText(v.toString(), x, y);
         }
-        ctx.closePath();
-        ctx.restore();
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = "#3d3d3d";
-        ctx.rect(0, 50, 50, app.canvas.height - 50);
-        ctx.fill();
-        ctx.closePath();
-        ctx.restore();
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = "#7C7C7C";
-        ctx.font = "25px Arial";
-        for (let y = offsetY; y <= app.canvas.height; y += gridSize * step) {
-          const rowIndex = Math.round((y - offsetY) / gridSize);
-          const row = startRow + rowIndex;
+        for (let i = 0; i < totalH; i += 1) {
+          const x = rulerSize / 1.5;
+          const y = startY + i * gap;
+          const v = i - offsetY;
           ctx.save();
-          ctx.translate(30, y);
+          ctx.translate(x, y);
           ctx.rotate(-Math.PI / 2);
-          ctx.fillText(`${row * baseGridSize}`, 0, 0);
+          ctx.fillText(v.toString(), 0, 0);
           ctx.restore();
         }
-        ctx.closePath();
         ctx.restore();
+
+        ctx.scale(app.scale, app.scale);
+        for (let i = 0; i < totalW; i += gap) {
+          ctx.moveTo(i + startX, 0);
+          ctx.lineTo(i + startX, totalH);
+        }
+        for (let i = 0; i < totalH; i += gap) {
+          ctx.moveTo(0, i + startY);
+          ctx.lineTo(totalW, i + startY);
+        }
+        ctx.stroke();
 
         ctx.restore();
       },

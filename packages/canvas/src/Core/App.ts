@@ -200,6 +200,7 @@ export class App extends Emitter<IAppEvents> {
     return this.rafId !== null;
   }
 
+  /** util function to resolve the scale value */
   resolveScaleV(v: number) {
     return v / this.dpr / this.scale;
   }
@@ -210,5 +211,10 @@ export class App extends Emitter<IAppEvents> {
 
   toAbsY(y: number) {
     return this.resolveScaleV(y) + this.panY;
+  }
+
+  resetTransform(ctx: CanvasRenderingContext2D) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(this.dpr, this.dpr);
   }
 }
