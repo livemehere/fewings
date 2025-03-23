@@ -89,79 +89,70 @@ const Home = () => {
     };
     window.addEventListener("keydown", downHandler);
     window.addEventListener("keyup", upHandler);
-
-    app.on("pointerdown", (e) => {
-      // const downX = e.pointerState.downX;
-      // console.log(downX, app.toAbsX(downX));
-    });
-
     app.startLoop();
 
-    // const grid = new CustomShape({
-    //   x: 0,
-    //   y: 0,
-    //   width: app.canvas.width,
-    //   height: app.canvas.height,
-    //   strokeStyle: "rgba(0, 0, 0, 0.3)",
-    //   render: function (ctx) {
-    //     const gap = 100;
-    //     const rulerSize = 30;
+    const grid = new CustomShape({
+      x: 0,
+      y: 0,
+      width: app.canvas.width,
+      height: app.canvas.height,
+      strokeStyle: "rgba(0, 0, 0, 0.3)",
+      render: function (ctx) {
+        const gap = app.stage.scale * 100;
+        const rulerSize = 30;
 
-    //     const startX = app.panX % gap;
-    //     const startY = app.panY % gap;
-    //     const totalW = app.canvas.width;
-    //     const totalH = app.canvas.height;
+        const startX = app.stage.x % gap;
+        const startY = app.stage.y % gap;
+        const totalW = app.canvas.width;
+        const totalH = app.canvas.height;
 
-    //     const offsetX = Math.floor(app.panX / gap);
-    //     const offsetY = Math.floor(app.panY / gap);
+        const offsetX = Math.floor(app.stage.x / gap);
+        const offsetY = Math.floor(app.stage.y / gap);
 
-    //     ctx.save();
-    //     app.resetTransform(ctx);
+        ctx.save();
+        /** ruler indicator */
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, totalW, rulerSize);
+        ctx.rect(0, 0, rulerSize, totalH);
+        ctx.fillStyle = "black";
+        ctx.fill();
 
-    //     /** ruler indicator */
-    //     ctx.save();
-    //     ctx.beginPath();
-    //     ctx.rect(0, 0, totalW, rulerSize);
-    //     ctx.rect(0, 0, rulerSize, totalH);
-    //     ctx.fillStyle = "black";
-    //     ctx.fill();
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "red";
+        for (let i = 0; i < totalW; i += 1) {
+          const x = startX + i * gap;
+          const y = rulerSize / 1.5;
+          const v = (i - offsetX) * gap;
+          ctx.fillText(v.toString(), x, y);
+        }
+        for (let i = 0; i < totalH; i += 1) {
+          const x = rulerSize / 1.5;
+          const y = startY + i * gap;
+          const v = i - offsetY;
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(-Math.PI / 2);
+          ctx.fillText(v.toString(), 0, 0);
+          ctx.restore();
+        }
+        ctx.restore();
 
-    //     ctx.font = "20px Arial";
-    //     ctx.fillStyle = "red";
-    //     for (let i = 0; i < totalW; i += 1) {
-    //       const x = startX + i * gap;
-    //       const y = rulerSize / 1.5;
-    //       const v = (i - offsetX) * gap;
-    //       ctx.fillText(v.toString(), x, y);
-    //     }
-    //     for (let i = 0; i < totalH; i += 1) {
-    //       const x = rulerSize / 1.5;
-    //       const y = startY + i * gap;
-    //       const v = i - offsetY;
-    //       ctx.save();
-    //       ctx.translate(x, y);
-    //       ctx.rotate(-Math.PI / 2);
-    //       ctx.fillText(v.toString(), 0, 0);
-    //       ctx.restore();
-    //     }
-    //     ctx.restore();
+        for (let i = 0; i < totalW; i += gap) {
+          ctx.moveTo(i + startX, 0);
+          ctx.lineTo(i + startX, totalH);
+        }
+        for (let i = 0; i < totalH; i += gap) {
+          ctx.moveTo(0, i + startY);
+          ctx.lineTo(totalW, i + startY);
+        }
+        ctx.stroke();
 
-    //     ctx.scale(app.scale, app.scale);
-    //     for (let i = 0; i < totalW; i += gap) {
-    //       ctx.moveTo(i + startX, 0);
-    //       ctx.lineTo(i + startX, totalH);
-    //     }
-    //     for (let i = 0; i < totalH; i += gap) {
-    //       ctx.moveTo(0, i + startY);
-    //       ctx.lineTo(totalW, i + startY);
-    //     }
-    //     ctx.stroke();
-
-    //     ctx.restore();
-    //   },
-    //   hitMapRender(ctx) {},
-    // });
-    // app.stage.addChild(grid);
+        ctx.restore();
+      },
+      hitMapRender(ctx) {},
+    });
+    app.stage.addChild(grid);
     // const rect2 = new Rect({
     //   x: 600,
     //   y: 300,

@@ -143,6 +143,9 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     const centerY = (bounds.top + bounds.bottom) / 2;
     ctx.translate(centerX, centerY);
     ctx.rotate(this.rotate);
+    if ("scale" in this) {
+      ctx.scale(this.scale as number, this.scale as number);
+    }
     ctx.translate(-centerX, -centerY);
     renderCallback();
     ctx.restore();
