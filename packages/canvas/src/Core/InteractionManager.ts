@@ -85,7 +85,7 @@ export class InteractionManager {
         this.pointerState.downX,
         this.pointerState.downY,
         10,
-        10
+        10,
       );
     }
     this.hitCtx.restore();
@@ -111,7 +111,7 @@ export class InteractionManager {
         this.pointerState.downX,
         this.pointerState.downY,
         1,
-        1
+        1,
       );
       const hex = rgbToHex(pixel.data[0], pixel.data[1], pixel.data[2]);
       const node = CNode.idMap.get(hex);
@@ -156,7 +156,7 @@ export class InteractionManager {
       this.pointerState.x,
       this.pointerState.y,
       1,
-      1
+      1,
     );
     const hex = rgbToHex(pixel.data[0], pixel.data[1], pixel.data[2]);
     const node = CNode.idMap.get(hex);

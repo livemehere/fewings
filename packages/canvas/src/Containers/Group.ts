@@ -91,7 +91,7 @@ export class Group extends Container {
         child.vertices = MathHelper.rotateMatrix(
           child.vertices,
           deltaRotate,
-          this.pivot
+          this.pivot,
         );
       } else {
         child.rotate += deltaRotate;

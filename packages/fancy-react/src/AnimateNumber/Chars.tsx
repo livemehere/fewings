@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, useAnimate } from 'motion/react';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useAnimate } from "motion/react";
 
 type TCharSize = {
   w: number;
@@ -10,16 +10,19 @@ export function Chars({
   to,
   countDur,
   widthDur,
-  direction = 'random',
-  onSizeChange
+  direction = "random",
+  onSizeChange,
 }: {
   to: number;
   countDur: number;
   widthDur: number;
-  direction?: 'up' | 'down' | 'random';
+  direction?: "up" | "down" | "random";
   onSizeChange?: (size: TCharSize) => void;
 }) {
-  const isUp = useMemo(() => direction === 'up' || (direction === 'random' && Math.random() > 0.5), [direction]);
+  const isUp = useMemo(
+    () => direction === "up" || (direction === "random" && Math.random() > 0.5),
+    [direction],
+  );
   const [size, setSize] = useState<TCharSize>({ w: 0, h: 0 });
 
   const doneTimerRef = useRef<number | null>(null);
@@ -33,8 +36,8 @@ export function Chars({
     const nEl = nRef.current;
 
     if (nEl) {
-      nEl.style.visibility = v ? 'visible' : 'hidden';
-      scope.current.style.display = v ? 'none' : 'block';
+      nEl.style.visibility = v ? "visible" : "hidden";
+      scope.current.style.display = v ? "none" : "block";
     }
   };
 
@@ -49,7 +52,10 @@ export function Chars({
   const countDir = to > from ? 1 : -1;
 
   const nums = useMemo(() => {
-    const arr = Array.from({ length: Math.abs(to - from) + 1 }, (_, i) => from + i * countDir);
+    const arr = Array.from(
+      { length: Math.abs(to - from) + 1 },
+      (_, i) => from + i * countDir,
+    );
     return isUp ? arr : arr.reverse();
   }, [to, from, isUp]);
 
@@ -60,7 +66,7 @@ export function Chars({
     animate(
       scope.current,
       {
-        y: isUp ? y : y.reverse()
+        y: isUp ? y : y.reverse(),
       },
       {
         duration: countDur,
@@ -72,10 +78,10 @@ export function Chars({
             () => {
               setDone(true);
             },
-            (countDur + 1) * 1000
+            (countDur + 1) * 1000,
           );
-        }
-      }
+        },
+      },
     );
     return () => {
       clearDoneTimer();
@@ -85,33 +91,33 @@ export function Chars({
   return (
     <motion.div
       style={{
-        position: 'relative',
-        display: 'inline-block',
-        overflow: 'hidden'
+        position: "relative",
+        display: "inline-block",
+        overflow: "hidden",
       }}
       initial={{
         width: 0,
-        transformOrigin: 'left'
+        transformOrigin: "left",
       }}
       animate={{
-        width: 'auto',
-        transformOrigin: 'left'
+        width: "auto",
+        transformOrigin: "left",
       }}
       exit={{
         width: 0,
-        transformOrigin: 'right'
+        transformOrigin: "right",
       }}
       transition={{
-        duration: widthDur
+        duration: widthDur,
       }}
     >
       <div
         ref={scope}
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
-          willChange: 'transform'
+          willChange: "transform",
         }}
       >
         {nums.map((num) => (
@@ -125,7 +131,7 @@ export function Chars({
           if (size.w === el.offsetWidth && size.h === el.offsetHeight) return;
           const _size: TCharSize = {
             w: el.offsetWidth,
-            h: el.offsetHeight
+            h: el.offsetHeight,
           };
           setSize(_size);
           onSizeChange?.(_size);

@@ -1,32 +1,33 @@
-import { Sandpack } from '@/components/Sandpack';
+import { Sandpack } from "@/components/Sandpack";
 
 # Emitter
 
 > The `Emitter` class is an `abstract class` that provides the ability to register event listeners, dispatch events.
-
 
 ## API
 
 ```ts
 type EventMap = Record<string, (...args: any[]) => void>;
 type TListener<M extends EventMap, K extends keyof M> = M[K];
-type TPayLoad<M extends EventMap, K extends keyof M> = Parameters<TListener<M, K>>;
+type TPayLoad<M extends EventMap, K extends keyof M> = Parameters<
+  TListener<M, K>
+>;
 
 declare abstract class Emitter<T extends EventMap> {
-    listener: Partial<Record<keyof T, TListener<T, keyof T>[]>>;
-    on<E extends keyof T>(event: E, listener: TListener<T, E>): () => void;
-    once<E extends keyof T>(event: E, listener: TListener<T, E>): () => void;
-    dispatch<E extends keyof T>(event: E, ...payload: TPayLoad<T, E>): void;
-    removeAllListeners(): void;
+  listener: Partial<Record<keyof T, TListener<T, keyof T>[]>>;
+  on<E extends keyof T>(event: E, listener: TListener<T, E>): () => void;
+  once<E extends keyof T>(event: E, listener: TListener<T, E>): () => void;
+  dispatch<E extends keyof T>(event: E, ...payload: TPayLoad<T, E>): void;
+  removeAllListeners(): void;
 }
 ```
 
-| Method               | Description                                |
-|----------------------|--------------------------------------------|
-| `on`                 | Register event listeners                   |
-| `once`               | Register one-time event listeners          |
-| `dispatch`           | Dispatch events                            |
-| `removeAllListeners` | Remove all listeners                       |
+| Method               | Description                       |
+| -------------------- | --------------------------------- |
+| `on`                 | Register event listeners          |
+| `once`               | Register one-time event listeners |
+| `dispatch`           | Dispatch events                   |
+| `removeAllListeners` | Remove all listeners              |
 
 ## Example
 
@@ -35,7 +36,6 @@ To use Emitter, extend it with a specific event map.
 <Sandpack>
 ```tsx App.js
 import { emitter } from './MyEmitter';
-
 
 export default function App(){
     return (
@@ -49,20 +49,21 @@ export default function App(){
 import { Emitter } from '@fewings/core/classes';
 
 type MyEvents = {
-    click: (x: number, y: number) => void;
-    message: (text: string) => void;
+click: (x: number, y: number) => void;
+message: (text: string) => void;
 };
 
 class MyEmitter extends Emitter<MyEvents> {
-    constructor() {
-        super();
-    }
+constructor() {
+super();
+}
 }
 export const emitter = new MyEmitter();
 
 emitter.on('click', (x, y) => {
-    console.log('click', x, y);
+console.log('click', x, y);
 });
 
 ```
 </Sandpack>
+```

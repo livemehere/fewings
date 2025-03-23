@@ -14,16 +14,18 @@ declare function parse(str: string): Record<string, string | string[]>;
 ## Example
 
 ```ts
-import { parse } from '@fewings/core/qs';
+import { parse } from "@fewings/core/qs";
 
-console.log(parse('?name=kong&idx=3%2C4&serviceId=430011481&serverId=5&placementId=1'))
+console.log(
+  parse("?name=kong&idx=3%2C4&serviceId=430011481&serverId=5&placementId=1"),
+);
 /**
-    * {
-    *   name: 'kong',
-    *   idx: ['3', '4'],
-    *   serviceId: '430011481',
-    *   serverId: '5',
-    *   placementId: '1'
-    * }
-*/
+ * {
+ *   name: 'kong',
+ *   idx: ['3', '4'],
+ *   serviceId: '430011481',
+ *   serverId: '5',
+ *   placementId: '1'
+ * }
+ */
 ```

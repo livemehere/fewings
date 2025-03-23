@@ -13,7 +13,7 @@ export abstract class Shape extends CNode implements IShape {
       props.x,
       props.y,
       props.width,
-      props.height
+      props.height,
     );
     this.pivot = this.getCenterPoint();
   }
@@ -22,7 +22,7 @@ export abstract class Shape extends CNode implements IShape {
     x: number,
     y: number,
     width: number,
-    height: number
+    height: number,
   ): IPoint[];
 
   override get x(): number {
@@ -120,27 +120,27 @@ export abstract class Shape extends CNode implements IShape {
     ctx.fillText(
       `x: ${this.x.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap
+      this.y + yGap,
     );
     ctx.fillText(
       `y: ${this.y.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap * 2
+      this.y + yGap * 2,
     );
     ctx.fillText(
       `w: ${this.width.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap * 3
+      this.y + yGap * 3,
     );
     ctx.fillText(
       `h: ${this.height.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap * 4
+      this.y + yGap * 4,
     );
     ctx.fillText(
       `rotate: ${this.rotate.toFixed(2)}`,
       this.x + this.width + gap,
-      this.y + yGap * 5
+      this.y + yGap * 5,
     );
     ctx.restore();
   }
@@ -162,7 +162,7 @@ export abstract class Shape extends CNode implements IShape {
 
   protected renderRoutine(
     ctx: CanvasRenderingContext2D,
-    renderCallback: () => void
+    renderCallback: () => void,
   ): void {
     ctx.save();
     // Apply opacity
@@ -201,7 +201,7 @@ export abstract class Shape extends CNode implements IShape {
 
   protected hitRenderRoutine(
     ctx: CanvasRenderingContext2D,
-    renderCallback: () => void
+    renderCallback: () => void,
   ): void {
     ctx.save();
     ctx.fillStyle = this.id;

@@ -5,16 +5,19 @@
 ## API
 
 ```ts
-declare function debounce<T extends (...args: any[]) => any>(fn: T, wait: number): T;
+declare function debounce<T extends (...args: any[]) => any>(
+  fn: T,
+  wait: number,
+): T;
 ```
 
 ## Example
 
 ```ts
-import { debounce } from '@fewings/core/fp';
+import { debounce } from "@fewings/core/fp";
 
 const fn = debounce((x: number, y: number) => {
-    console.log(x, y);
+  console.log(x, y);
 }, 100);
 
 fn(1, 2);
@@ -24,6 +27,3 @@ fn(5, 6);
 // Output:
 // 5 6
 ```
-
-
-

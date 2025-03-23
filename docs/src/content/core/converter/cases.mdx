@@ -13,7 +13,11 @@ declare const toKebabCase: (str: string) => string;
 ## Example
 
 ```ts
-import { toPascalCase, toCamelCase, toKebabCase } from "@fewings/core/converter";
+import {
+  toPascalCase,
+  toCamelCase,
+  toKebabCase,
+} from "@fewings/core/converter";
 
 const str = "to my case";
 const str2 = "to-my-case";
@@ -34,7 +38,4 @@ console.log(toKebabCase(str)); // to-my-case
 console.log(toKebabCase(str2)); // to-my-case
 console.log(toKebabCase(str3)); // to-my-case
 console.log(toKebabCase(str4)); // to-my-case
-````
-
-
-
+```

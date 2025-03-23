@@ -1,4 +1,3 @@
-
 # useQsState
 
 > `useQsState` is a hook that allows you to sync state with the URL query string. It is a wrapper around `useState` that reads the initial state from the query string and updates the query string whenever the state changes.
@@ -6,14 +5,20 @@
 ## API
 
 ```ts
-import { SetStateAction } from 'react';
+import { SetStateAction } from "react";
 
 type QsValue = string | string[] | undefined | null;
 
 type Options = {
-    navigateMode?: "replace" | "push";
+  navigateMode?: "replace" | "push";
 };
-declare const useQsState: <State extends Record<string, QsValue>>(initialState?: State, options?: Options) => readonly [State & Record<string, string | string[]>, (newState: SetStateAction<State>) => void];
+declare const useQsState: <State extends Record<string, QsValue>>(
+  initialState?: State,
+  options?: Options,
+) => readonly [
+  State & Record<string, string | string[]>,
+  (newState: SetStateAction<State>) => void,
+];
 ```
 
 ## Example

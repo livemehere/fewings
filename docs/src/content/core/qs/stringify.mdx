@@ -9,20 +9,25 @@
 
 ```ts
 type QsValue = string | string[] | undefined | null;
-declare function stringify(obj: Record<string, QsValue>, prefix?: string): string;
+declare function stringify(
+  obj: Record<string, QsValue>,
+  prefix?: string,
+): string;
 ```
 
 ## Example
 
 ```ts
-import { stringify } from '@fewings/core/qs';
+import { stringify } from "@fewings/core/qs";
 
-console.log(stringify({
+console.log(
+  stringify({
     name: "kong",
     idx: ["3", "4"],
     serviceId: "430011481",
     serverId: "5",
     placementId: null,
     empty: undefined,
-})) // ?name=kong&idx=3%2C4&serviceId=430011481&serverId=5
+  }),
+); // ?name=kong&idx=3%2C4&serviceId=430011481&serverId=5
 ```

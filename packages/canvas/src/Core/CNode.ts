@@ -123,7 +123,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
       | "top-right"
       | "bottom-left"
       | "bottom-right"
-      | "center"
+      | "center",
   ) {
     switch (direction) {
       case "center":
@@ -168,7 +168,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
         if (!pointerEvent._propagationStopped) {
           this.parent.dispatch(
             event,
-            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>)
+            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>),
           );
         }
       }
@@ -177,13 +177,13 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
 
   override on<E extends keyof ICNodeEvents>(
     event: E,
-    listener: ICNodeEvents[E]
+    listener: ICNodeEvents[E],
   ): () => void {
     super.on(event, listener);
     CNode.totalListeners++;
     return () => {
       this.listener[event] = this.listener[event]?.filter(
-        (l) => l !== listener
+        (l) => l !== listener,
       );
       CNode.totalListeners--;
     };

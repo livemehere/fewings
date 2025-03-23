@@ -134,7 +134,7 @@ describe("Shape", () => {
         primitive.vertices.map((v) => ({
           x: parseFloat(v.x.toFixed(3)),
           y: parseFloat(v.y.toFixed(3)),
-        }))
+        })),
       ).toEqual([
         { x: 50.0, y: -20.711 },
         { x: 120.711, y: 50.0 },

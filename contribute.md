@@ -52,7 +52,7 @@ Thank you for your interest in contributing to the project. We welcome all contr
 ```
 
 ### 1. Don't export default
-    
+
 ```typescript
 // ❌
 export default const newFunction = ()=> {
@@ -68,7 +68,7 @@ export const newFunction = ()=> {
 ### 2. import relative path when importing functions in the same group.
 
 ```typescript
-import { existFunction } from './existFunction';
+import { existFunction } from "./existFunction";
 export const newFunction = () => {
   existFunction();
 };

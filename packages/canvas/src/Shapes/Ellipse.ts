@@ -19,7 +19,7 @@ export class Ellipse extends Shape {
       this.height / 2,
       0,
       0,
-      Math.PI * 2
+      Math.PI * 2,
     );
     ctx.fill();
     ctx.stroke();

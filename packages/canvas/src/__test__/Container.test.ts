@@ -70,10 +70,10 @@ describe("Container", () => {
 
     it("findAll", () => {
       expect(
-        container.findAll((node) => node.id === primitiveShape.id)
+        container.findAll((node) => node.id === primitiveShape.id),
       ).toEqual([primitiveShape]);
       expect(
-        container.findAll((node) => node.id === primitiveShape2.id)
+        container.findAll((node) => node.id === primitiveShape2.id),
       ).toEqual([primitiveShape2]);
       expect(container.findAll((node) => node.id === "not found")).toEqual([]);
     });

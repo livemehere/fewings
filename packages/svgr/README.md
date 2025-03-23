@@ -9,15 +9,15 @@ yarn add @fewings/svgr
 ```
 
 There is two ways to use this package:
+
 1. CLI
 2. vite-plugin
 
 ## CLI
 
-
 ```bash
 
-# cli options 
+# cli options
 # *svgPath - path to the svg files (required)
 # *outDir -  path to the output directory (required)
 # constName - name of the constant (default: IconMap)
@@ -39,12 +39,12 @@ import { fewingsSvgrVitePlugin } from "@fewings/svgr";
 import svgr from "vite-plugin-svgr";
 
 type Options = {
-    svgPath: string;
-    outDir: string; 
-    constName?: string;
-    svgImportBase?: string;
-    typeName?: string;
-    componentName?: string;
+  svgPath: string;
+  outDir: string;
+  constName?: string;
+  svgImportBase?: string;
+  typeName?: string;
+  componentName?: string;
 };
 
 export default defineConfig({

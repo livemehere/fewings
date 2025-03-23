@@ -6,18 +6,18 @@
 
 ```ts
 declare function getTranslateXY(element: HTMLElement): {
-    translateX: number;
-    translateY: number;
+  translateX: number;
+  translateY: number;
 };
 ```
 
 ## Example
 
 ```ts
-import { getTranslateXY } from '@fewings/core/dom';
+import { getTranslateXY } from "@fewings/core/dom";
 
-const element = document.createElement('div');
-element.style.transform = 'translate(10px, 20px)';
+const element = document.createElement("div");
+element.style.transform = "translate(10px, 20px)";
 document.body.appendChild(element);
 
 const { translateX, translateY } = getTranslateXY(element);
