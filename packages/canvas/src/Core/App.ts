@@ -16,6 +16,7 @@ export type TAppProps = {
   height: number;
   fps?: number;
   debug?: boolean;
+  dpr?: number;
 };
 
 export class App extends Emitter<TAppEvents> {
@@ -26,10 +27,6 @@ export class App extends Emitter<TAppEvents> {
 
   private _width: number;
   private _height: number;
-
-  private _scale: number;
-  panX: number;
-  panY: number;
 
   debug: boolean;
 
@@ -53,7 +50,7 @@ export class App extends Emitter<TAppEvents> {
     }) as CanvasRenderingContext2D;
 
     this.debug = props.debug ?? false;
-    this.dpr = window.devicePixelRatio;
+    this.dpr = props.dpr ?? window.devicePixelRatio;
 
     this.stage = new Group();
 
@@ -64,13 +61,18 @@ export class App extends Emitter<TAppEvents> {
 
     this._width = props.width;
     this._height = props.height;
-    this._scale = 1;
-    this.panX = 0;
-    this.panY = 0;
+
     this.interactionManager = new InteractionManager(this, {
       debug: this.debug,
     });
     this.resize();
+    this.debugLog("[App constructor] dpr", this.dpr);
+    this.debugLog("[App constructor] fps", this.fps);
+  }
+
+  debugLog(...args: any[]) {
+    if (!this.debug) return;
+    console.debug(...args);
   }
 
   get width() {
@@ -91,19 +93,12 @@ export class App extends Emitter<TAppEvents> {
     this.resize();
   }
 
-  get scale() {
-    return this._scale;
-  }
-
-  set scale(scale: number) {
-    this._scale = Math.max(0.1, scale);
-  }
-
   private resize() {
     this.canvas.width = this._width * this.dpr;
     this.canvas.height = this._height * this.dpr;
     this.canvas.style.width = `${this._width}px`;
     this.canvas.style.height = `${this._height}px`;
+    this.debugLog("[App resize]", this.canvas.width, this.canvas.height);
     this.interactionManager.resize();
   }
 
@@ -113,11 +108,11 @@ export class App extends Emitter<TAppEvents> {
   ) {
     ctx.save();
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    ctx.scale(this.scale * this.dpr, this.scale * this.dpr);
-    ctx.translate(this.panX, this.panY);
+    ctx.scale(this.dpr, this.dpr);
     callback();
     ctx.restore();
   }
+
   render() {
     this.appRenderRoutine(this.ctx, () => {
       this.stage.render(this.ctx);
@@ -129,7 +124,9 @@ export class App extends Emitter<TAppEvents> {
 
   addLoop(cb: Loop) {
     this.loops.add(cb);
+    this.debugLog("[App Loop] addLoop", this.loops.size);
     if (!this.isLooping()) {
+      this.debugLog("[App Loop] loop started...");
       this.startLoop();
     }
 
@@ -140,6 +137,8 @@ export class App extends Emitter<TAppEvents> {
 
   removeLoop(cb: Loop) {
     this.loops.delete(cb);
+    this.debugLog("[App Loop] removeLoop", this.loops.size);
+
     if (this.loops.size === 0) {
       this.stopLoop();
     }
@@ -156,12 +155,10 @@ export class App extends Emitter<TAppEvents> {
     this.rafId = requestAnimationFrame(() => {
       const now = Date.now();
       const { shouldUpdate, deltaTime } = this.shouldUpdate(now);
-
       if (shouldUpdate) {
         this.lastTime = now;
         this.executeLoops(deltaTime);
       }
-
       this.startLoop();
     });
   }
@@ -170,6 +167,7 @@ export class App extends Emitter<TAppEvents> {
     if (this.rafId) {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
+      this.debugLog("[App Loop] stopLoop", this.loops.size);
     }
   }
 
@@ -198,23 +196,5 @@ export class App extends Emitter<TAppEvents> {
 
   isLooping() {
     return this.rafId !== null;
-  }
-
-  /** util function to resolve the scale value */
-  resolveScaleV(v: number) {
-    return v / this.dpr / this.scale;
-  }
-
-  toAbsX(x: number) {
-    return this.resolveScaleV(x) + this.panX;
-  }
-
-  toAbsY(y: number) {
-    return this.resolveScaleV(y) + this.panY;
-  }
-
-  resetTransform(ctx: CanvasRenderingContext2D) {
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(this.dpr, this.dpr);
   }
 }

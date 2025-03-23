@@ -1,14 +1,18 @@
 import { CNode, TNodeProps } from "../Core/CNode";
-import { MathHelper } from "../Helpers/MathHelper";
-import { Shape } from "../Shapes/Shape";
 import { Bounds, ModelTypeMap, TModelType } from "../types";
-import { Container, IContainerProps } from "./Container";
+import { Container } from "./Container";
+
+export type TGroupProps = TNodeProps & {
+  scale?: number;
+};
 
 export class Group extends Container {
   readonly type: TModelType = ModelTypeMap.GROUP;
+  scale: number;
 
-  constructor(props?: TNodeProps) {
+  constructor(props?: TGroupProps) {
     super(props);
+    this.scale = props?.scale ?? 1;
   }
 
   override get x(): number {
@@ -20,11 +24,13 @@ export class Group extends Container {
   }
 
   override get width(): number {
-    return this.getBounds().right - this.getBounds().left;
+    const bounds = this.getBounds();
+    return bounds.right - bounds.left;
   }
 
   override get height(): number {
-    return this.getBounds().bottom - this.getBounds().top;
+    const bounds = this.getBounds();
+    return bounds.bottom - bounds.top;
   }
 
   override set x(x: number) {
@@ -32,7 +38,6 @@ export class Group extends Container {
     this.children.forEach((child) => {
       child.x += deltaX;
     });
-    this.pivot.x += deltaX;
   }
 
   override set y(y: number) {
@@ -40,7 +45,6 @@ export class Group extends Container {
     this.children.forEach((child) => {
       child.y += deltaY;
     });
-    this.pivot.y += deltaY;
   }
 
   override set width(width: number) {
@@ -51,7 +55,7 @@ export class Group extends Container {
 
     const scale = width / currentWidth;
     const bounds = this.getBounds();
-    const centerX = bounds.x + bounds.width / 2;
+    const centerX = bounds.left + bounds.right / 2;
 
     this.children.forEach((child) => {
       // 중심으로부터의 거리를 비율에 맞게 조정
@@ -64,37 +68,39 @@ export class Group extends Container {
       // 위치 조정 (중심점 기준으로 비율에 맞게)
       child.x = centerX + scaledDistance;
     });
-    this.pivot.x += deltaWidth / 2;
   }
 
   override set height(height: number) {
-    //TODO: increase each of children's height 현재 비율을 유지하면서
-  }
+    const currentHeight = this.height;
+    const deltaHeight = height - currentHeight;
 
-  override get rotate(): number {
-    return this._rotate;
-  }
+    if (currentHeight === 0 || deltaHeight === 0) return;
 
-  override set rotate(angle: number) {
-    const prevRotate = this._rotate;
-    this._rotate = angle;
-    const deltaRotate = angle - prevRotate;
+    const scale = height / currentHeight;
+    const bounds = this.getBounds();
+    const centerY = bounds.top + bounds.bottom / 2;
 
     this.children.forEach((child) => {
-      if (child instanceof Shape) {
-        child.vertices = MathHelper.rotateMatrix(
-          child.vertices,
-          deltaRotate,
-          this.pivot
-        );
-      } else {
-        child.rotate += deltaRotate;
-      }
+      const childDistanceFromCenter = child.y - centerY;
+      const scaledDistance = childDistanceFromCenter * scale;
+
+      // 높이 조정
+      child.height *= scale;
+
+      // 위치 조정 (중심점 기준으로 비율에 맞게)
+      child.y = centerY + scaledDistance;
     });
   }
 
-  // TODO: need to optimize
   override getBounds(): Bounds {
+    if (this.children.length === 0)
+      return {
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+      };
+
     let minX = Infinity;
     let minY = Infinity;
     let maxX = -Infinity;
@@ -116,73 +122,24 @@ export class Group extends Container {
     };
   }
 
-  override debugRender(ctx: CanvasRenderingContext2D): void {
-    const bounds = this.getBounds();
-    // fill text each position
-    const gap = bounds.bottom - bounds.top / 15;
-    const fontSize = bounds.bottom - bounds.top / 15;
-    const baseX = bounds.left + bounds.right;
-    const baseY = bounds.top;
-    ctx.font = `${fontSize}px Arial`;
-    ctx.fillStyle = "black";
-    ctx.fillText(this.id, baseX, baseY);
-    ctx.fillText(`x: ${bounds.left.toFixed(2)}`, baseX, baseY + gap);
-    ctx.fillText(`y: ${bounds.top.toFixed(2)}`, baseX, baseY + gap * 2);
-    ctx.fillText(
-      `w: ${(bounds.right - bounds.left).toFixed(2)}`,
-      baseX,
-      baseY + gap * 3
-    );
-    ctx.fillText(
-      `h: ${(bounds.bottom - bounds.top).toFixed(2)}`,
-      baseX,
-      baseY + gap * 4
-    );
-    ctx.fillText(`rotate: ${this._rotate.toFixed(2)}`, baseX, baseY + gap * 5);
-    ctx.restore();
-  }
-
-  render(ctx: CanvasRenderingContext2D): void {
-    if (!this.visible) return;
+  override _render(ctx: CanvasRenderingContext2D): void {
     this.children.forEach((shape) => {
-      shape.render(ctx);
-    });
-    if (this.debug) {
-      this.drawBounds(ctx);
-      this.debugRender(ctx);
-    }
-  }
-
-  hitMapRender(ctx: CanvasRenderingContext2D): void {
-    if (!this.visible && !this.isStatic) return;
-    this.hitMapDrawBounds(ctx);
-    this.children.forEach((shape) => {
-      shape.hitMapRender(ctx);
+      shape._render(ctx);
     });
   }
 
-  private drawBoundsVerticesPath(ctx: CanvasRenderingContext2D): void {
+  override _hitMapRender(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
-    ctx.moveTo(this.x, this.y);
-    ctx.lineTo(this.x + this.width, this.y);
-    ctx.lineTo(this.x + this.width, this.y + this.height);
-    ctx.lineTo(this.x, this.y + this.height);
+    const bounds = this.getBounds();
+    this.setupHitRender(ctx);
+    ctx.moveTo(bounds.left, bounds.top);
+    ctx.lineTo(bounds.right, bounds.top);
+    ctx.lineTo(bounds.right, bounds.bottom);
+    ctx.lineTo(bounds.left, bounds.bottom);
     ctx.closePath();
-  }
-
-  protected drawBounds(ctx: CanvasRenderingContext2D): void {
-    ctx.save();
-    this.drawBoundsVerticesPath(ctx);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  protected hitMapDrawBounds(ctx: CanvasRenderingContext2D): void {
-    ctx.save();
-    this.drawBoundsVerticesPath(ctx);
-    ctx.fillStyle = this.id;
-    ctx.fill();
-    ctx.restore();
+    this.children.forEach((shape) => {
+      shape._hitMapRender(ctx);
+    });
   }
 
   addX(x: number): void {
@@ -201,7 +158,15 @@ export class Group extends Container {
     throw new Error("Method not implemented.");
   }
 
-  getGlobalBounds(): Bounds {
+  override getGlobalBounds(): Bounds {
+    throw new Error("Method not implemented.");
+  }
+
+  override toJSON(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  override fromJSON(json: string): CNode {
     throw new Error("Method not implemented.");
   }
 }

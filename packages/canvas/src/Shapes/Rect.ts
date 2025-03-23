@@ -1,5 +1,6 @@
 import { Shape, TShapeProps } from "./Shape";
 import { IPoint, ModelTypeMap, TModelType } from "../types";
+import { VerticesHelper } from "../Helpers/VerticesHelper";
 
 export class Rect extends Shape {
   readonly type: TModelType = ModelTypeMap.RECT;
@@ -14,15 +15,10 @@ export class Rect extends Shape {
     width: number,
     height: number
   ): IPoint[] {
-    return [
-      { x: x, y: y },
-      { x: x + width, y: y },
-      { x: x + width, y: y + height },
-      { x: x, y: y + height },
-    ];
+    return VerticesHelper.createBoxVertices(x, y, width, height);
   }
 
-  drawPath(ctx: CanvasRenderingContext2D) {
+  private drawPath(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     // FIXME: implement round
     ctx.moveTo(this.vertices[0].x, this.vertices[0].y);
@@ -32,6 +28,15 @@ export class Rect extends Shape {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
-    ctx.closePath();
+  }
+
+  _render(ctx: CanvasRenderingContext2D) {
+    this.setupRender(ctx);
+    this.drawPath(ctx);
+  }
+
+  _hitMapRender(ctx: CanvasRenderingContext2D) {
+    this.setupHitRender(ctx);
+    this.drawPath(ctx);
   }
 }

@@ -96,8 +96,106 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   abstract set height(v: number);
 
   /** methods */
-  abstract render(ctx: CanvasRenderingContext2D): void;
-  abstract hitMapRender(ctx: CanvasRenderingContext2D): void;
+  render(ctx: CanvasRenderingContext2D): void {
+    if (!this.visible) return;
+    this.renderRoutine(ctx, () => {
+      this._render(ctx);
+      if (this.debug) this.debugRender(ctx);
+    });
+  }
+
+  hitMapRender(ctx: CanvasRenderingContext2D): void {
+    if (!this.visible && !this.isStatic) return;
+    this.renderRoutine(ctx, () => {
+      this._hitMapRender(ctx);
+    });
+  }
+
+  protected renderRoutine(
+    ctx: CanvasRenderingContext2D,
+    renderCallback: () => void
+  ): void {
+    ctx.save();
+    renderCallback();
+    ctx.restore();
+  }
+
+  protected setupRender(ctx: CanvasRenderingContext2D): void {
+    if (this.opacity !== undefined && this.opacity > 0) {
+      ctx.globalAlpha = this.opacity;
+    }
+    if (this.shadowColor !== undefined) {
+      ctx.shadowColor = this.shadowColor;
+    }
+    if (this.shadowBlur !== undefined) {
+      ctx.shadowBlur = this.shadowBlur;
+    }
+    if (this.shadowOffsetX !== undefined) {
+      ctx.shadowOffsetX = this.shadowOffsetX;
+    }
+    if (this.shadowOffsetY !== undefined) {
+      ctx.shadowOffsetY = this.shadowOffsetY;
+    }
+    if (this.lineDash !== undefined) {
+      ctx.setLineDash(this.lineDash);
+    }
+    if (this.lineDashOffset !== undefined) {
+      ctx.lineDashOffset = this.lineDashOffset;
+    }
+    if (this.fillStyle !== undefined) {
+      ctx.fillStyle = this.fillStyle;
+    }
+    if (this.strokeStyle !== undefined) {
+      ctx.strokeStyle = this.strokeStyle;
+    }
+    if (this.strokeWidth !== undefined) {
+      ctx.lineWidth = this.strokeWidth;
+    }
+  }
+
+  protected setupHitRender(ctx: CanvasRenderingContext2D): void {
+    ctx.fillStyle = this.id;
+    ctx.strokeStyle = this.id;
+  }
+
+  protected debugRender(ctx: CanvasRenderingContext2D): void {
+    // fill text each position
+    const bounds = this.getBounds();
+    ctx.beginPath();
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "red";
+    ctx.rect(
+      bounds.left,
+      bounds.top,
+      bounds.right - bounds.left,
+      bounds.bottom - bounds.top
+    );
+    ctx.stroke();
+    ctx.closePath();
+    const gap = 20;
+    const fontSize = 20;
+    const baseX = bounds.right + 10;
+    const baseY = bounds.top;
+    ctx.font = `bold ${fontSize}px Arial`;
+    ctx.fillStyle = "black";
+    ctx.fillText(this.id, baseX, baseY);
+    ctx.fillText(`x: ${bounds.left.toFixed(2)}`, baseX, baseY + gap);
+    ctx.fillText(`y: ${bounds.top.toFixed(2)}`, baseX, baseY + gap * 2);
+    ctx.fillText(
+      `w: ${(bounds.right - bounds.left).toFixed(2)}`,
+      baseX,
+      baseY + gap * 3
+    );
+    ctx.fillText(
+      `h: ${(bounds.bottom - bounds.top).toFixed(2)}`,
+      baseX,
+      baseY + gap * 4
+    );
+  }
+
+  abstract _render(ctx: CanvasRenderingContext2D): void;
+  abstract _hitMapRender(ctx: CanvasRenderingContext2D): void;
+
   abstract toJSON(): string;
   abstract fromJSON(json: string): CNode;
   abstract clone(): CNode;
@@ -106,45 +204,6 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   // abstract toJPEG(quality?: number): string;
   // abstract toSVG(): string;
   // abstract toBlob(): Blob;
-  protected debugRender(ctx: CanvasRenderingContext2D): void {
-    if (!this.debug) return;
-    ctx.save();
-    ctx.strokeStyle = "red";
-    ctx.fillStyle = "red";
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
-
-    const gap = this.width / 2;
-    const yGap = this.height / 3;
-    const fontSize = 16;
-    ctx.font = `${fontSize}px Arial`;
-    ctx.fillText(this.id, this.x + this.width + gap, this.y);
-    ctx.fillText(
-      `x: ${this.x.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap
-    );
-    ctx.fillText(
-      `y: ${this.y.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap * 2
-    );
-    ctx.fillText(
-      `w: ${this.width.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap * 3
-    );
-    ctx.fillText(
-      `h: ${this.height.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap * 4
-    );
-    ctx.fillText(
-      `rotate: ${this.rotate.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap * 5
-    );
-    ctx.restore();
-  }
 
   /**
    * Shape : calculate bounds with vertices

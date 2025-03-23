@@ -30,10 +30,10 @@ export class TransformHelper {
       const dy = e.pointerState.y! - e.pointerState.downY!;
 
       if (axis.includes("x")) {
-        node.x = startX! + app.resolveScaleV(dx);
+        node.x = startX! + dx; // TODO: resolve scale,rotate
       }
       if (axis.includes("y")) {
-        node.y = startY! + app.resolveScaleV(dy);
+        node.y = startY! + dy; // TODO: resolve scale,rotate
       }
     });
 
@@ -50,13 +50,13 @@ export class TransformHelper {
       axis,
     }: {
       axis: TAxis;
-    },
+    }
   ) {
     let startPanX: number;
     let startPanY: number;
     const offDown = app.on("pointerdown", (e) => {
-      startPanX = app.panX;
-      startPanY = app.panY;
+      startPanX = app.stage.x;
+      startPanY = app.stage.y;
       document.body.style.cursor = "grabbing";
     });
     const offMove = app.on("pointermove", (e) => {
@@ -66,17 +66,17 @@ export class TransformHelper {
       if (downTime && TransformHelper.draggingNode.size === 0) {
         if (axis.includes("x")) {
           const dx = x - downX!;
-          app.panX = startPanX + app.resolveScaleV(dx);
+          app.stage.x = startPanX + dx; // TODO: resolve scale,rotate
         }
         if (axis.includes("y")) {
           const dy = y - downY!;
-          app.panY = startPanY + app.resolveScaleV(dy);
+          app.stage.y = startPanY + dy; // TODO: resolve scale,rotate
         }
       }
     });
     const offUp = app.on("pointerup", () => {
-      startPanX = app.panX;
-      startPanY = app.panY;
+      startPanX = app.stage.x;
+      startPanY = app.stage.y;
       document.body.style.cursor = "grab";
     });
 

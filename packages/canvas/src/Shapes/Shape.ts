@@ -78,76 +78,8 @@ export abstract class Shape extends CNode implements IShape {
     };
   }
 
-  abstract drawPath(ctx: CanvasRenderingContext2D): void;
-
-  override render(ctx: CanvasRenderingContext2D): void {
-    if (!this.visible) return;
-    this.renderRoutine(ctx, () => {
-      this.drawPath(ctx);
-      this.debugRender(ctx);
-    });
-  }
-
-  override hitMapRender(ctx: CanvasRenderingContext2D): void {
-    if (!this.visible && !this.isStatic) return;
-    this.hitRenderRoutine(ctx, () => {
-      this.drawPath(ctx);
-    });
-  }
-
-  protected renderRoutine(
-    ctx: CanvasRenderingContext2D,
-    renderCallback: () => void
-  ): void {
-    ctx.save();
-    if (this.opacity !== undefined && this.opacity > 0) {
-      ctx.globalAlpha = this.opacity;
-    }
-    if (this.shadowColor !== undefined) {
-      ctx.shadowColor = this.shadowColor;
-    }
-    if (this.shadowBlur !== undefined) {
-      ctx.shadowBlur = this.shadowBlur;
-    }
-    if (this.shadowOffsetX !== undefined) {
-      ctx.shadowOffsetX = this.shadowOffsetX;
-    }
-    if (this.shadowOffsetY !== undefined) {
-      ctx.shadowOffsetY = this.shadowOffsetY;
-    }
-    if (this.lineDash !== undefined) {
-      ctx.setLineDash(this.lineDash);
-    }
-    if (this.lineDashOffset !== undefined) {
-      ctx.lineDashOffset = this.lineDashOffset;
-    }
-    if (this.fillStyle !== undefined) {
-      ctx.fillStyle = this.fillStyle;
-    }
-    if (this.strokeStyle !== undefined) {
-      ctx.strokeStyle = this.strokeStyle;
-    }
-    if (this.strokeWidth !== undefined) {
-      ctx.lineWidth = this.strokeWidth;
-    }
-    renderCallback();
-    ctx.restore();
-  }
-
-  protected hitRenderRoutine(
-    ctx: CanvasRenderingContext2D,
-    renderCallback: () => void
-  ): void {
-    ctx.save();
-    if (this.fillStyle !== undefined) {
-      ctx.fillStyle = this.fillStyle;
-    }
-    if (this.strokeStyle !== undefined) {
-      ctx.strokeStyle = this.strokeStyle;
-    }
-    renderCallback();
-    ctx.restore();
-  }
+  abstract _render(ctx: CanvasRenderingContext2D): void;
+  abstract _hitMapRender(ctx: CanvasRenderingContext2D): void;
 
   override toJSON(): string {
     throw new Error("Method not implemented.");

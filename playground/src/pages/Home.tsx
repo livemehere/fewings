@@ -24,22 +24,20 @@ const Home = () => {
 
     const listeners: (() => void)[] = [];
 
-    const group = new Group({
-      showBounds: true,
-    });
+    const group = new Group({ debug: true });
     app.stage.addChild(group);
-    listeners.push(TransformHelper.draggable(app, group, "xy"));
+    // listeners.push(TransformHelper.draggable(app, group, "xy"));
 
-    const n = 3;
+    const n = 2;
     for (let i = 0; i < n; i++) {
       const rect = new Rect({
         x: 100 + i * 100,
         y: 100 + i * 100,
         width: 100,
         height: 100,
-        fillStyle: "red",
-        strokeStyle: "blue",
-        strokeWidth: 10,
+        // fillStyle: "red",
+        // strokeStyle: "blue",
+        // strokeWidth: 10,
         // opacity: 0.5,
         // shadowColor: "black",
         // shadowBlur: 10,
@@ -52,121 +50,116 @@ const Home = () => {
         // rotate: MathHelper.degToRad(45),
       });
       group.addChild(rect);
-      listeners.push(
-        rect.on("pointerenter", (e) => {
-          e.target.fillStyle = "green";
-        }),
-      );
-      listeners.push(
-        rect.on("pointerleave", (e) => {
-          e.target.fillStyle = "red";
-        }),
-      );
+      // listeners.push(
+      //   rect.on("pointerenter", (e) => {
+      //     e.target.fillStyle = "green";
+      //   })
+      // );
+      // listeners.push(
+      //   rect.on("pointerleave", (e) => {
+      //     e.target.fillStyle = "black";
+      //   })
+      // );
 
-      listeners.push(TransformHelper.draggable(app, rect, "xy"));
+      // listeners.push(TransformHelper.draggable(app, rect, "xy"));
     }
 
-    group.updatePivot("center");
+    // let panOff: (() => void) | null = null;
+    // const downHandler = (e: KeyboardEvent) => {
+    //   if (e.key === "r") {
+    //     group.rotate += 0.1;
+    //   }
 
-    let panOff: (() => void) | null = null;
-    const downHandler = (e: KeyboardEvent) => {
-      if (e.key === "r") {
-        group.rotate += 0.1;
-      }
-      if (e.key === "e") {
-        group.renderBounds = !group.renderBounds;
-      }
+    //   if (e.key === " " && !panOff) {
+    //     document.body.style.cursor = "grab";
+    //     panOff = TransformHelper.enablePanning(app, { axis: "xy" });
+    //   }
+    // };
 
-      if (e.key === " " && !panOff) {
-        document.body.style.cursor = "grab";
-        panOff = TransformHelper.enablePanning(app, { axis: "xy" });
-      }
-    };
+    // const upHandler = (e: KeyboardEvent) => {
+    //   if (e.key === " ") {
+    //     if (panOff) {
+    //       panOff();
+    //       panOff = null;
+    //       document.body.style.cursor = "default";
+    //     }
+    //   }
+    // };
+    // window.addEventListener("keydown", downHandler);
+    // window.addEventListener("keyup", upHandler);
 
-    const upHandler = (e: KeyboardEvent) => {
-      if (e.key === " ") {
-        if (panOff) {
-          panOff();
-          panOff = null;
-          document.body.style.cursor = "default";
-        }
-      }
-    };
-    window.addEventListener("keydown", downHandler);
-    window.addEventListener("keyup", upHandler);
+    // app.on("pointerdown", (e) => {
+    //   const downX = e.pointerState.downX;
+    //   console.log(downX, app.toAbsX(downX));
+    // });
 
-    app.on("pointerdown", (e) => {
-      const downX = e.pointerState.downX;
-      console.log(downX, app.toAbsX(downX));
-    });
-
-    // app.render();
     app.startLoop();
 
-    const grid = new CustomShape({
-      x: 0,
-      y: 0,
-      width: app.canvas.width,
-      height: app.canvas.height,
-      strokeStyle: "rgba(0, 0, 0, 0.3)",
-      drawPath: function (ctx) {
-        const gap = 100;
-        const rulerSize = 30;
+    // const grid = new CustomShape({
+    //   x: 0,
+    //   y: 0,
+    //   width: app.canvas.width,
+    //   height: app.canvas.height,
+    //   strokeStyle: "rgba(0, 0, 0, 0.3)",
+    //   render: function (ctx) {
+    //     const gap = 100;
+    //     const rulerSize = 30;
 
-        const startX = app.panX % gap;
-        const startY = app.panY % gap;
-        const totalW = app.canvas.width;
-        const totalH = app.canvas.height;
+    //     const startX = app.panX % gap;
+    //     const startY = app.panY % gap;
+    //     const totalW = app.canvas.width;
+    //     const totalH = app.canvas.height;
 
-        const offsetX = Math.floor(app.panX / gap);
-        const offsetY = Math.floor(app.panY / gap);
+    //     const offsetX = Math.floor(app.panX / gap);
+    //     const offsetY = Math.floor(app.panY / gap);
 
-        ctx.save();
-        app.resetTransform(ctx);
+    //     ctx.save();
+    //     app.resetTransform(ctx);
 
-        /** ruler indicator */
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(0, 0, totalW, rulerSize);
-        ctx.rect(0, 0, rulerSize, totalH);
-        ctx.fillStyle = "black";
-        ctx.fill();
+    //     /** ruler indicator */
+    //     ctx.save();
+    //     ctx.beginPath();
+    //     ctx.rect(0, 0, totalW, rulerSize);
+    //     ctx.rect(0, 0, rulerSize, totalH);
+    //     ctx.fillStyle = "black";
+    //     ctx.fill();
 
-        ctx.font = "20px Arial";
-        ctx.fillStyle = "red";
-        for (let i = 0; i < totalW; i += 1) {
-          const x = startX + i * gap;
-          const y = rulerSize / 1.5;
-          const v = (i - offsetX) * gap;
-          ctx.fillText(v.toString(), x, y);
-        }
-        for (let i = 0; i < totalH; i += 1) {
-          const x = rulerSize / 1.5;
-          const y = startY + i * gap;
-          const v = i - offsetY;
-          ctx.save();
-          ctx.translate(x, y);
-          ctx.rotate(-Math.PI / 2);
-          ctx.fillText(v.toString(), 0, 0);
-          ctx.restore();
-        }
-        ctx.restore();
+    //     ctx.font = "20px Arial";
+    //     ctx.fillStyle = "red";
+    //     for (let i = 0; i < totalW; i += 1) {
+    //       const x = startX + i * gap;
+    //       const y = rulerSize / 1.5;
+    //       const v = (i - offsetX) * gap;
+    //       ctx.fillText(v.toString(), x, y);
+    //     }
+    //     for (let i = 0; i < totalH; i += 1) {
+    //       const x = rulerSize / 1.5;
+    //       const y = startY + i * gap;
+    //       const v = i - offsetY;
+    //       ctx.save();
+    //       ctx.translate(x, y);
+    //       ctx.rotate(-Math.PI / 2);
+    //       ctx.fillText(v.toString(), 0, 0);
+    //       ctx.restore();
+    //     }
+    //     ctx.restore();
 
-        ctx.scale(app.scale, app.scale);
-        for (let i = 0; i < totalW; i += gap) {
-          ctx.moveTo(i + startX, 0);
-          ctx.lineTo(i + startX, totalH);
-        }
-        for (let i = 0; i < totalH; i += gap) {
-          ctx.moveTo(0, i + startY);
-          ctx.lineTo(totalW, i + startY);
-        }
-        ctx.stroke();
+    //     ctx.scale(app.scale, app.scale);
+    //     for (let i = 0; i < totalW; i += gap) {
+    //       ctx.moveTo(i + startX, 0);
+    //       ctx.lineTo(i + startX, totalH);
+    //     }
+    //     for (let i = 0; i < totalH; i += gap) {
+    //       ctx.moveTo(0, i + startY);
+    //       ctx.lineTo(totalW, i + startY);
+    //     }
+    //     ctx.stroke();
 
-        ctx.restore();
-      },
-    });
-    app.stage.addChild(grid);
+    //     ctx.restore();
+    //   },
+    //   hitMapRender(ctx) {},
+    // });
+    // app.stage.addChild(grid);
     // const rect2 = new Rect({
     //   x: 600,
     //   y: 300,
@@ -226,16 +219,17 @@ const Home = () => {
     //   // group.setRotate(center, MathHelper.degToRad(angle));
     // });
 
-    const wheelHandler = (e: WheelEvent) => {
-      app.scale += -e.deltaY / 1000;
-    };
-    app.canvas.addEventListener("wheel", wheelHandler);
+    // const wheelHandler = (e: WheelEvent) => {
+    //   app.scale += -e.deltaY / 1000;
+    // };
+    // app.canvas.addEventListener("wheel", wheelHandler);
 
     return () => {
-      listeners.forEach((l) => l());
-      window.removeEventListener("keydown", downHandler);
-      window.removeEventListener("keyup", upHandler);
-      app.canvas.removeEventListener("wheel", wheelHandler);
+      // listeners.forEach((l) => l());
+      // window.removeEventListener("keydown", downHandler);
+      // window.removeEventListener("keyup", upHandler);
+      // app.canvas.removeEventListener("wheel", wheelHandler);
+      app.clearLoops();
     };
   }, []);
   return (

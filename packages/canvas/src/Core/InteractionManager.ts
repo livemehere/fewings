@@ -56,7 +56,6 @@ export class InteractionManager {
         document.body.appendChild(this.hitCanvas);
       }
     }
-    this.resize();
     this.pointerState = {
       downX: null,
       downY: null,
@@ -70,11 +69,21 @@ export class InteractionManager {
     this.app.canvas.addEventListener("pointerup", this.handlePointerUp);
   }
 
+  debugLog(...args: any[]) {
+    if (!this.debug) return;
+    console.debug(...args);
+  }
+
   resize() {
     this.hitCanvas.width = this.app.width * this.app.dpr;
     this.hitCanvas.height = this.app.height * this.app.dpr;
     this.hitCanvas.style.width = `${this.app.width / 2}px`;
     this.hitCanvas.style.height = `${this.app.height / 2}px`;
+    this.debugLog(
+      "[InteractionManager] resize",
+      this.hitCanvas.width,
+      this.hitCanvas.height
+    );
   }
 
   renderPointer() {

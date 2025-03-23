@@ -1,4 +1,4 @@
-import { TNodeProps } from "../Core/CNode";
+import { CNode, TNodeProps } from "../Core/CNode";
 import { Bounds, IPoint, ModelTypeMap, TModelType } from "../types";
 import { Container } from "./Container";
 
@@ -70,25 +70,44 @@ export class Frame extends Container {
   }
 
   // TODO: implement render bound and clipping
-  render(ctx: CanvasRenderingContext2D): void {
+  _render(ctx: CanvasRenderingContext2D): void {
     if (!this.visible) return;
+    ctx.beginPath();
+    const bounds = this.getBounds();
+    ctx.rect(
+      bounds.left,
+      bounds.top,
+      bounds.right - bounds.left,
+      bounds.bottom - bounds.top
+    );
+    ctx.closePath();
     this.children.forEach((child) => {
-      child.render(ctx);
+      child._render(ctx);
     });
   }
 
-  hitMapRender(ctx: CanvasRenderingContext2D): void {
-    if (!this.visible && !this.isStatic) return;
-    this.children.forEach((child) => {
-      child.hitMapRender(ctx);
-    });
+  _hitMapRender(ctx: CanvasRenderingContext2D): void {
+    ctx.beginPath();
+    const bounds = this.getBounds();
+    ctx.rect(
+      bounds.left,
+      bounds.top,
+      bounds.right - bounds.left,
+      bounds.bottom - bounds.top
+    );
+    ctx.closePath();
   }
 
-  protected debugRender(ctx: CanvasRenderingContext2D): void {
-    ctx.save();
-    ctx.translate(this._x, this._y);
-    ctx.rotate(this._rotate);
-    ctx.fillRect(0, 0, this._width, this._height);
-    ctx.restore();
+  toJSON(): string {
+    throw new Error("Method not implemented.");
+  }
+  fromJSON(json: string): CNode {
+    throw new Error("Method not implemented.");
+  }
+  clone(): CNode {
+    throw new Error("Method not implemented.");
+  }
+  getGlobalBounds(): Bounds {
+    throw new Error("Method not implemented.");
   }
 }

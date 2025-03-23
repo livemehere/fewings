@@ -34,7 +34,21 @@ export class Ellipse extends Shape {
   }
 
   // FIXME: implement drawPath with vertices with bezier curve
-  drawPath(ctx: CanvasRenderingContext2D) {
+  _render(ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.ellipse(
+      this.x + this.width / 2,
+      this.y + this.height / 2,
+      this.width / 2,
+      this.height / 2,
+      0,
+      0,
+      Math.PI * 2
+    );
+    ctx.closePath();
+  }
+
+  _hitMapRender(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.ellipse(
       this.x + this.width / 2,

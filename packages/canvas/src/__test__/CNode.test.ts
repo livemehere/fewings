@@ -40,15 +40,13 @@ class SampleNode extends CNode {
     throw new Error("Method not implemented.");
   }
 
-  render(ctx: CanvasRenderingContext2D): void {
+  _render(ctx: CanvasRenderingContext2D): void {
     throw new Error("Method not implemented.");
   }
-  hitMapRender(ctx: CanvasRenderingContext2D): void {
+  _hitMapRender(ctx: CanvasRenderingContext2D): void {
     throw new Error("Method not implemented.");
   }
-  protected debugRender(ctx: CanvasRenderingContext2D): void {
-    throw new Error("Method not implemented.");
-  }
+
   getBounds(): Bounds {
     throw new Error("Method not implemented.");
   }
