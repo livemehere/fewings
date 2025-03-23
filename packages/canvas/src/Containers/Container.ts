@@ -1,13 +1,19 @@
 import { CNode, TNodeProps } from "../Core/CNode";
 
+export type TContainerProps = TNodeProps & {
+  scale?: number;
+};
+
 export abstract class Container extends CNode {
   /**
    * @description order of array is the order of drawing. last element is on top.
    */
   children: CNode[] = [];
+  scale: number;
 
-  constructor(props?: TNodeProps) {
+  constructor(props?: TContainerProps) {
     super(props);
+    this.scale = props?.scale ?? 1;
   }
 
   protected renderChildren(ctx: CanvasRenderingContext2D): void {

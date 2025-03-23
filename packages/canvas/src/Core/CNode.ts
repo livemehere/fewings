@@ -95,6 +95,26 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   abstract set width(v: number);
   abstract set height(v: number);
 
+  resolveTransform(dx: number, dy: number, appScale: number) {
+    let parent: Container | null = this.parent;
+    let _dx = dx / appScale;
+    let _dy = dy / appScale;
+    while (parent) {
+      _dx /= parent.scale;
+      _dy /= parent.scale;
+
+      const r = parent.rotate;
+      const cos = Math.cos(-r);
+      const sin = Math.sin(-r);
+      const rx = _dx * cos - _dy * sin;
+      const ry = _dx * sin + _dy * cos;
+      _dx = rx;
+      _dy = ry;
+      parent = parent.parent;
+    }
+    return { x: _dx, y: _dy };
+  }
+
   /** methods */
   render(ctx: CanvasRenderingContext2D): void {
     if (!this.visible) return;

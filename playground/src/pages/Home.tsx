@@ -25,9 +25,10 @@ const Home = () => {
 
     const listeners: (() => void)[] = [];
 
-    const group = new Group({ debug: true });
+    const group = new Group({ debug: true, rotate: MathHelper.degToRad(45) });
+
     app.stage.addChild(group);
-    // listeners.push(TransformHelper.draggable(app, group, "xy"));
+    listeners.push(TransformHelper.draggable(app, group, "xy"));
 
     const n = 5;
     for (let i = 0; i < n; i++) {
@@ -65,34 +66,34 @@ const Home = () => {
       listeners.push(TransformHelper.draggable(app, rect, "xy"));
     }
 
-    // let panOff: (() => void) | null = null;
-    // const downHandler = (e: KeyboardEvent) => {
-    //   if (e.key === "r") {
-    //     group.rotate += 0.1;
-    //   }
+    let panOff: (() => void) | null = null;
+    const downHandler = (e: KeyboardEvent) => {
+      if (e.key === "r") {
+        group.rotate += 0.1;
+      }
 
-    //   if (e.key === " " && !panOff) {
-    //     document.body.style.cursor = "grab";
-    //     panOff = TransformHelper.enablePanning(app, { axis: "xy" });
-    //   }
-    // };
+      if (e.key === " " && !panOff) {
+        document.body.style.cursor = "grab";
+        panOff = TransformHelper.enablePanning(app, { axis: "xy" });
+      }
+    };
 
-    // const upHandler = (e: KeyboardEvent) => {
-    //   if (e.key === " ") {
-    //     if (panOff) {
-    //       panOff();
-    //       panOff = null;
-    //       document.body.style.cursor = "default";
-    //     }
-    //   }
-    // };
-    // window.addEventListener("keydown", downHandler);
-    // window.addEventListener("keyup", upHandler);
+    const upHandler = (e: KeyboardEvent) => {
+      if (e.key === " ") {
+        if (panOff) {
+          panOff();
+          panOff = null;
+          document.body.style.cursor = "default";
+        }
+      }
+    };
+    window.addEventListener("keydown", downHandler);
+    window.addEventListener("keyup", upHandler);
 
-    // app.on("pointerdown", (e) => {
-    //   const downX = e.pointerState.downX;
-    //   console.log(downX, app.toAbsX(downX));
-    // });
+    app.on("pointerdown", (e) => {
+      // const downX = e.pointerState.downX;
+      // console.log(downX, app.toAbsX(downX));
+    });
 
     app.startLoop();
 
@@ -216,23 +217,23 @@ const Home = () => {
 
     // let angle = 0;
     const off = app.addLoop((app, deltaTime) => {
-      group.rotate += 0.01;
-      group.traverse((n) => {
-        n.rotate -= 0.01;
-      });
+      // group.rotate += 0.01;
+      // group.traverse((n) => {
+      //   n.rotate -= 0.01;
+      // });
       // group.setRotate(center, MathHelper.degToRad(angle));
     });
 
-    // const wheelHandler = (e: WheelEvent) => {
-    //   app.scale += -e.deltaY / 1000;
-    // };
-    // app.canvas.addEventListener("wheel", wheelHandler);
+    const wheelHandler = (e: WheelEvent) => {
+      app.stage.scale += -e.deltaY / 1000;
+    };
+    app.canvas.addEventListener("wheel", wheelHandler);
 
     return () => {
       listeners.forEach((l) => l());
-      // window.removeEventListener("keydown", downHandler);
-      // window.removeEventListener("keyup", upHandler);
-      // app.canvas.removeEventListener("wheel", wheelHandler);
+      window.removeEventListener("keydown", downHandler);
+      window.removeEventListener("keyup", upHandler);
+      app.canvas.removeEventListener("wheel", wheelHandler);
       app.clearLoops();
       off();
     };

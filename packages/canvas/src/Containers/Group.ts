@@ -1,18 +1,12 @@
-import { CNode, TNodeProps } from "../Core/CNode";
+import { CNode } from "../Core/CNode";
 import { Bounds, ModelTypeMap, TModelType } from "../types";
-import { Container } from "./Container";
-
-export type TGroupProps = TNodeProps & {
-  scale?: number;
-};
+import { Container, TContainerProps } from "./Container";
 
 export class Group extends Container {
   readonly type: TModelType = ModelTypeMap.GROUP;
-  scale: number;
 
-  constructor(props?: TGroupProps) {
+  constructor(props?: TContainerProps) {
     super(props);
-    this.scale = props?.scale ?? 1;
   }
 
   override get x(): number {
