@@ -1,11 +1,12 @@
-import { CNode, ICNodeProps } from "../Core/CNode";
+import { CNode, TNodeProps } from "../Core/CNode";
+
 export abstract class Container extends CNode {
   /**
    * @description order of array is the order of drawing. last element is on top.
    */
   children: CNode[] = [];
 
-  constructor(props?: ICNodeProps) {
+  constructor(props?: TNodeProps) {
     super(props);
   }
 

@@ -11,18 +11,18 @@ import {
   TStrokeStyle,
 } from "../types";
 import { Container } from "../Containers/Container";
-import { IPointerEvent } from "./InteractionManager";
+import { TPointerEvent } from "./InteractionManager";
 
 export type ICNodeEvents = {
-  pointerdown: (e: IPointerEvent) => void;
-  pointermove: (e: IPointerEvent) => void;
-  pointerup: (e: IPointerEvent) => void;
-  pointerenter: (e: IPointerEvent) => void;
-  pointerleave: (e: IPointerEvent) => void;
+  pointerdown: (e: TPointerEvent) => void;
+  pointermove: (e: TPointerEvent) => void;
+  pointerup: (e: TPointerEvent) => void;
+  pointerenter: (e: TPointerEvent) => void;
+  pointerleave: (e: TPointerEvent) => void;
   redraw: () => void;
 };
 
-export type ICNodeProps = IDrawAttrs &
+export type TNodeProps = IDrawAttrs &
   Partial<Omit<ICNode, "id" | "type" | "tags">> & {
     tags?: string[];
   };
@@ -56,7 +56,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   lineDashOffset?: number;
   round?: number[];
 
-  constructor(props: ICNodeProps = {}) {
+  constructor(props: TNodeProps = {}) {
     super();
     CNode.totalNodes++;
     CNode.idSeq += 10;
@@ -98,7 +98,6 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   /** methods */
   abstract render(ctx: CanvasRenderingContext2D): void;
   abstract hitMapRender(ctx: CanvasRenderingContext2D): void;
-  protected abstract debugRender(ctx: CanvasRenderingContext2D): void;
   abstract toJSON(): string;
   abstract fromJSON(json: string): CNode;
   abstract clone(): CNode;
@@ -107,6 +106,45 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   // abstract toJPEG(quality?: number): string;
   // abstract toSVG(): string;
   // abstract toBlob(): Blob;
+  protected debugRender(ctx: CanvasRenderingContext2D): void {
+    if (!this.debug) return;
+    ctx.save();
+    ctx.strokeStyle = "red";
+    ctx.fillStyle = "red";
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
+
+    const gap = this.width / 2;
+    const yGap = this.height / 3;
+    const fontSize = 16;
+    ctx.font = `${fontSize}px Arial`;
+    ctx.fillText(this.id, this.x + this.width + gap, this.y);
+    ctx.fillText(
+      `x: ${this.x.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap
+    );
+    ctx.fillText(
+      `y: ${this.y.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap * 2
+    );
+    ctx.fillText(
+      `w: ${this.width.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap * 3
+    );
+    ctx.fillText(
+      `h: ${this.height.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap * 4
+    );
+    ctx.fillText(
+      `rotate: ${this.rotate.toFixed(2)}`,
+      this.x + this.width + gap,
+      this.y + yGap * 5
+    );
+    ctx.restore();
+  }
 
   /**
    * Shape : calculate bounds with vertices
@@ -134,8 +172,8 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     super.dispatch(event, ...payload);
     if (this.parent) {
       if (event === "pointerdown") {
-        const pointerEvent = payload[0] as IPointerEvent;
-        const bubbledEvent: IPointerEvent = {
+        const pointerEvent = payload[0] as TPointerEvent;
+        const bubbledEvent: TPointerEvent = {
           ...pointerEvent,
           currentTarget: this.parent,
           target: this,

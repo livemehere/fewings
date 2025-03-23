@@ -1,24 +1,24 @@
-import { InteractionManager, IPointerEvent } from "./InteractionManager";
+import { InteractionManager, TPointerEvent } from "./InteractionManager";
 import { Group } from "../Containers/Group";
 import { Emitter } from "@fewings/core/classes/Emitter";
 
 type Loop = (deltaTime: number) => void;
 
-type IAppEvents = {
-  pointermove: (e: Omit<IPointerEvent, "target" | "currentTarget">) => void;
-  pointerup: (e: Omit<IPointerEvent, "target" | "currentTarget">) => void;
-  pointerdown: (e: Omit<IPointerEvent, "target" | "currentTarget">) => void;
+type TAppEvents = {
+  pointermove: (e: Omit<TPointerEvent, "target" | "currentTarget">) => void;
+  pointerup: (e: Omit<TPointerEvent, "target" | "currentTarget">) => void;
+  pointerdown: (e: Omit<TPointerEvent, "target" | "currentTarget">) => void;
 };
 
-interface IAppProps {
+export type TAppProps = {
   canvas: HTMLCanvasElement;
   width: number;
   height: number;
   fps?: number;
   debug?: boolean;
-}
+};
 
-export class App extends Emitter<IAppEvents> {
+export class App extends Emitter<TAppEvents> {
   readonly stage: Group;
   readonly canvas: HTMLCanvasElement;
   readonly ctx: CanvasRenderingContext2D;
@@ -45,7 +45,7 @@ export class App extends Emitter<IAppEvents> {
   private rafId: number | null;
   private readonly loops: Set<Loop>;
 
-  constructor(props: IAppProps) {
+  constructor(props: TAppProps) {
     super();
     this.canvas = props.canvas;
     this.ctx = this.canvas.getContext("2d", {
@@ -109,7 +109,7 @@ export class App extends Emitter<IAppEvents> {
 
   private appRenderRoutine(
     ctx: CanvasRenderingContext2D,
-    callback: () => void,
+    callback: () => void
   ) {
     ctx.save();
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

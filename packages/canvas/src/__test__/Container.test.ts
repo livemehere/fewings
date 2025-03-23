@@ -1,11 +1,11 @@
 import { Container } from "../Containers/Container";
-import { CNode, ICNodeProps } from "../Core/CNode";
+import { CNode, TNodeProps } from "../Core/CNode";
 import { Rect } from "../Shapes/Rect";
 import { TModelType, Bounds, ModelTypeMap } from "../types";
 
 class SampleContainer extends Container {
   readonly type: TModelType = ModelTypeMap.CONTAINER;
-  constructor(props?: ICNodeProps) {
+  constructor(props?: TNodeProps) {
     super(props);
   }
   get x(): number {

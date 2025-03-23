@@ -1,10 +1,10 @@
-import { Shape, IShapeProps } from "./Shape";
+import { Shape, TShapeProps } from "./Shape";
 import { IPoint, ModelTypeMap, TModelType } from "../types";
 
 export class Rect extends Shape {
   readonly type: TModelType = ModelTypeMap.RECT;
 
-  constructor(props: IShapeProps) {
+  constructor(props: TShapeProps) {
     super(props);
   }
 
@@ -12,7 +12,7 @@ export class Rect extends Shape {
     x: number,
     y: number,
     width: number,
-    height: number,
+    height: number
   ): IPoint[] {
     return [
       { x: x, y: y },

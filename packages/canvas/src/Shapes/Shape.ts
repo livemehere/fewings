@@ -1,20 +1,14 @@
 import { Bounds, IBox, IPoint, IShape } from "../types";
-import { CNode, ICNodeProps } from "../Core/CNode";
-import { MathHelper } from "../Helpers/MathHelper";
+import { CNode, TNodeProps } from "../Core/CNode";
 
-export type IShapeProps = ICNodeProps & IPoint & IBox;
+export type TShapeProps = TNodeProps & IPoint & IBox;
 
 export abstract class Shape extends CNode implements IShape {
   vertices: IPoint[];
 
-  constructor(props: IShapeProps) {
+  constructor({ x, y, width, height, ...props }: TShapeProps) {
     super(props);
-    this.vertices = this.createVertices(
-      props.x,
-      props.y,
-      props.width,
-      props.height
-    );
+    this.vertices = this.createVertices(x, y, width, height);
   }
 
   abstract createVertices(
@@ -86,55 +80,16 @@ export abstract class Shape extends CNode implements IShape {
 
   abstract drawPath(ctx: CanvasRenderingContext2D): void;
 
-  protected debugRender(ctx: CanvasRenderingContext2D): void {
-    ctx.save();
-    ctx.strokeStyle = "red";
-    ctx.fillStyle = "red";
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
-
-    const gap = this.width / 2;
-    const yGap = this.height / 3;
-    const fontSize = this.height / 3;
-    ctx.font = `${fontSize}px Arial`;
-    ctx.fillText(this.id, this.x + this.width + gap, this.y);
-    ctx.fillText(
-      `x: ${this.x.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap
-    );
-    ctx.fillText(
-      `y: ${this.y.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap * 2
-    );
-    ctx.fillText(
-      `w: ${this.width.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap * 3
-    );
-    ctx.fillText(
-      `h: ${this.height.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap * 4
-    );
-    ctx.fillText(
-      `rotate: ${this.rotate.toFixed(2)}`,
-      this.x + this.width + gap,
-      this.y + yGap * 5
-    );
-    ctx.restore();
-  }
-
   override render(ctx: CanvasRenderingContext2D): void {
+    if (!this.visible) return;
     this.renderRoutine(ctx, () => {
       this.drawPath(ctx);
-    });
-    if (this.debug) {
       this.debugRender(ctx);
-    }
+    });
   }
 
   override hitMapRender(ctx: CanvasRenderingContext2D): void {
+    if (!this.visible && !this.isStatic) return;
     this.hitRenderRoutine(ctx, () => {
       this.drawPath(ctx);
     });
@@ -145,37 +100,37 @@ export abstract class Shape extends CNode implements IShape {
     renderCallback: () => void
   ): void {
     ctx.save();
-    // Apply opacity
-    if (this.opacity !== undefined) {
+    if (this.opacity !== undefined && this.opacity > 0) {
       ctx.globalAlpha = this.opacity;
     }
-
-    // Apply shadows
-    if (this.shadowColor) {
+    if (this.shadowColor !== undefined) {
       ctx.shadowColor = this.shadowColor;
-      ctx.shadowBlur = this.shadowBlur || 0;
-      ctx.shadowOffsetX = this.shadowOffsetX || 0;
-      ctx.shadowOffsetY = this.shadowOffsetY || 0;
     }
-
-    ctx.lineDashOffset = this.lineDashOffset || 0;
-    ctx.setLineDash(this.lineDash);
-
-    // Handle fill
-    if (this.fillStyle) {
+    if (this.shadowBlur !== undefined) {
+      ctx.shadowBlur = this.shadowBlur;
+    }
+    if (this.shadowOffsetX !== undefined) {
+      ctx.shadowOffsetX = this.shadowOffsetX;
+    }
+    if (this.shadowOffsetY !== undefined) {
+      ctx.shadowOffsetY = this.shadowOffsetY;
+    }
+    if (this.lineDash !== undefined) {
+      ctx.setLineDash(this.lineDash);
+    }
+    if (this.lineDashOffset !== undefined) {
+      ctx.lineDashOffset = this.lineDashOffset;
+    }
+    if (this.fillStyle !== undefined) {
       ctx.fillStyle = this.fillStyle;
     }
-
-    // Handle stroke
-    if (this.strokeStyle) {
+    if (this.strokeStyle !== undefined) {
       ctx.strokeStyle = this.strokeStyle;
-      if (this.strokeWidth !== undefined) {
-        ctx.lineWidth = this.strokeWidth;
-      }
     }
-
+    if (this.strokeWidth !== undefined) {
+      ctx.lineWidth = this.strokeWidth;
+    }
     renderCallback();
-
     ctx.restore();
   }
 
@@ -184,9 +139,26 @@ export abstract class Shape extends CNode implements IShape {
     renderCallback: () => void
   ): void {
     ctx.save();
-    ctx.fillStyle = this.id;
-    ctx.strokeStyle = this.id;
+    if (this.fillStyle !== undefined) {
+      ctx.fillStyle = this.fillStyle;
+    }
+    if (this.strokeStyle !== undefined) {
+      ctx.strokeStyle = this.strokeStyle;
+    }
     renderCallback();
     ctx.restore();
+  }
+
+  override toJSON(): string {
+    throw new Error("Method not implemented.");
+  }
+  override fromJSON(json: string): CNode {
+    throw new Error("Method not implemented.");
+  }
+  override clone(): CNode {
+    throw new Error("Method not implemented.");
+  }
+  override getGlobalBounds(): Bounds {
+    throw new Error("Method not implemented.");
   }
 }

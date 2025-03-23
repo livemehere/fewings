@@ -1,9 +1,9 @@
-import { CNode, ICNodeProps } from "../Core/CNode";
+import { CNode, TNodeProps } from "../Core/CNode";
 import { Bounds, ModelTypeMap, TModelType } from "../types";
 
 class SampleNode extends CNode {
   readonly type: TModelType = ModelTypeMap.PRIMITIVE;
-  constructor(props?: ICNodeProps) {
+  constructor(props?: TNodeProps) {
     super(props);
   }
   toJSON(): string {

@@ -1,11 +1,11 @@
-import { ICNodeProps } from "../Core/CNode";
+import { TNodeProps } from "../Core/CNode";
 import { Bounds, IPoint, ModelTypeMap, TModelType } from "../types";
 import { Container } from "./Container";
 
-export interface IFrameProps extends ICNodeProps {
+export type TFrameProps = TNodeProps & {
   overflowClip?: boolean;
   rotate?: number;
-}
+};
 
 export class Frame extends Container {
   readonly type: TModelType = ModelTypeMap.FRAME;
@@ -17,7 +17,7 @@ export class Frame extends Container {
   _height: number;
   _rotate: number;
 
-  constructor(props?: IFrameProps) {
+  constructor(props?: TFrameProps) {
     super({ debug: props?.debug ?? false });
     this.overflowClip = props?.overflowClip ?? true;
     this.rotate = 0;
@@ -71,12 +71,14 @@ export class Frame extends Container {
 
   // TODO: implement render bound and clipping
   render(ctx: CanvasRenderingContext2D): void {
+    if (!this.visible) return;
     this.children.forEach((child) => {
       child.render(ctx);
     });
   }
 
   hitMapRender(ctx: CanvasRenderingContext2D): void {
+    if (!this.visible && !this.isStatic) return;
     this.children.forEach((child) => {
       child.hitMapRender(ctx);
     });

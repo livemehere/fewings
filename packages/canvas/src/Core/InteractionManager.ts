@@ -2,9 +2,9 @@ import { App } from "./App";
 import { CNode, ICNodeEvents } from "./CNode";
 import { rgbToHex } from "../utils";
 
-export type IPointerEvent = {
+export type TPointerEvent = {
   type: keyof ICNodeEvents;
-  pointerState: IPointerState;
+  pointerState: TPointerState;
   /** node that triggered the event */
   target: CNode;
   /** node that is currently being processed */
@@ -15,7 +15,7 @@ export type IPointerEvent = {
   _propagationStopped: boolean;
 };
 
-export type IPointerState = {
+export type TPointerState = {
   downX: number | null;
   downY: number | null;
   downTime: number | null;
@@ -30,7 +30,7 @@ export class InteractionManager {
   readonly hitCtx: CanvasRenderingContext2D;
   debug?: boolean;
 
-  private pointerState: IPointerState;
+  private pointerState: TPointerState;
   private currentHoverNode: CNode | null;
 
   constructor(app: App, options?: { debug?: boolean }) {
@@ -85,7 +85,7 @@ export class InteractionManager {
         this.pointerState.downX,
         this.pointerState.downY,
         10,
-        10,
+        10
       );
     }
     this.hitCtx.restore();
@@ -111,7 +111,7 @@ export class InteractionManager {
         this.pointerState.downX,
         this.pointerState.downY,
         1,
-        1,
+        1
       );
       const hex = rgbToHex(pixel.data[0], pixel.data[1], pixel.data[2]);
       const node = CNode.idMap.get(hex);
@@ -156,7 +156,7 @@ export class InteractionManager {
       this.pointerState.x,
       this.pointerState.y,
       1,
-      1,
+      1
     );
     const hex = rgbToHex(pixel.data[0], pixel.data[1], pixel.data[2]);
     const node = CNode.idMap.get(hex);

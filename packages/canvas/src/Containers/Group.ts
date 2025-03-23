@@ -1,20 +1,14 @@
-import { ICNodeProps } from "../Core/CNode";
+import { CNode, TNodeProps } from "../Core/CNode";
 import { MathHelper } from "../Helpers/MathHelper";
 import { Shape } from "../Shapes/Shape";
 import { Bounds, ModelTypeMap, TModelType } from "../types";
-import { Container } from "./Container";
-
-interface IGroupProps extends ICNodeProps {
-  showBounds?: boolean;
-}
+import { Container, IContainerProps } from "./Container";
 
 export class Group extends Container {
   readonly type: TModelType = ModelTypeMap.GROUP;
 
-  renderBounds: boolean;
-  constructor(props: IGroupProps = { debug: false, showBounds: false }) {
+  constructor(props?: TNodeProps) {
     super(props);
-    this.renderBounds = props?.showBounds ?? false;
   }
 
   override get x(): number {
@@ -149,19 +143,18 @@ export class Group extends Container {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
+    if (!this.visible) return;
     this.children.forEach((shape) => {
       shape.render(ctx);
     });
-    if (this.renderBounds) {
-      this.drawBounds(ctx);
-    }
-
     if (this.debug) {
+      this.drawBounds(ctx);
       this.debugRender(ctx);
     }
   }
 
   hitMapRender(ctx: CanvasRenderingContext2D): void {
+    if (!this.visible && !this.isStatic) return;
     this.hitMapDrawBounds(ctx);
     this.children.forEach((shape) => {
       shape.hitMapRender(ctx);
@@ -202,5 +195,13 @@ export class Group extends Container {
     this.children.forEach((child) => {
       child.y += y;
     });
+  }
+
+  override clone(): Group {
+    throw new Error("Method not implemented.");
+  }
+
+  getGlobalBounds(): Bounds {
+    throw new Error("Method not implemented.");
   }
 }
