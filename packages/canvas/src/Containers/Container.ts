@@ -1,12 +1,23 @@
 import { CNode, ICNodeProps } from "../Core/CNode";
 export abstract class Container extends CNode {
+  /**
+   * @description order of array is the order of drawing. last element is on top.
+   */
   children: CNode[] = [];
 
-  constructor(props: ICNodeProps) {
+  constructor(props?: ICNodeProps) {
     super(props);
   }
 
   addChild(child: CNode): void {
+    if (!(child instanceof CNode)) {
+      throw new Error("Child must be an instance of CNode");
+    }
+
+    if (child.parent) {
+      child.parent.removeChild(child);
+    }
+
     this.children.push(child);
     child.parent = this;
   }
@@ -61,5 +72,21 @@ export abstract class Container extends CNode {
       }
     });
     return result;
+  }
+
+  /**
+   * @description bring the child to the front of the container. last index of the array.
+   */
+  bringToFront(child: CNode): void {
+    this.removeChild(child);
+    this.children.push(child);
+  }
+
+  /**
+   * @description send the child to the back of the container. first index of the array.
+   */
+  sendToBack(child: CNode): void {
+    this.removeChild(child);
+    this.children.unshift(child);
   }
 }

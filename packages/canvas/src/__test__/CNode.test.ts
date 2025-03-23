@@ -132,4 +132,8 @@ describe("CNode", () => {
   it("toString", () => {
     expect(cNode.toString()).toBe(`CNode(${cNode.id})`);
   });
+
+  it.todo("toJSON");
+  it.todo("fromJSON");
+  it.todo("clone");
 });
