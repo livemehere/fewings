@@ -4,18 +4,16 @@ import { Container } from "./Container";
 
 export type TFrameProps = TNodeProps & {
   overflowClip?: boolean;
-  rotate?: number;
 };
 
 export class Frame extends Container {
   readonly type: TModelType = ModelTypeMap.FRAME;
   overflowClip: boolean;
   rotate: number;
-  _x: number;
-  _y: number;
-  _width: number;
-  _height: number;
-  _rotate: number;
+  private _x: number;
+  private _y: number;
+  private _width: number;
+  private _height: number;
 
   constructor(props?: TFrameProps) {
     super({ debug: props?.debug ?? false });
@@ -25,7 +23,6 @@ export class Frame extends Container {
     this._y = props?.y ?? 0;
     this._width = props?.width ?? 0;
     this._height = props?.height ?? 0;
-    this._rotate = props?.rotate ?? 0;
   }
 
   override get x(): number {
@@ -62,10 +59,10 @@ export class Frame extends Container {
 
   override getBounds(): Bounds {
     return {
-      x: this._x,
-      y: this._y,
-      width: this._width,
-      height: this._height,
+      left: this._x,
+      top: this._y,
+      right: this._x + this._width,
+      bottom: this._y + this._height,
     };
   }
 
@@ -73,6 +70,7 @@ export class Frame extends Container {
   _render(ctx: CanvasRenderingContext2D): void {
     if (!this.visible) return;
     ctx.beginPath();
+    this.setupRender(ctx);
     const bounds = this.getBounds();
     ctx.rect(
       bounds.left,
@@ -81,9 +79,9 @@ export class Frame extends Container {
       bounds.bottom - bounds.top
     );
     ctx.closePath();
-    this.children.forEach((child) => {
-      child._render(ctx);
-    });
+    ctx.fill();
+    ctx.stroke();
+    this.renderChildren(ctx);
   }
 
   _hitMapRender(ctx: CanvasRenderingContext2D): void {
@@ -96,6 +94,9 @@ export class Frame extends Container {
       bounds.bottom - bounds.top
     );
     ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    this.hitMapRenderChildren(ctx);
   }
 
   toJSON(): string {

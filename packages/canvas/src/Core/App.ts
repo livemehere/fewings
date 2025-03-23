@@ -2,7 +2,7 @@ import { InteractionManager, TPointerEvent } from "./InteractionManager";
 import { Group } from "../Containers/Group";
 import { Emitter } from "@fewings/core/classes/Emitter";
 
-type Loop = (deltaTime: number) => void;
+type Loop = (app: App, deltaTime: number) => void;
 
 type TAppEvents = {
   pointermove: (e: Omit<TPointerEvent, "target" | "currentTarget">) => void;
@@ -190,7 +190,7 @@ export class App extends Emitter<TAppEvents> {
   }
 
   private executeLoops(deltaTime: number): void {
-    this.loops.forEach((loop) => loop(deltaTime));
+    this.loops.forEach((loop) => loop(this, deltaTime));
     this.render();
   }
 

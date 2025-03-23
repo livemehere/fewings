@@ -10,6 +10,18 @@ export abstract class Container extends CNode {
     super(props);
   }
 
+  protected renderChildren(ctx: CanvasRenderingContext2D): void {
+    this.children.forEach((child) => {
+      child.render(ctx);
+    });
+  }
+
+  protected hitMapRenderChildren(ctx: CanvasRenderingContext2D): void {
+    this.children.forEach((child) => {
+      child.hitMapRender(ctx);
+    });
+  }
+
   addChild(child: CNode): void {
     if (!(child instanceof CNode)) {
       throw new Error("Child must be an instance of CNode");

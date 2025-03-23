@@ -100,12 +100,14 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     if (!this.visible) return;
     this.renderRoutine(ctx, () => {
       this._render(ctx);
-      if (this.debug) this.debugRender(ctx);
+      if (this.debug) {
+        this.debugRender(ctx);
+      }
     });
   }
 
   hitMapRender(ctx: CanvasRenderingContext2D): void {
-    if (!this.visible && !this.isStatic) return;
+    if (!this.visible || this.isStatic) return;
     this.renderRoutine(ctx, () => {
       this._hitMapRender(ctx);
     });
@@ -116,6 +118,12 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     renderCallback: () => void
   ): void {
     ctx.save();
+    const bounds = this.getBounds();
+    const centerX = (bounds.left + bounds.right) / 2;
+    const centerY = (bounds.top + bounds.bottom) / 2;
+    ctx.translate(centerX, centerY);
+    ctx.rotate(this.rotate);
+    ctx.translate(-centerX, -centerY);
     renderCallback();
     ctx.restore();
   }
@@ -160,6 +168,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
 
   protected debugRender(ctx: CanvasRenderingContext2D): void {
     // fill text each position
+    ctx.save();
     const bounds = this.getBounds();
     ctx.beginPath();
     ctx.lineWidth = 4;
@@ -191,6 +200,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
       baseX,
       baseY + gap * 4
     );
+    ctx.restore();
   }
 
   abstract _render(ctx: CanvasRenderingContext2D): void;

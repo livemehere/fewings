@@ -123,9 +123,7 @@ export class Group extends Container {
   }
 
   override _render(ctx: CanvasRenderingContext2D): void {
-    this.children.forEach((shape) => {
-      shape._render(ctx);
-    });
+    this.renderChildren(ctx);
   }
 
   override _hitMapRender(ctx: CanvasRenderingContext2D): void {
@@ -137,9 +135,9 @@ export class Group extends Container {
     ctx.lineTo(bounds.right, bounds.bottom);
     ctx.lineTo(bounds.left, bounds.bottom);
     ctx.closePath();
-    this.children.forEach((shape) => {
-      shape._hitMapRender(ctx);
-    });
+    ctx.fill();
+    ctx.stroke();
+    this.hitMapRenderChildren(ctx);
   }
 
   addX(x: number): void {

@@ -5,6 +5,7 @@ import {
   Group,
   TransformHelper,
   CustomShape,
+  MathHelper,
 } from "../../../packages/canvas/src";
 
 const Home = () => {
@@ -28,40 +29,40 @@ const Home = () => {
     app.stage.addChild(group);
     // listeners.push(TransformHelper.draggable(app, group, "xy"));
 
-    const n = 2;
+    const n = 5;
     for (let i = 0; i < n; i++) {
       const rect = new Rect({
         x: 100 + i * 100,
         y: 100 + i * 100,
         width: 100,
         height: 100,
-        // fillStyle: "red",
-        // strokeStyle: "blue",
-        // strokeWidth: 10,
-        // opacity: 0.5,
-        // shadowColor: "black",
-        // shadowBlur: 10,
-        // shadowOffsetX: 10,
-        // shadowOffsetY: 10,
-        // lineDash: [10, 5],
-        // lineDashOffset: 10,
+        fillStyle: "red",
+        strokeStyle: "blue",
+        strokeWidth: 10,
+        opacity: 0.5,
+        shadowColor: "black",
+        shadowBlur: 10,
+        shadowOffsetX: 10,
+        shadowOffsetY: 10,
+        lineDash: [10, 5],
+        lineDashOffset: 10,
         // round: [30, 10, 10, 30],
         debug: true,
-        // rotate: MathHelper.degToRad(45),
+        rotate: MathHelper.degToRad(45),
       });
       group.addChild(rect);
-      // listeners.push(
-      //   rect.on("pointerenter", (e) => {
-      //     e.target.fillStyle = "green";
-      //   })
-      // );
-      // listeners.push(
-      //   rect.on("pointerleave", (e) => {
-      //     e.target.fillStyle = "black";
-      //   })
-      // );
+      listeners.push(
+        rect.on("pointerenter", (e) => {
+          e.target.fillStyle = "green";
+        })
+      );
+      listeners.push(
+        rect.on("pointerleave", (e) => {
+          e.target.fillStyle = "black";
+        })
+      );
 
-      // listeners.push(TransformHelper.draggable(app, rect, "xy"));
+      listeners.push(TransformHelper.draggable(app, rect, "xy"));
     }
 
     // let panOff: (() => void) | null = null;
@@ -214,10 +215,13 @@ const Home = () => {
     // const offGroupDrag = TransformHelper.draggable(app, group, "xy");
 
     // let angle = 0;
-    // const off = app.addLoop((deltaTime) => {
-    //   angle += 0.01;
-    //   // group.setRotate(center, MathHelper.degToRad(angle));
-    // });
+    const off = app.addLoop((app, deltaTime) => {
+      group.rotate += 0.01;
+      group.traverse((n) => {
+        n.rotate -= 0.01;
+      });
+      // group.setRotate(center, MathHelper.degToRad(angle));
+    });
 
     // const wheelHandler = (e: WheelEvent) => {
     //   app.scale += -e.deltaY / 1000;
@@ -225,11 +229,12 @@ const Home = () => {
     // app.canvas.addEventListener("wheel", wheelHandler);
 
     return () => {
-      // listeners.forEach((l) => l());
+      listeners.forEach((l) => l());
       // window.removeEventListener("keydown", downHandler);
       // window.removeEventListener("keyup", upHandler);
       // app.canvas.removeEventListener("wheel", wheelHandler);
       app.clearLoops();
+      off();
     };
   }, []);
   return (
