@@ -170,7 +170,7 @@ describe("Container", () => {
     expect(container.findById("not found")).toEqual(null);
   });
 
-  it.skip("findByTag", () => {
+  it("findByTag", () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     innerContainer.addChild(innerShape);
@@ -178,7 +178,7 @@ describe("Container", () => {
     expect(container.findByTag("not found")).toEqual([]);
   });
 
-  it.skip("findAll", () => {
+  it("findAll", () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     innerContainer.addChild(innerShape);
