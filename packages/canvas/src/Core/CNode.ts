@@ -1,5 +1,6 @@
-import { stringify } from "@fewings/core/qs";
-import { djb2 } from "packages/core/dist/hash";
+import { djb2 } from "@fewings/core/hash";
+import { Emitter } from "@fewings/core/classes/Emitter";
+
 import {
   IPoint,
   Bounds,
@@ -11,7 +12,6 @@ import {
 } from "../types";
 import { Container } from "../Containers/Container";
 import { IPointerEvent } from "./InteractionManager";
-import { Emitter } from "@fewings/core/classes/Emitter";
 
 export type ICNodeEvents = {
   pointerdown: (e: IPointerEvent) => void;
