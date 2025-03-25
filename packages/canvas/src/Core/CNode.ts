@@ -196,6 +196,11 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     ctx.beginPath();
     ctx.lineWidth = 4;
     ctx.strokeStyle = "red";
+    ctx.shadowColor = "none";
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+
     ctx.rect(
       bounds.left,
       bounds.top,

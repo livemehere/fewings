@@ -18,7 +18,6 @@ const Home = () => {
       canvas: canvasRef.current,
       width: 1000,
       height: 1000,
-      debug: true,
     });
 
     appRef.current = app;
@@ -40,15 +39,15 @@ const Home = () => {
         fillStyle: "red",
         strokeStyle: "blue",
         strokeWidth: 10,
-        opacity: 0.5,
-        shadowColor: "black",
-        shadowBlur: 10,
-        shadowOffsetX: 10,
-        shadowOffsetY: 10,
-        lineDash: [10, 5],
-        lineDashOffset: 10,
+        // opacity: 0.5,
+        // shadowColor: "black",
+        // shadowBlur: 10,
+        // shadowOffsetX: 10,
+        // shadowOffsetY: 10,
+        // lineDash: [10, 5],
+        // lineDashOffset: 10,
         // round: [30, 10, 10, 30],
-        debug: true,
+        // debug: true,
         rotate: MathHelper.degToRad(45),
       });
       group.addChild(rect);
@@ -101,8 +100,8 @@ const Home = () => {
         const gap = app.stage.scale * 100;
         const rulerSize = 30;
 
-        const startX = app.stage.x % gap;
-        const startY = app.stage.y % gap;
+        const startX = Math.floor(app.stage.x / gap) * gap;
+        const startY = Math.floor(app.stage.y / gap) * gap;
         const totalW = app.canvas.width;
         const totalH = app.canvas.height;
 
@@ -120,32 +119,57 @@ const Home = () => {
 
         ctx.font = "20px Arial";
         ctx.fillStyle = "red";
-        for (let i = 0; i < totalW; i += 1) {
-          const x = startX + i * gap;
-          const y = rulerSize / 1.5;
-          const v = (i - offsetX) * gap;
-          ctx.fillText(v.toString(), x, y);
+        const skipStep = Math.max(1, Math.floor(0.5 / app.stage.scale));
+
+        const baseY = rulerSize / 2;
+        const originOffset = {
+          x: Math.floor(app.stage.x / gap),
+          y: Math.floor(app.stage.y / gap),
+        };
+        const visibleLinesH = Math.ceil(totalW / gap) + 2;
+        const visibleLinesV = Math.ceil(totalH / gap) + 2;
+        for (let i = 0; i < visibleLinesH; i += skipStep) {
+          const val = ((i + originOffset.x) * gap) / app.stage.scale;
+          const x = i * gap - (app.stage.x % gap);
+
+          if (x >= rulerSize && x <= totalW) {
+            ctx.fillText(Math.round(val).toString(), x, baseY);
+          }
         }
-        for (let i = 0; i < totalH; i += 1) {
-          const x = rulerSize / 1.5;
-          const y = startY + i * gap;
-          const v = i - offsetY;
-          ctx.save();
-          ctx.translate(x, y);
-          ctx.rotate(-Math.PI / 2);
-          ctx.fillText(v.toString(), 0, 0);
-          ctx.restore();
+
+        const baseX = rulerSize / 2;
+        for (let i = 0; i < visibleLinesV; i += skipStep) {
+          const val = ((i + originOffset.y) * gap) / app.stage.scale;
+          const y = i * gap - (app.stage.y % gap);
+
+          if (y >= rulerSize && y <= totalH) {
+            ctx.save();
+            ctx.translate(baseX, y);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText(Math.round(val).toString(), 0, 0);
+            ctx.restore();
+          }
         }
         ctx.restore();
 
-        for (let i = 0; i < totalW; i += gap) {
-          ctx.moveTo(i + startX, 0);
-          ctx.lineTo(i + startX, totalH);
+        ctx.beginPath();
+
+        for (let i = 0; i < visibleLinesH; i++) {
+          const x = i * gap - (app.stage.x % gap);
+          if (x >= 0 && x <= totalW) {
+            ctx.moveTo(x, rulerSize);
+            ctx.lineTo(x, totalH);
+          }
         }
-        for (let i = 0; i < totalH; i += gap) {
-          ctx.moveTo(0, i + startY);
-          ctx.lineTo(totalW, i + startY);
+
+        for (let i = 0; i < visibleLinesV; i++) {
+          const y = i * gap - (app.stage.y % gap);
+          if (y >= 0 && y <= totalH) {
+            ctx.moveTo(rulerSize, y);
+            ctx.lineTo(totalW, y);
+          }
         }
+
         ctx.stroke();
 
         ctx.restore();
