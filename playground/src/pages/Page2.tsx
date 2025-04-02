@@ -2,7 +2,7 @@ import { Slider } from "../../../packages/react/src/components/Slider";
 import { useState } from "react";
 const Page2 = () => {
   const [horizontalValue, setHorizontalValue] = useState(0);
-  const [step, setStep] = useState(1);
+  const [step] = useState(1);
   return (
     <div style={{ padding: "2rem" }}>
       <Slider.Root
@@ -14,7 +14,7 @@ const Page2 = () => {
         dir="horizontal"
       >
         <Slider.Track>
-          {({ ratio, value, isDragging }) => (
+          {({ ratio }) => (
             <div
               style={{
                 width: "300px",
@@ -35,7 +35,7 @@ const Page2 = () => {
           )}
         </Slider.Track>
         <Slider.Thumb>
-          {({ isDragging, value }) => (
+          {({ isDragging }) => (
             <div
               style={{
                 width: "20px",

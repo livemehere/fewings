@@ -65,7 +65,7 @@ const SliderExample = () => {
           dir="horizontal"
         >
           <Slider.Track>
-            {({ ratio, value, isDragging }) => (
+            {({ ratio }) => (
               <div
                 style={{
                   width: "300px",
@@ -86,7 +86,7 @@ const SliderExample = () => {
             )}
           </Slider.Track>
           <Slider.Thumb>
-            {({ isDragging, value }) => (
+            {({ isDragging }) => (
               <div
                 style={{
                   width: "20px",
