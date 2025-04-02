@@ -1,28 +1,42 @@
+import SpaceExample from "@/components/examples/SpaceExample";
+
 # Space
 
 A utility component for adding fixed dimensions of space in layouts. It can be used to create horizontal or vertical spacing between elements.
 
-## Usage
+## API
 
 ```tsx
-import { Space } from "@fewings/react";
+export const Space = ({ x, y }: { x?: string | number; y?: string | number }) =>
+  React.ReactNode;
+```
 
-function Layout() {
+## Example
+
+<SpaceExample />
+
+```tsx
+import { Space } from "@fewings/react/components";
+
+function SpacingExample() {
   return (
     <div>
+      {/* Vertical spacing */}
       <div>First element</div>
-      <Space y={16} />
+      <Space y={20} />
       <div>Second element</div>
-      <Space x={32} />
+      <Space y={20} />
       <div>Third element</div>
+
+      {/* Horizontal spacing */}
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <div>First</div>
+        <Space x={40} />
+        <div>Second</div>
+        <Space x={40} />
+        <div>Third</div>
+      </div>
     </div>
   );
 }
 ```
-
-## Props
-
-| Name | Type               | Description         |
-| ---- | ------------------ | ------------------- |
-| x    | `string \| number` | Width of the space  |
-| y    | `string \| number` | Height of the space |

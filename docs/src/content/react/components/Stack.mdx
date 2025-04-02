@@ -1,55 +1,88 @@
+import StackExample from "@/components/examples/StackExample";
+
 # Stack
 
 Flexbox-based layout components for arranging elements in vertical (VStack) or horizontal (HStack) directions.
 
-## Usage
+## API
 
 ```tsx
-import { VStack, HStack } from "@fewings/react";
+type Props<T extends keyof React.JSX.IntrinsicElements> =
+  React.PropsWithChildren<{
+    inline?: boolean;
+    gap?: number | string;
+    align?: "start" | "center" | "end" | "stretch" | "baseline";
+    justify?:
+      | "start"
+      | "center"
+      | "end"
+      | "space-between"
+      | "space-around"
+      | "space-evenly";
+    padding?: number | string;
+    as?: T;
+  }> &
+    React.ComponentProps<"div">;
 
-function Layout() {
+export const VStack = <T extends keyof React.JSX.IntrinsicElements>({
+  inline,
+  children,
+  gap = 0,
+  align = "stretch",
+  justify = "start",
+  padding,
+  style = {},
+  as = "div" as T,
+  ...props
+}: Props<T>) => React.ReactNode;
+
+export const HStack = <T extends keyof React.JSX.IntrinsicElements>({
+  inline,
+  children,
+  gap = 0,
+  align = "stretch",
+  justify = "start",
+  padding,
+  style = {},
+  as = "div" as T,
+  ...props
+}: Props<T>) => React.ReactNode;
+```
+
+## Example
+
+<StackExample />
+
+```tsx
+import { VStack, HStack } from "@fewings/react/components";
+
+function LayoutExample() {
   return (
-    <VStack gap={16} align="center">
-      <HStack gap={8} justify="space-between">
+    <div>
+      {/* Vertical Stack */}
+      <VStack
+        gap={16}
+        align="center"
+        justify="space-between"
+        style={{ border: "1px solid #ccc", padding: "1rem", height: "300px" }}
+      >
         <div>Item 1</div>
         <div>Item 2</div>
+        <div>Item 3</div>
+      </VStack>
+
+      {/* Horizontal Stack */}
+      <HStack
+        gap={16}
+        align="center"
+        justify="space-between"
+        style={{ border: "1px solid #ccc", padding: "1rem", marginTop: "1rem" }}
+      >
+        <div>Item 1</div>
+        <div>Item 2</div>
+        <div>Item 3</div>
       </HStack>
-      <div>Item 3</div>
-    </VStack>
+    </div>
   );
 }
 ```
-
-## Components
-
-### VStack
-
-A vertical stack component that arranges its children in a column.
-
-#### Props
-
-| Name     | Type                                                                                  | Default     | Description                |
-| -------- | ------------------------------------------------------------------------------------- | ----------- | -------------------------- |
-| children | `React.ReactNode`                                                                     | -           | Child components           |
-| inline   | `boolean`                                                                             | -           | Whether to use inline-flex |
-| gap      | `number \| string`                                                                    | `0`         | Gap between items          |
-| align    | `"start" \| "center" \| "end" \| "stretch" \| "baseline"`                             | `"stretch"` | Cross-axis alignment       |
-| justify  | `"start" \| "center" \| "end" \| "space-between" \| "space-around" \| "space-evenly"` | `"start"`   | Main-axis alignment        |
-| padding  | `number \| string`                                                                    | -           | Padding value              |
-| as       | `keyof JSX.IntrinsicElements`                                                         | `"div"`     | HTML element to render     |
-
-### HStack
-
-A horizontal stack component that arranges its children in a row.
-
-#### Props
-
-| Name     | Type                                                                                  | Default     | Description                |
-| -------- | ------------------------------------------------------------------------------------- | ----------- | -------------------------- |
-| children | `React.ReactNode`                                                                     | -           | Child components           |
-| inline   | `boolean`                                                                             | -           | Whether to use inline-flex |
-| gap      | `number \| string`                                                                    | `0`         | Gap between items          |
-| align    | `"start" \| "center" \| "end" \| "stretch" \| "baseline"`                             | `"stretch"` | Cross-axis alignment       |
-| justify  | `"start" \| "center" \| "end" \| "space-between" \| "space-around" \| "space-evenly"` | `"start"`   | Main-axis alignment        |
-| padding  | `number \| string`                                                                    | -           | Padding value              |
-| as       | `keyof JSX.IntrinsicElements`                                                         | `"div"`     | HTML element to render     |

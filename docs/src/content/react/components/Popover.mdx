@@ -1,64 +1,186 @@
+import PopoverExample from "@/components/examples/PopoverExample";
+
 # Popover
 
 A compound component that creates a popover UI element. It supports both controlled and uncontrolled modes, and can be triggered by click or hover.
 
-## Usage
+## API
 
 ```tsx
-import { Popover } from "@fewings/react";
+type TriggerType = "click" | "hover";
+
+type Anchor =
+  | "top-left"
+  | "top-right"
+  | "top-center"
+  | "bottom-left"
+  | "bottom-right"
+  | "bottom-center"
+  | "left-center"
+  | "left-top"
+  | "left-bottom"
+  | "right-center"
+  | "right-top"
+  | "right-bottom";
+
+const Root = ({
+  children,
+  closeOnClickOutSide = true,
+  type = "click",
+  initialOpen,
+  open: openProp,
+  onChangeOpen,
+  disabled,
+}: {
+  children: React.ReactNode;
+  closeOnClickOutSide?: boolean;
+  type?: TriggerType;
+  open?: boolean;
+  onChangeOpen?: (v: boolean) => void;
+  initialOpen?: boolean;
+  disabled?: boolean;
+}) => React.ReactNode;
+
+const Trigger = ({ children }: { children: React.ReactElement<any> }) =>
+  React.ReactNode;
+
+const Panel = ({
+  children,
+  anchor = "bottom-left",
+  wrapper,
+  zIndex = 99,
+  portal = true,
+}: {
+  children: React.ReactNode;
+  anchor?: Anchor;
+  zIndex?: number;
+  portal?: boolean;
+  wrapper?: React.ComponentType;
+}) => React.ReactNode;
+
+export const Popover = {
+  Root,
+  Trigger,
+  Panel,
+  Consumer: PopoverContext.Consumer,
+};
+```
+
+## Example
+
+<PopoverExample />
+
+```tsx
+import { Popover } from "@fewings/react/components";
+import { useState } from "react";
 
 function MyPopover() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Popover.Root>
-      <Popover.Trigger>
-        <button>Open Popover</button>
-      </Popover.Trigger>
-      <Popover.Panel>
-        <div>Popover content</div>
-      </Popover.Panel>
-    </Popover.Root>
+    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+      {/* Basic Click Popover */}
+      <Popover.Root>
+        <Popover.Trigger>
+          <button
+            style={{
+              padding: "0.5rem 1rem",
+              backgroundColor: "#f3f4f6",
+              border: "1px solid #d1d5db",
+              borderRadius: "0.375rem",
+            }}
+          >
+            Click me
+          </button>
+        </Popover.Trigger>
+        <Popover.Panel>
+          <div
+            style={{
+              padding: "1rem",
+              backgroundColor: "white",
+              border: "1px solid #d1d5db",
+              borderRadius: "0.375rem",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+              width: "200px",
+            }}
+          >
+            <p>This is a basic click-triggered popover</p>
+          </div>
+        </Popover.Panel>
+      </Popover.Root>
+
+      {/* Hover Popover */}
+      <Popover.Root type="hover">
+        <Popover.Trigger>
+          <button
+            style={{
+              padding: "0.5rem 1rem",
+              backgroundColor: "#eff6ff",
+              border: "1px solid #bfdbfe",
+              borderRadius: "0.375rem",
+            }}
+          >
+            Hover me
+          </button>
+        </Popover.Trigger>
+        <Popover.Panel>
+          <div
+            style={{
+              padding: "1rem",
+              backgroundColor: "white",
+              border: "1px solid #bfdbfe",
+              borderRadius: "0.375rem",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            }}
+          >
+            <p>This popover appears on hover</p>
+          </div>
+        </Popover.Panel>
+      </Popover.Root>
+
+      {/* Controlled Popover */}
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <button
+          style={{
+            padding: "0.25rem 0.75rem",
+            backgroundColor: "#e5e7eb",
+            border: "1px solid #d1d5db",
+            borderRadius: "0.375rem",
+          }}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? "Close" : "Open"} Popover
+        </button>
+
+        <Popover.Root open={isOpen} onChangeOpen={setIsOpen}>
+          <Popover.Trigger>
+            <button
+              style={{
+                padding: "0.5rem 1rem",
+                backgroundColor: "#f5f3ff",
+                border: "1px solid #ddd6fe",
+                borderRadius: "0.375rem",
+              }}
+            >
+              Controlled Popover
+            </button>
+          </Popover.Trigger>
+          <Popover.Panel>
+            <div
+              style={{
+                padding: "1rem",
+                backgroundColor: "white",
+                border: "1px solid #ddd6fe",
+                borderRadius: "0.375rem",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+              }}
+            >
+              <p>This popover is controlled externally</p>
+            </div>
+          </Popover.Panel>
+        </Popover.Root>
+      </div>
+    </div>
   );
 }
 ```
-
-## Components
-
-### Root
-
-The main container component that manages the popover state.
-
-#### Props
-
-| Name                | Type                   | Default   | Description                            |
-| ------------------- | ---------------------- | --------- | -------------------------------------- |
-| children            | `React.ReactNode`      | -         | Child components                       |
-| closeOnClickOutSide | `boolean`              | `true`    | Whether to close when clicking outside |
-| type                | `"click" \| "hover"`   | `"click"` | Trigger type                           |
-| open                | `boolean`              | -         | Controlled open state                  |
-| onChangeOpen        | `(v: boolean) => void` | -         | Callback when open state changes       |
-| initialOpen         | `boolean`              | -         | Initial open state                     |
-| disabled            | `boolean`              | -         | Whether the popover is disabled        |
-
-### Trigger
-
-The element that triggers the popover.
-
-#### Props
-
-| Name     | Type                 | Description         |
-| -------- | -------------------- | ------------------- |
-| children | `React.ReactElement` | The trigger element |
-
-### Panel
-
-The content container that appears when the popover is open.
-
-#### Props
-
-| Name     | Type                  | Default         | Description                                   |
-| -------- | --------------------- | --------------- | --------------------------------------------- |
-| children | `React.ReactNode`     | -               | Panel content                                 |
-| anchor   | `Anchor`              | `"bottom-left"` | Position of the panel relative to the trigger |
-| zIndex   | `number`              | `99`            | CSS z-index value                             |
-| portal   | `boolean`             | `true`          | Whether to render in a portal                 |
-| wrapper  | `React.ComponentType` | -               | Custom wrapper component                      |

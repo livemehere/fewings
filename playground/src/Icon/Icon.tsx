@@ -5,11 +5,11 @@ export const Icon = ({
   name,
   ...props
 }: React.ComponentProps<"svg"> & {
-  title?: string;
-  titleId?: string;
-  desc?: string;
-  descId?: string;
-  name: IconKeys;
+    title?: string;
+    titleId?: string;
+    desc?: string;
+    descId?: string;
+    name: IconKeys;
 }) => {
   const Comp = useMemo(() => IconMap[name], [name]);
   return <Comp {...props} />;

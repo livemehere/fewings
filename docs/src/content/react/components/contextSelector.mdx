@@ -1,82 +1,82 @@
+import ContextSelectorExample from "@/components/examples/ContextSelectorExample";
+
 # Context Selector
 
 A utility for creating and using React contexts with selector support. It allows components to subscribe to specific parts of the context value, preventing unnecessary re-renders.
 
-## Usage
+## API
 
 ```tsx
-import { createContext, useContextSelector } from "@fewings/react";
+import {
+  Context,
+  createContext as createContextOrg,
+  useContext as useContextOrg,
+  ReactNode,
+  Provider,
+} from "react";
 
-// Create a context
+interface Store<T> {
+  value: T;
+  subscribe: (l: () => void) => () => void;
+  notify: () => void;
+}
+
+export const createContext = <T extends unknown>(initialValue: T) => Context<T>;
+
+export const useContextSelector = <T, R>(
+  context: Context<T>,
+  selector: (value: T) => R
+) => R;
+```
+
+## Example
+
+<ContextSelectorExample />
+
+```tsx
+import {
+  createContext,
+  useContextSelector,
+} from "@fewings/react/contextSelector";
+import { useState } from "react";
+
+// Create a context with user data
 const UserContext = createContext({
-  name: "",
-  age: 0,
-  email: "",
+  name: "John Doe",
+  age: 30,
+  email: "john@example.com",
 });
 
 // Create a provider component
 function UserProvider({ children }) {
+  const [userData, setUserData] = useState({
+    name: "John Doe",
+    age: 30,
+    email: "john@example.com",
+  });
+
   return (
-    <UserContext.Provider
-      value={{
-        name: "John Doe",
-        age: 30,
-        email: "john@example.com",
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={userData}>{children}</UserContext.Provider>
   );
 }
 
-// Use the context with selectors
-function UserName() {
+// Use the context with selectors - components only re-render
+// when their specific selected values change
+function NameDisplay() {
+  // Only re-renders when name changes
   const name = useContextSelector(UserContext, (state) => state.name);
   return <div>{name}</div>;
 }
 
-function UserAge() {
+function AgeDisplay() {
+  // Only re-renders when age changes
   const age = useContextSelector(UserContext, (state) => state.age);
   return <div>{age}</div>;
 }
+
+function EmailDisplay() {
+  // Only re-renders when email changes
+  const email = useContextSelector(UserContext, (state) => state.email);
+  return <div>{email}</div>;
+}
 ```
-
-## API
-
-### createContext
-
-Creates a context with selector support.
-
-```tsx
-const context = createContext<T>(initialValue: T)
-```
-
-#### Parameters
-
-| Name         | Type | Description                   |
-| ------------ | ---- | ----------------------------- |
-| initialValue | `T`  | Initial value for the context |
-
-### useContextSelector
-
-A hook that subscribes to a specific part of the context value using a selector function.
-
-```tsx
-const selectedValue = useContextSelector<T, R>(
-  context: Context<T>,
-  selector: (value: T) => R
-)
-```
-
-#### Parameters
-
-| Name     | Type              | Description                                                |
-| -------- | ----------------- | ---------------------------------------------------------- |
-| context  | `Context<T>`      | The context to use                                         |
-| selector | `(value: T) => R` | Function that selects a specific part of the context value |
-
-#### Returns
-
-| Name          | Type | Description                         |
-| ------------- | ---- | ----------------------------------- |
-| selectedValue | `R`  | The selected value from the context |

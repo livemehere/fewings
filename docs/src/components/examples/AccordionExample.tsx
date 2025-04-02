@@ -1,52 +1,5 @@
-import AccordionExample from "@/components/examples/AccordionExample";
+"use client";
 
-# Accordion
-
-A compound component that creates an accordion UI element. It supports both controlled and uncontrolled modes for managing the open/closed state.
-
-## API
-
-```tsx
-type TAccordionContextValue = {
-  open: boolean;
-  setOpen: (v: boolean) => void;
-};
-
-const Root = ({
-  children,
-  initialOpen = false,
-  open: openProp,
-  onChangeOpen,
-  disabled,
-}: {
-  children: React.ReactNode;
-  open?: boolean;
-  onChangeOpen?: (v: boolean) => void;
-  initialOpen?: boolean;
-  disabled?: boolean;
-}) => React.ReactNode;
-
-const Trigger = ({ children }: { children: React.ReactElement<any> }) =>
-  React.ReactNode;
-
-const Panel = ({
-  children,
-  wrapper,
-}: { children: React.ReactNode } & Wrappable) => React.ReactNode;
-
-export const Accordion = {
-  Root,
-  Trigger,
-  Panel,
-  Consumer: AccordionContext.Consumer,
-};
-```
-
-## Example
-
-<AccordionExample />
-
-```tsx
 import { Accordion } from "@fewings/react/components";
 import { useState } from "react";
 
@@ -147,4 +100,5 @@ const AccordionExample = () => {
     </div>
   );
 };
-```
+
+export default AccordionExample;

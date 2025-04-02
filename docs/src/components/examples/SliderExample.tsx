@@ -1,74 +1,5 @@
-import SliderExample from "@/components/examples/SliderExample";
+"use client";
 
-# Slider
-
-A compound component for creating slider controls. It supports both horizontal and vertical orientations, and provides controlled and uncontrolled modes.
-
-## API
-
-```tsx
-interface SliderContextValue {
-  value: number;
-  setValue: (value: number) => void;
-  min: number;
-  max: number;
-  step: number;
-  disabled?: boolean;
-  dir: "horizontal" | "vertical";
-  //
-  thumbRef: RefObject<HTMLElement | null>;
-  trackRef: RefObject<HTMLElement | null>;
-  ratio: number;
-  isDragging: boolean;
-  setIsDragging: (isDragging: boolean) => void;
-}
-
-const SliderRoot = ({
-  children,
-  dir,
-  ...props
-}: { children: ReactNode } & Omit<
-  SliderContextValue,
-  | "ratio"
-  | "thumbRef"
-  | "trackRef"
-  | "isDragging"
-  | "setIsDragging"
-  | "setRatio"
->) => React.ReactNode;
-
-const SliderThumb = ({
-  children,
-}: {
-  children: (props: {
-    value: number;
-    ratio: number;
-    isDragging: boolean;
-  }) => ReactElement<any>;
-}) => React.ReactNode;
-
-const SliderTrack = ({
-  children,
-}: {
-  children: (props: {
-    value: number;
-    ratio: number;
-    isDragging: boolean;
-  }) => ReactElement<any>;
-}) => React.ReactNode;
-
-export const Slider = {
-  Root: SliderRoot,
-  Thumb: SliderThumb,
-  Track: SliderTrack,
-};
-```
-
-## Example
-
-<SliderExample />
-
-```tsx
 import { Slider } from "@fewings/react/components";
 import { useState } from "react";
 
@@ -247,4 +178,5 @@ const SliderExample = () => {
     </div>
   );
 };
-```
+
+export default SliderExample;
