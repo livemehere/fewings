@@ -1,24 +1,18 @@
 import React, {
   createContext,
-  useState,
   useContext,
   RefObject,
   useRef,
   cloneElement,
   Children,
-  useEffect,
+  useCallback,
+  useMemo,
+  useLayoutEffect,
 } from "react";
 
-import {
-  useClickOutside,
-  useControlledState,
-  useForceUpdate,
-  useIsomorphicLayoutEffect,
-} from "@fewings/react/hooks";
-import { Wrappable } from "@fewings/react/types";
+import { useClickOutside, useControlledState } from "@fewings/react/hooks";
 import { createPortal } from "react-dom";
-import { RemoveScroll } from "react-remove-scroll";
-
+import { useElementPositionObserver } from "@fewings/react/hooks/useElementPositionObserver";
 type TriggerType = "click" | "hover";
 type TPopoverContextValue = {
   open: boolean;
@@ -27,7 +21,6 @@ type TPopoverContextValue = {
   panelRef: RefObject<HTMLElement | null>;
   closeOnClickOutSide: boolean;
   type: TriggerType;
-  scrollLock?: boolean;
   controlled?: boolean;
 };
 
@@ -52,7 +45,6 @@ const PopoverContext = createContext<TPopoverContextValue>({
   panelRef: { current: null },
   closeOnClickOutSide: true,
   type: "click",
-  scrollLock: true,
   controlled: false,
 });
 
@@ -60,7 +52,6 @@ const Root = ({
   children,
   closeOnClickOutSide = true,
   type = "click",
-  scrollLock = true,
   initialOpen,
   open: openProp,
   onChangeOpen,
@@ -69,7 +60,6 @@ const Root = ({
   children: React.ReactNode;
   closeOnClickOutSide?: boolean;
   type?: TriggerType;
-  scrollLock?: boolean;
   open?: boolean;
   onChangeOpen?: (v: boolean) => void;
   initialOpen?: boolean;
@@ -93,7 +83,6 @@ const Root = ({
         panelRef,
         closeOnClickOutSide,
         type,
-        scrollLock,
         controlled,
       }}
     >
@@ -104,17 +93,10 @@ const Root = ({
 Root.displayName = "PopoverRoot";
 
 const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
-  const {
-    open,
-    setOpen,
-    triggerRef,
-    panelRef,
-    closeOnClickOutSide,
-    type,
-    controlled,
-  } = useContext(PopoverContext);
+  const { open, setOpen, triggerRef, panelRef, closeOnClickOutSide, type } =
+    useContext(PopoverContext);
   const ref = useClickOutside(() => {
-    if (closeOnClickOutSide && !controlled) {
+    if (closeOnClickOutSide) {
       setOpen(false);
     }
   }, panelRef);
@@ -152,7 +134,7 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
         triggerRef.current = el;
         ref.current = el;
       },
-    }),
+    })
   );
 };
 Trigger.displayName = "PopoverTrigger";
@@ -162,142 +144,124 @@ const Panel = ({
   anchor = "bottom-left",
   wrapper,
   zIndex = 99,
+  portal = true,
 }: {
   children: React.ReactNode;
   anchor?: Anchor;
   zIndex?: number;
-} & Wrappable) => {
-  const { scrollLock } = useContext(PopoverContext);
-  const [_, setPanel] = useState<HTMLElement | null>(null);
-  const update = useForceUpdate();
-
-  const Wrapper = wrapper || React.Fragment;
-  const ScrollLockWrapper = scrollLock ? RemoveScroll : React.Fragment;
+  portal?: boolean;
+  wrapper?: React.ComponentType;
+}) => {
+  const Wrapper = useMemo(() => wrapper || React.Fragment, [wrapper]);
   const { open, triggerRef, panelRef, type, setOpen } =
     useContext(PopoverContext);
 
-  const pos = useRef({});
-  const setPos = () => {
-    const tBounds = triggerRef.current?.getBoundingClientRect();
+  const setPanelPosition = (triggerRect: DOMRect) => {
     const pBounds = panelRef.current?.getBoundingClientRect();
-    pos.current = (() => {
-      if (!tBounds) return {};
-      switch (anchor) {
-        case "bottom-right":
-          return {
-            top: tBounds.bottom,
-            right: window.innerWidth - tBounds.right,
-          };
-        case "bottom-left":
-          return {
-            top: tBounds.bottom,
-            left: tBounds.left,
-          };
-        case "bottom-center":
-          return {
-            top: tBounds.bottom,
-            left: tBounds.left + tBounds.width / 2 - (pBounds?.width || 0) / 2,
-          };
-        case "top-right":
-          return {
-            bottom: window.innerHeight - tBounds.top,
-            right: window.innerWidth - tBounds.right,
-          };
-        case "top-left":
-          return {
-            bottom: window.innerHeight - tBounds.top,
-            left: tBounds.left,
-          };
-        case "top-center":
-          return {
-            bottom: window.innerHeight - tBounds.top,
-            left: tBounds.left + tBounds.width / 2 - (pBounds?.width || 0) / 2,
-          };
-        case "left-top":
-          return {
-            top: tBounds.top,
-            right: window.innerWidth - tBounds.left,
-          };
-        case "left-center":
-          return {
-            top: tBounds.top + tBounds.height / 2 - (pBounds?.height || 0) / 2,
-            right: window.innerWidth - tBounds.left,
-          };
-        case "left-bottom":
-          return {
-            bottom: window.innerHeight - tBounds.bottom,
-            right: window.innerWidth - tBounds.left,
-          };
-        case "right-top":
-          return {
-            top: tBounds.top,
-            left: tBounds.right,
-          };
-        case "right-center":
-          return {
-            top: tBounds.top + tBounds.height / 2 - (pBounds?.height || 0) / 2,
-            left: tBounds.right,
-          };
-        case "right-bottom":
-          return {
-            bottom: window.innerHeight - tBounds.bottom,
-            left: tBounds.right,
-          };
-        default:
-          throw new Error("Invalid anchor");
-      }
-    })();
-  };
-  useIsomorphicLayoutEffect(() => {
-    if (open) {
-      setPos();
-    }
-  });
+    if (!triggerRect || !panelRef.current) return;
 
-  useEffect(() => {
-    const handler = () => {
-      if (open) {
-        setPos();
-        update();
+    const style = panelRef.current.style;
+    switch (anchor) {
+      case "bottom-right":
+        style.top = `${triggerRect.bottom}px`;
+        style.right = `${window.innerWidth - triggerRect.right}px`;
+        break;
+      case "bottom-left":
+        style.top = `${triggerRect.bottom}px`;
+        style.left = `${triggerRect.left}px`;
+        break;
+      case "bottom-center":
+        style.top = `${triggerRect.bottom}px`;
+        style.left = `${triggerRect.left + triggerRect.width / 2 - (pBounds?.width || 0) / 2}px`;
+        break;
+      case "top-right":
+        style.bottom = `${window.innerHeight - triggerRect.top}px`;
+        style.right = `${window.innerWidth - triggerRect.right}px`;
+        break;
+      case "top-left":
+        style.bottom = `${window.innerHeight - triggerRect.top}px`;
+        style.left = `${triggerRect.left}px`;
+        break;
+      case "top-center":
+        style.bottom = `${window.innerHeight - triggerRect.top}px`;
+        style.left = `${triggerRect.left + triggerRect.width / 2 - (pBounds?.width || 0) / 2}px`;
+        break;
+      case "left-top":
+        style.top = `${triggerRect.top}px`;
+        style.right = `${window.innerWidth - triggerRect.left}px`;
+        break;
+      case "left-center":
+        style.top = `${triggerRect.top + triggerRect.height / 2 - (pBounds?.height || 0) / 2}px`;
+        style.right = `${window.innerWidth - triggerRect.left}px`;
+        break;
+      case "left-bottom":
+        style.bottom = `${window.innerHeight - triggerRect.bottom}px`;
+        style.right = `${window.innerWidth - triggerRect.left}px`;
+        break;
+      case "right-top":
+        style.top = `${triggerRect.top}px`;
+        style.left = `${triggerRect.right}px`;
+        break;
+      case "right-center":
+        style.top = `${triggerRect.top + triggerRect.height / 2 - (pBounds?.height || 0) / 2}px`;
+        style.left = `${triggerRect.right}px`;
+        break;
+      case "right-bottom":
+        style.bottom = `${window.innerHeight - triggerRect.bottom}px`;
+        style.left = `${triggerRect.right}px`;
+        break;
+      default:
+        throw new Error("Invalid anchor");
+    }
+  };
+
+  useElementPositionObserver(
+    triggerRef,
+    (rect) => {
+      setPanelPosition(rect);
+    },
+    open
+  );
+  useLayoutEffect(() => {
+    if (open) {
+      const rect = triggerRef.current?.getBoundingClientRect();
+      if (rect) {
+        setPanelPosition(rect);
       }
-    };
-    window.addEventListener("resize", handler);
-    window.addEventListener("scroll", handler);
-    return () => {
-      window.removeEventListener("resize", handler);
-      window.removeEventListener("scroll", handler);
-    };
+    }
   }, [open]);
 
-  return createPortal(
-    <Wrapper>
-      {open && (
-        <ScrollLockWrapper>
-          <div
-            ref={(el) => {
-              panelRef.current = el;
-              setPanel(el);
-            }}
-            style={{
-              position: "fixed",
-              zIndex,
-              width: "fit-content",
-              height: "fit-content",
-              ...pos.current,
-            }}
-            onPointerLeave={() => {
-              if (type === "hover") {
-                setOpen(false);
-              }
-            }}
-          >
-            {children}
-          </div>
-        </ScrollLockWrapper>
-      )}
-    </Wrapper>,
-    document.body,
+  const Content = useCallback(
+    ({ children }: { children: React.ReactNode }) => (
+      <div
+        ref={(el) => {
+          panelRef.current = el;
+        }}
+        style={{
+          position: "fixed",
+          zIndex,
+          width: "fit-content",
+          height: "fit-content",
+        }}
+        onPointerLeave={() => {
+          if (type === "hover") {
+            setOpen(false);
+          }
+        }}
+      >
+        {children}
+      </div>
+    ),
+    [open, zIndex, type]
   );
+
+  if (portal) {
+    return createPortal(
+      <Wrapper>{open && <Content>{children}</Content>}</Wrapper>,
+      document.body
+    );
+  }
+  return <Wrapper>{open && <Content>{children}</Content>}</Wrapper>;
 };
 Panel.displayName = "PopoverPanel";
 
