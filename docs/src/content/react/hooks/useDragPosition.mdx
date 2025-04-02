@@ -2,10 +2,41 @@
 
 A hook that enables drag functionality for elements. It provides controlled and uncontrolled modes for both dragging state and position style.
 
-## Usage
+## API
 
 ```tsx
-import { useDragPosition } from "@fewings/react";
+interface DragStyle {
+  position: "absolute";
+  top: number | string;
+  left: number | string;
+}
+interface UseDragPositionProps {
+  dir?: "x" | "y" | "xy";
+  style?: DragStyle;
+  defaultStyle?: DragStyle;
+  onChangeStyle?: (style: DragStyle) => void;
+  isDragging?: boolean;
+  onChangeDragging?: (isDragging: boolean) => void;
+}
+declare const useDragPosition: (opt?: UseDragPositionProps) => {
+  handleRef: React$1.RefObject<HTMLElement | null>;
+  boundRef: React$1.RefObject<HTMLElement | null>;
+  style: DragStyle;
+  isDragging: boolean;
+  bounds: {
+    minLeft: number;
+    maxLeft: number;
+    maxTop: number;
+    minTop: number;
+  };
+};
+```
+
+## Example
+
+```tsx
+import { useDragPosition } from "@fewings/react/hooks";
+import { useState } from "react";
 
 function DraggableElement() {
   const { style, isDragging, handleRef, boundRef } = useDragPosition({
@@ -20,34 +51,27 @@ function DraggableElement() {
   return (
     <div
       ref={boundRef}
-      style={{ position: "relative", width: 500, height: 500 }}
+      style={{
+        position: "relative",
+        width: 500,
+        height: 500,
+        border: "1px solid black",
+      }}
     >
-      <div ref={handleRef} style={style}>
+      <div
+        ref={handleRef}
+        style={{
+          ...style,
+          padding: 20,
+          background: isDragging ? "#e0e0e0" : "#f5f5f5",
+          cursor: "move",
+          userSelect: "none",
+          border: "1px solid #ccc",
+        }}
+      >
         Drag me!
       </div>
     </div>
   );
 }
 ```
-
-## API
-
-### Parameters
-
-| Name             | Type                            | Description                           |
-| ---------------- | ------------------------------- | ------------------------------------- |
-| dir              | `"x" \| "y" \| "xy"`            | Direction of dragging (default: "xy") |
-| style            | `DragStyle`                     | Controlled position style             |
-| defaultStyle     | `DragStyle`                     | Initial position style                |
-| onChangeStyle    | `(style: DragStyle) => void`    | Callback when style changes           |
-| isDragging       | `boolean`                       | Controlled dragging state             |
-| onChangeDragging | `(isDragging: boolean) => void` | Callback when dragging state changes  |
-
-### Returns
-
-| Name       | Type                     | Description                   |
-| ---------- | ------------------------ | ----------------------------- |
-| style      | `DragStyle`              | Current position style        |
-| isDragging | `boolean`                | Current dragging state        |
-| handleRef  | `RefObject<HTMLElement>` | Ref for the draggable element |
-| boundRef   | `RefObject<HTMLElement>` | Ref for the boundary element  |

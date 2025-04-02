@@ -10,9 +10,12 @@ import React, {
   useLayoutEffect,
 } from "react";
 
-import { useClickOutside, useControlledState } from "@fewings/react/hooks";
+import {
+  useClickOutside,
+  useControlledState,
+  useElementPositionObserver,
+} from "@fewings/react/hooks";
 import { createPortal } from "react-dom";
-import { useElementPositionObserver } from "@fewings/react/hooks/useElementPositionObserver";
 type TriggerType = "click" | "hover";
 type TPopoverContextValue = {
   open: boolean;
@@ -134,7 +137,7 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
         triggerRef.current = el;
         ref.current = el;
       },
-    }),
+    })
   );
 };
 Trigger.displayName = "PopoverTrigger";
@@ -220,7 +223,7 @@ const Panel = ({
     (rect) => {
       setPanelPosition(rect);
     },
-    open,
+    open
   );
   useLayoutEffect(() => {
     if (open) {
@@ -252,13 +255,13 @@ const Panel = ({
         {children}
       </div>
     ),
-    [open, zIndex, type],
+    [open, zIndex, type]
   );
 
   if (portal) {
     return createPortal(
       <Wrapper>{open && <Content>{children}</Content>}</Wrapper>,
-      document.body,
+      document.body
     );
   }
   return <Wrapper>{open && <Content>{children}</Content>}</Wrapper>;

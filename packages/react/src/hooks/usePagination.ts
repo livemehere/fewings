@@ -18,22 +18,22 @@ interface UsePaginationReturn {
 /**
  * values are not index, but literal page number
  */
-export function usePagination({
+export const usePagination = ({
   currentPage,
   totalPages,
   maxVisiblePageButtons,
-}: UsePaginationProps): UsePaginationReturn {
+}: UsePaginationProps): UsePaginationReturn => {
   const currentGroupIdx = useMemo(
     () => Math.floor((currentPage - 1) / maxVisiblePageButtons),
-    [currentPage, maxVisiblePageButtons],
+    [currentPage, maxVisiblePageButtons]
   );
   const totalGroupLength = useMemo(
     () => Math.ceil(totalPages / maxVisiblePageButtons),
-    [totalPages, maxVisiblePageButtons],
+    [totalPages, maxVisiblePageButtons]
   );
   const isLastGroup = useMemo(
     () => currentGroupIdx === totalGroupLength - 1,
-    [currentGroupIdx, totalGroupLength],
+    [currentGroupIdx, totalGroupLength]
   );
 
   const pageNumbers = useMemo(
@@ -44,9 +44,9 @@ export function usePagination({
             ? totalPages - currentGroupIdx * maxVisiblePageButtons
             : maxVisiblePageButtons,
         },
-        (_, i) => currentGroupIdx * maxVisiblePageButtons + i + 1,
+        (_, i) => currentGroupIdx * maxVisiblePageButtons + i + 1
       ),
-    [isLastGroup, totalPages, currentGroupIdx, maxVisiblePageButtons],
+    [isLastGroup, totalPages, currentGroupIdx, maxVisiblePageButtons]
   );
 
   return {
@@ -55,4 +55,4 @@ export function usePagination({
     totalGroupLength,
     isLastGroup,
   };
-}
+};

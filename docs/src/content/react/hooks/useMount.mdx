@@ -2,13 +2,26 @@
 
 A hook that checks if a component has been mounted. It returns `true` after the component's initial render.
 
-## Usage
+## API
 
 ```tsx
-import { useMount } from "@fewings/react";
+declare const useMount: () => boolean;
+```
+
+## Example
+
+```tsx
+import { useMount } from "@fewings/react/hooks";
+import { useEffect } from "react";
 
 function MyComponent() {
   const isMounted = useMount();
+
+  useEffect(() => {
+    if (isMounted) {
+      console.log("Component is now mounted");
+    }
+  }, [isMounted]);
 
   return (
     <div>
@@ -17,11 +30,3 @@ function MyComponent() {
   );
 }
 ```
-
-## API
-
-### Returns
-
-| Name      | Type      | Description                      |
-| --------- | --------- | -------------------------------- |
-| isMounted | `boolean` | Whether the component is mounted |

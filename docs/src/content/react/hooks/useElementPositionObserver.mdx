@@ -1,37 +1,64 @@
 # useElementPositionObserver
 
-A hook that observes element position changes using `requestAnimationFrame`.
+A hook that observes element position changes using `requestAnimationFrame` per every frame.
 
 > ⚠️ **Warning**: This hook continuously calls `requestAnimationFrame` while active,
 > which can be performance intensive. Use with caution and only when necessary.
 > Consider using `ResizeObserver` or `IntersectionObserver` for simpler cases.
 
-## Usage
+## API
 
 ```tsx
-import { useElementPositionObserver } from "@fewings/react";
+/**
+ * @param ref - Reference to the element to observe
+ * @param onChange - Callback function called when only position changes (exactly DOMRect difference)
+ * @param active - Whether the observer should be active
+ */
+declare const useElementPositionObserver: (
+  ref: React.RefObject<HTMLElement | null>,
+  onChange: (rect: DOMRect) => void,
+  active: boolean
+) => void;
+```
+
+## Example
+
+```tsx
+import { useElementPositionObserver } from "@fewings/react/hooks";
+import { useRef, useState } from "react";
 
 function PositionTracker() {
   const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({
+    top: 0,
+    left: 0,
+    width: 0,
+    height: 0,
+  });
 
   useElementPositionObserver(
     ref,
     (rect) => {
-      console.log("Position changed:", rect);
+      setPosition({
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      });
     },
     true
   );
 
-  return <div ref={ref}>Track me!</div>;
+  return (
+    <>
+      <div
+        ref={ref}
+        style={{ width: "100px", height: "100px", background: "blue" }}
+      >
+        Track me!
+      </div>
+      <div>Position: {JSON.stringify(position)}</div>
+    </>
+  );
 }
 ```
-
-## API
-
-### Parameters
-
-| Name     | Type                                   | Description                                    |
-| -------- | -------------------------------------- | ---------------------------------------------- |
-| ref      | `React.RefObject<HTMLElement \| null>` | Reference to the element to observe            |
-| onChange | `(rect: DOMRect) => void`              | Callback function called when position changes |
-| active   | `boolean`                              | Whether the observer should be active          |

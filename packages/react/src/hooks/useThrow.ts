@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function useThrow() {
+export const useThrow = () => {
   const [_, update] = useState();
   const handleThrow = (v: Error | any) => {
     update(() => {
@@ -9,4 +9,4 @@ export default function useThrow() {
   };
 
   return handleThrow;
-}
+};

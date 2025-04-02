@@ -11,11 +11,11 @@ import { useEffect, useRef } from "react";
  * @param onChange - Callback function called when position changes
  * @param active - Whether the observer should be active
  */
-export function useElementPositionObserver(
+export const useElementPositionObserver = (
   ref: React.RefObject<HTMLElement | null>,
   onChange: (rect: DOMRect) => void,
-  active: boolean,
-) {
+  active: boolean
+) => {
   const prevRectRef = useRef<DOMRect | null>(null);
 
   useEffect(() => {
@@ -49,4 +49,4 @@ export function useElementPositionObserver(
 
     return () => cancelAnimationFrame(rafId);
   }, [ref, onChange, active]);
-}
+};

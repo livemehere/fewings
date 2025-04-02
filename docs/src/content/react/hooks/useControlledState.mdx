@@ -2,53 +2,54 @@
 
 A hook that manages both controlled and uncontrolled state. It allows components to work in both controlled and uncontrolled modes, providing flexibility in state management.
 
-## Usage
+> If your component supports both controlled and uncontrolled modes, you can use this hook to manage the state.
+> If `defaultValue` non nullable value, the component will be uncontrolled.
+
+## API
 
 ```tsx
-import { useControlledState } from "@fewings/react";
+interface TControlledState<T> {
+  value?: T;
+  defaultValue?: T;
+  onChange?: (state: T) => void;
+}
+declare const useControlledState: <T>({
+  value,
+  defaultValue,
+  onChange,
+}: TControlledState<T>) => readonly [
+  T | undefined,
+  (state: SetStateAction<T>) => void,
+];
+```
+
+## Example
+
+```tsx
+import { useControlledState } from "@fewings/react/hooks";
+import { useState } from "react";
 
 function Toggle({ value, defaultValue, onChange }) {
-  const [state, setState] = useControlledState({
+  // you'd better set default value like this for remove the warning of `value` is undefined
+  const [state = false, setState] = useControlledState({
     value,
     defaultValue,
     onChange,
   });
 
   return (
-    <button onClick={() => setState(!state)}>
-      {state ? "On" : "Off"}
-    </button>
+    <button onClick={() => setState(!state)}>{state ? "On" : "Off"}</button>
   );
 }
 
 // Controlled usage
-<Toggle value={isOn} onChange={setIsOn} />
+function App() {
+  const [isOn, setIsOn] = useState(false);
+  return <Toggle value={isOn} onChange={setIsOn} />;
+}
 
 // Uncontrolled usage
-<Toggle defaultValue={false} />
+function App() {
+  return <Toggle defaultValue={false} />;
+}
 ```
-
-## API
-
-```tsx
-const [state, setState] = useControlledState<T>({
-  value?: T,
-  defaultValue?: T,
-  onChange?: (state: T) => void,
-})
-```
-
-### Parameters
-
-| Name         | Type                 | Description                                 |
-| ------------ | -------------------- | ------------------------------------------- |
-| value        | `T`                  | Controlled value                            |
-| defaultValue | `T`                  | Default value for uncontrolled mode         |
-| onChange     | `(state: T) => void` | Callback function called when state changes |
-
-### Returns
-
-| Name     | Type                                          | Description              |
-| -------- | --------------------------------------------- | ------------------------ |
-| state    | `T`                                           | Current state value      |
-| setState | `(state: T \| ((prevState: T) => T)) => void` | Function to update state |

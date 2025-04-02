@@ -2,35 +2,36 @@
 
 A hook that detects clicks outside of a specified element. It can also exclude certain elements from triggering the outside click handler.
 
-## Usage
+## API
 
 ```tsx
-import { useClickOutside } from "@fewings/react";
+declare const useClickOutside: (
+  handler: (event: MouseEvent) => void,
+  exclude?: RefObject<HTMLElement | null>
+) => RefObject<HTMLElement | null>;
+```
+
+## Example
+
+```tsx
+import { useClickOutside } from "@fewings/react/hooks";
 
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useClickOutside(() => setIsOpen(false));
+  const excludeRef = useRef<HTMLUListElement>(null); // prevent popover element's click event from triggering the outside click handler
 
   return (
     <div ref={dropdownRef}>
       <button onClick={() => setIsOpen(!isOpen)}>Toggle Dropdown</button>
-      {isOpen && <div>Dropdown content</div>}
+      {isOpen && (
+        <ul ref={excludeRef}>
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+      )}
     </div>
   );
 }
 ```
-
-## API
-
-### Parameters
-
-| Name    | Type                             | Description                                                                  |
-| ------- | -------------------------------- | ---------------------------------------------------------------------------- |
-| handler | `(event: MouseEvent) => void`    | Callback function to call when clicking outside                              |
-| exclude | `RefObject<HTMLElement \| null>` | Optional ref to an element that should not trigger the outside click handler |
-
-### Returns
-
-| Name | Type                             | Description                                           |
-| ---- | -------------------------------- | ----------------------------------------------------- |
-| ref  | `RefObject<HTMLElement \| null>` | Ref to attach to the element to detect outside clicks |

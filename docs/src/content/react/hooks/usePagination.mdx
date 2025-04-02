@@ -2,12 +2,42 @@
 
 A hook that helps manage pagination state and calculates page numbers for pagination components. It provides utilities for handling page groups and visible page buttons.
 
-## Usage
+## API
 
 ```tsx
-import { usePagination } from "@fewings/react";
+interface UsePaginationProps {
+  /** 1 or greater */
+  currentPage: number;
+  /** 1 or greater */
+  totalPages: number;
+  maxVisiblePageButtons: number;
+}
+interface UsePaginationReturn {
+  pageNumbers: number[];
+  currentGroupIdx: number;
+  totalGroupLength: number;
+  isLastGroup: boolean;
+}
+/**
+ * values are not index, but literal page number
+ */
+declare const usePagination: ({
+  currentPage,
+  totalPages,
+  maxVisiblePageButtons,
+}: UsePaginationProps) => UsePaginationReturn;
+```
 
-function Pagination({ currentPage, totalPages, onPageChange }) {
+## Example
+
+```tsx
+import { usePagination } from "@fewings/react/hooks";
+import { useState } from "react";
+
+function PaginationExample() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 20;
+
   const { pageNumbers, currentGroupIdx, totalGroupLength, isLastGroup } =
     usePagination({
       currentPage,
@@ -17,46 +47,52 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
   return (
     <div>
-      {pageNumbers.map((page) => (
-        <button
-          key={page}
-          onClick={() => onPageChange(page)}
-          disabled={page === currentPage}
-        >
-          {page}
+      <div>
+        <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+          First
         </button>
-      ))}
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+
+        {pageNumbers.map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            style={{
+              fontWeight: page === currentPage ? "bold" : "normal",
+              margin: "0 4px",
+            }}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+        <button
+          onClick={() => setCurrentPage(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          Last
+        </button>
+      </div>
+
+      <div>
+        Page {currentPage} of {totalPages} | Group {currentGroupIdx + 1} of{" "}
+        {totalGroupLength}
+      </div>
     </div>
   );
 }
 ```
-
-## API
-
-```tsx
-const result = usePagination({
-  currentPage: number,
-  totalPages: number,
-  maxVisiblePageButtons: number,
-});
-```
-
-### Parameters
-
-| Name                  | Type     | Description                                    |
-| --------------------- | -------- | ---------------------------------------------- |
-| currentPage           | `number` | Current page number (1 or greater)             |
-| totalPages            | `number` | Total number of pages (1 or greater)           |
-| maxVisiblePageButtons | `number` | Maximum number of page buttons to show at once |
-
-### Returns
-
-| Name             | Type       | Description                               |
-| ---------------- | ---------- | ----------------------------------------- |
-| pageNumbers      | `number[]` | Array of page numbers to display          |
-| currentGroupIdx  | `number`   | Index of the current page group           |
-| totalGroupLength | `number`   | Total number of page groups               |
-| isLastGroup      | `boolean`  | Whether the current group is the last one |
 
 ```
 

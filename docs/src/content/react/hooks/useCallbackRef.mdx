@@ -5,15 +5,15 @@ A hook that creates a stable callback reference that always points to the latest
 ## API
 
 ```tsx
-const stableCallback = useCallbackRef<T extends (...args: any[]) => any>(
+declare const useCallbackRef: <T extends (...args: any[]) => any>(
   callback: T | undefined
-)
+) => T;
 ```
 
-## Usage
+## Example
 
 ```tsx
-import { useCallbackRef } from "@fewings/react";
+import { useCallbackRef } from "@fewings/react/hooks";
 
 function MyComponent({ onUpdate }) {
   const stableCallback = useCallbackRef(onUpdate);
@@ -30,15 +30,3 @@ function MyComponent({ onUpdate }) {
   return <div>Component</div>;
 }
 ```
-
-### Parameters
-
-| Name     | Type | Description |
-| -------- | ---- | ----------- | ------------------------------------------------------ |
-| callback | `T   | undefined`  | The callback function to create a stable reference for |
-
-### Returns
-
-| Name           | Type | Description                                                                                   |
-| -------------- | ---- | --------------------------------------------------------------------------------------------- |
-| stableCallback | `T`  | A stable callback reference that always points to the latest version of the provided callback |

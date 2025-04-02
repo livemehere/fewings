@@ -1,27 +1,39 @@
 # useThrow
 
-A hook that allows throwing errors within React components. It uses `useState` to trigger a re-render while throwing the error.
-
-## Usage
-
-```tsx
-import { useThrow } from "@fewings/react";
-
-function ErrorBoundary() {
-  const throwError = useThrow();
-
-  const handleError = () => {
-    throwError(new Error("Something went wrong!"));
-  };
-
-  return <button onClick={handleError}>Throw Error</button>;
-}
-```
+A hook that allows throwing errors within React components. so that trigger your `ErrorBoundary` to catch something.
 
 ## API
 
-### Returns
+```tsx
+declare const useThrow: () => (v: Error | any) => void;
+```
 
-| Name        | Type                            | Description                |
-| ----------- | ------------------------------- | -------------------------- |
-| handleThrow | `(error: Error \| any) => void` | Function to throw an error |
+## Example
+
+```tsx
+import { useThrow } from "@fewings/react/hooks";
+import { useState } from "react";
+
+function ErrorDemo() {
+  const throwError = useThrow();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleError = () => {
+    try {
+      // This will throw and be caught by an error boundary
+      throwError(new Error("Something went wrong!"));
+    } catch (e) {
+      // In practice, this code won't execute because the error is thrown
+      // But in case you want to handle errors differently
+      setErrorMessage(e.message);
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={handleError}>Throw Error</button>
+      {errorMessage && <p>Error: {errorMessage}</p>}
+    </div>
+  );
+}
+```

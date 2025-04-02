@@ -2,6 +2,45 @@
 
 A hook that provides a safe way to use `useLayoutEffect` in server-side rendering (SSR) environments. It uses `useEffect` on the server and `useLayoutEffect` on the client.
 
+## API
+
+```tsx
+declare const useIsomorphicLayoutEffect: typeof useEffect;
+```
+
+## Example
+
+```tsx
+import { useIsomorphicLayoutEffect } from "@fewings/react/hooks";
+import { useRef, useState } from "react";
+
+function MeasureComponent() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useIsomorphicLayoutEffect(() => {
+    if (ref.current) {
+      const { width, height } = ref.current.getBoundingClientRect();
+      setDimensions({ width, height });
+    }
+  }, []);
+
+  return (
+    <>
+      <div
+        ref={ref}
+        style={{ width: "100%", height: "100px", background: "#f0f0f0" }}
+      >
+        My Component
+      </div>
+      <p>
+        Component dimensions: {dimensions.width}px × {dimensions.height}px
+      </p>
+    </>
+  );
+}
+```
+
 ## Usage
 
 ```tsx
@@ -15,7 +54,3 @@ function MyComponent() {
   return <div>My Component</div>;
 }
 ```
-
-## API
-
-It has the same API as `useLayoutEffect`. For more details, see the [React documentation](https://react.dev/reference/react/useLayoutEffect).

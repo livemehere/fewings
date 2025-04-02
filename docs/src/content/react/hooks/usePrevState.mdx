@@ -2,10 +2,17 @@
 
 A hook that returns the previous state value. It uses `useRef` to store the previous value and updates it after each render.
 
-## Usage
+## API
 
 ```tsx
-import { usePrevState } from "@fewings/react";
+declare const usePrevState: <T>(state: T | undefined) => T | undefined;
+```
+
+## Example
+
+```tsx
+import { usePrevState } from "@fewings/react/hooks";
+import { useState } from "react";
 
 function MyComponent() {
   const [count, setCount] = useState(0);
@@ -14,23 +21,9 @@ function MyComponent() {
   return (
     <div>
       <p>Current count: {count}</p>
-      <p>Previous count: {prevCount}</p>
+      <p>Previous count: {prevCount ?? "No previous value"}</p>
       <button onClick={() => setCount(count + 1)}>Increment</button>
     </div>
   );
 }
 ```
-
-## API
-
-### Parameters
-
-| Name  | Type             | Description         |
-| ----- | ---------------- | ------------------- |
-| state | `T \| undefined` | Current state value |
-
-### Returns
-
-| Name      | Type             | Description          |
-| --------- | ---------------- | -------------------- |
-| prevState | `T \| undefined` | Previous state value |
