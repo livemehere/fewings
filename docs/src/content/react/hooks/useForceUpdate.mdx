@@ -1,0 +1,27 @@
+# useForceUpdate
+
+A hook that forces a component to re-render. It uses `useState` to trigger a re-render by updating an empty object.
+
+## Usage
+
+```tsx
+import { useForceUpdate } from "@fewings/react";
+
+function MyComponent() {
+  const forceUpdate = useForceUpdate();
+
+  return (
+    <div>
+      <button onClick={forceUpdate}>Force Update</button>
+    </div>
+  );
+}
+```
+
+## API
+
+### Returns
+
+| Name        | Type         | Description                             |
+| ----------- | ------------ | --------------------------------------- |
+| forceUpdate | `() => void` | Function to force a component re-render |

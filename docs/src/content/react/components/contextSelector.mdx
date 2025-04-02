@@ -1,0 +1,82 @@
+# Context Selector
+
+A utility for creating and using React contexts with selector support. It allows components to subscribe to specific parts of the context value, preventing unnecessary re-renders.
+
+## Usage
+
+```tsx
+import { createContext, useContextSelector } from "@fewings/react";
+
+// Create a context
+const UserContext = createContext({
+  name: "",
+  age: 0,
+  email: "",
+});
+
+// Create a provider component
+function UserProvider({ children }) {
+  return (
+    <UserContext.Provider
+      value={{
+        name: "John Doe",
+        age: 30,
+        email: "john@example.com",
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
+}
+
+// Use the context with selectors
+function UserName() {
+  const name = useContextSelector(UserContext, (state) => state.name);
+  return <div>{name}</div>;
+}
+
+function UserAge() {
+  const age = useContextSelector(UserContext, (state) => state.age);
+  return <div>{age}</div>;
+}
+```
+
+## API
+
+### createContext
+
+Creates a context with selector support.
+
+```tsx
+const context = createContext<T>(initialValue: T)
+```
+
+#### Parameters
+
+| Name         | Type | Description                   |
+| ------------ | ---- | ----------------------------- |
+| initialValue | `T`  | Initial value for the context |
+
+### useContextSelector
+
+A hook that subscribes to a specific part of the context value using a selector function.
+
+```tsx
+const selectedValue = useContextSelector<T, R>(
+  context: Context<T>,
+  selector: (value: T) => R
+)
+```
+
+#### Parameters
+
+| Name     | Type              | Description                                                |
+| -------- | ----------------- | ---------------------------------------------------------- |
+| context  | `Context<T>`      | The context to use                                         |
+| selector | `(value: T) => R` | Function that selects a specific part of the context value |
+
+#### Returns
+
+| Name          | Type | Description                         |
+| ------------- | ---- | ----------------------------------- |
+| selectedValue | `R`  | The selected value from the context |

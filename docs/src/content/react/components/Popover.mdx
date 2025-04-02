@@ -1,0 +1,64 @@
+# Popover
+
+A compound component that creates a popover UI element. It supports both controlled and uncontrolled modes, and can be triggered by click or hover.
+
+## Usage
+
+```tsx
+import { Popover } from "@fewings/react";
+
+function MyPopover() {
+  return (
+    <Popover.Root>
+      <Popover.Trigger>
+        <button>Open Popover</button>
+      </Popover.Trigger>
+      <Popover.Panel>
+        <div>Popover content</div>
+      </Popover.Panel>
+    </Popover.Root>
+  );
+}
+```
+
+## Components
+
+### Root
+
+The main container component that manages the popover state.
+
+#### Props
+
+| Name                | Type                   | Default   | Description                            |
+| ------------------- | ---------------------- | --------- | -------------------------------------- |
+| children            | `React.ReactNode`      | -         | Child components                       |
+| closeOnClickOutSide | `boolean`              | `true`    | Whether to close when clicking outside |
+| type                | `"click" \| "hover"`   | `"click"` | Trigger type                           |
+| open                | `boolean`              | -         | Controlled open state                  |
+| onChangeOpen        | `(v: boolean) => void` | -         | Callback when open state changes       |
+| initialOpen         | `boolean`              | -         | Initial open state                     |
+| disabled            | `boolean`              | -         | Whether the popover is disabled        |
+
+### Trigger
+
+The element that triggers the popover.
+
+#### Props
+
+| Name     | Type                 | Description         |
+| -------- | -------------------- | ------------------- |
+| children | `React.ReactElement` | The trigger element |
+
+### Panel
+
+The content container that appears when the popover is open.
+
+#### Props
+
+| Name     | Type                  | Default         | Description                                   |
+| -------- | --------------------- | --------------- | --------------------------------------------- |
+| children | `React.ReactNode`     | -               | Panel content                                 |
+| anchor   | `Anchor`              | `"bottom-left"` | Position of the panel relative to the trigger |
+| zIndex   | `number`              | `99`            | CSS z-index value                             |
+| portal   | `boolean`             | `true`          | Whether to render in a portal                 |
+| wrapper  | `React.ComponentType` | -               | Custom wrapper component                      |

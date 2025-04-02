@@ -1,0 +1,28 @@
+# Space
+
+A utility component for adding fixed dimensions of space in layouts. It can be used to create horizontal or vertical spacing between elements.
+
+## Usage
+
+```tsx
+import { Space } from "@fewings/react";
+
+function Layout() {
+  return (
+    <div>
+      <div>First element</div>
+      <Space y={16} />
+      <div>Second element</div>
+      <Space x={32} />
+      <div>Third element</div>
+    </div>
+  );
+}
+```
+
+## Props
+
+| Name | Type               | Description         |
+| ---- | ------------------ | ------------------- |
+| x    | `string \| number` | Width of the space  |
+| y    | `string \| number` | Height of the space |

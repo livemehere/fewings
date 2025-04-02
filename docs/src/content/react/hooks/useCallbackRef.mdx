@@ -1,0 +1,44 @@
+# useCallbackRef
+
+A hook that creates a stable callback reference that always points to the latest version of the provided callback function. This is useful for preventing stale closures in event handlers and callbacks.
+
+## API
+
+```tsx
+const stableCallback = useCallbackRef<T extends (...args: any[]) => any>(
+  callback: T | undefined
+)
+```
+
+## Usage
+
+```tsx
+import { useCallbackRef } from "@fewings/react";
+
+function MyComponent({ onUpdate }) {
+  const stableCallback = useCallbackRef(onUpdate);
+
+  useEffect(() => {
+    // The callback will always be up to date
+    const interval = setInterval(() => {
+      stableCallback();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []); // No need to include onUpdate in dependencies
+
+  return <div>Component</div>;
+}
+```
+
+### Parameters
+
+| Name     | Type | Description |
+| -------- | ---- | ----------- | ------------------------------------------------------ |
+| callback | `T   | undefined`  | The callback function to create a stable reference for |
+
+### Returns
+
+| Name           | Type | Description                                                                                   |
+| -------------- | ---- | --------------------------------------------------------------------------------------------- |
+| stableCallback | `T`  | A stable callback reference that always points to the latest version of the provided callback |

@@ -1,0 +1,36 @@
+# usePrevState
+
+A hook that returns the previous state value. It uses `useRef` to store the previous value and updates it after each render.
+
+## Usage
+
+```tsx
+import { usePrevState } from "@fewings/react";
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+  const prevCount = usePrevState(count);
+
+  return (
+    <div>
+      <p>Current count: {count}</p>
+      <p>Previous count: {prevCount}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+## API
+
+### Parameters
+
+| Name  | Type             | Description         |
+| ----- | ---------------- | ------------------- |
+| state | `T \| undefined` | Current state value |
+
+### Returns
+
+| Name      | Type             | Description          |
+| --------- | ---------------- | -------------------- |
+| prevState | `T \| undefined` | Previous state value |

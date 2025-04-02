@@ -1,0 +1,27 @@
+# useThrow
+
+A hook that allows throwing errors within React components. It uses `useState` to trigger a re-render while throwing the error.
+
+## Usage
+
+```tsx
+import { useThrow } from "@fewings/react";
+
+function ErrorBoundary() {
+  const throwError = useThrow();
+
+  const handleError = () => {
+    throwError(new Error("Something went wrong!"));
+  };
+
+  return <button onClick={handleError}>Throw Error</button>;
+}
+```
+
+## API
+
+### Returns
+
+| Name        | Type                            | Description                |
+| ----------- | ------------------------------- | -------------------------- |
+| handleThrow | `(error: Error \| any) => void` | Function to throw an error |

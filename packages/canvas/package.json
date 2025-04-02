@@ -30,6 +30,16 @@
     "publish": "pnpm publish --access public --no-git-checks"
   },
   "exports": {
+    "./utils": {
+      "import": {
+        "default": "./dist/utils/index.mjs",
+        "types": "./dist/utils/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/utils/index.js",
+        "types": "./dist/utils/index.d.ts"
+      }
+    },
     ".": {
       "import": {
         "default": "./dist/index.mjs",

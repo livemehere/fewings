@@ -1,0 +1,21 @@
+# useIsomorphicLayoutEffect
+
+A hook that provides a safe way to use `useLayoutEffect` in server-side rendering (SSR) environments. It uses `useEffect` on the server and `useLayoutEffect` on the client.
+
+## Usage
+
+```tsx
+import { useIsomorphicLayoutEffect } from "@fewings/react";
+
+function MyComponent() {
+  useIsomorphicLayoutEffect(() => {
+    // DOM manipulation or layout measurements
+  }, []);
+
+  return <div>My Component</div>;
+}
+```
+
+## API
+
+It has the same API as `useLayoutEffect`. For more details, see the [React documentation](https://react.dev/reference/react/useLayoutEffect).

@@ -1,0 +1,30 @@
+# Float
+
+A component for positioning elements using CSS positioning properties. It supports absolute, fixed, relative, and sticky positioning.
+
+## Usage
+
+```tsx
+import { Float } from "@fewings/react";
+
+function FloatingElement() {
+  return (
+    <Float position="fixed" top={20} right={20} zIndex={100}>
+      <div>Floating content</div>
+    </Float>
+  );
+}
+```
+
+## Props
+
+| Name     | Type                                              | Default      | Description              |
+| -------- | ------------------------------------------------- | ------------ | ------------------------ |
+| children | `React.ReactNode`                                 | -            | Child components         |
+| position | `"absolute" \| "fixed" \| "relative" \| "sticky"` | `"absolute"` | CSS position value       |
+| top      | `number \| string`                                | -            | Distance from the top    |
+| right    | `number \| string`                                | -            | Distance from the right  |
+| bottom   | `number \| string`                                | -            | Distance from the bottom |
+| left     | `number \| string`                                | -            | Distance from the left   |
+| zIndex   | `number`                                          | -            | CSS z-index value        |
+| as       | `keyof JSX.IntrinsicElements`                     | `"div"`      | HTML element to render   |

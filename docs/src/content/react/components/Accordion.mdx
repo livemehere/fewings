@@ -1,0 +1,59 @@
+# Accordion
+
+A compound component that creates an accordion UI element. It supports both controlled and uncontrolled modes for managing the open/closed state.
+
+## Usage
+
+```tsx
+import { Accordion } from "@fewings/react";
+
+function MyAccordion() {
+  return (
+    <Accordion.Root>
+      <Accordion.Trigger>
+        <button>Toggle Accordion</button>
+      </Accordion.Trigger>
+      <Accordion.Panel>
+        <div>Accordion content</div>
+      </Accordion.Panel>
+    </Accordion.Root>
+  );
+}
+```
+
+## Components
+
+### Root
+
+The main container component that manages the accordion state.
+
+#### Props
+
+| Name         | Type                   | Default | Description                       |
+| ------------ | ---------------------- | ------- | --------------------------------- |
+| children     | `React.ReactNode`      | -       | Child components                  |
+| open         | `boolean`              | -       | Controlled open state             |
+| onChangeOpen | `(v: boolean) => void` | -       | Callback when open state changes  |
+| initialOpen  | `boolean`              | `false` | Initial open state                |
+| disabled     | `boolean`              | -       | Whether the accordion is disabled |
+
+### Trigger
+
+The element that toggles the accordion.
+
+#### Props
+
+| Name     | Type                 | Description         |
+| -------- | -------------------- | ------------------- |
+| children | `React.ReactElement` | The trigger element |
+
+### Panel
+
+The content container that appears when the accordion is open.
+
+#### Props
+
+| Name     | Type                  | Description              |
+| -------- | --------------------- | ------------------------ |
+| children | `React.ReactNode`     | Panel content            |
+| wrapper  | `React.ComponentType` | Custom wrapper component |

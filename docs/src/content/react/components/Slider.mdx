@@ -1,0 +1,88 @@
+# Slider
+
+A compound component for creating slider controls. It supports both horizontal and vertical orientations, and provides controlled and uncontrolled modes.
+
+## Usage
+
+```tsx
+import { Slider } from "@fewings/react";
+
+function MySlider() {
+  return (
+    <Slider.Root
+      value={50}
+      onChange={(value) => console.log(value)}
+      min={0}
+      max={100}
+      step={1}
+      dir="horizontal"
+    >
+      <Slider.Track>
+        {({ ratio }) => (
+          <div style={{ width: "200px", height: "4px", background: "#eee" }}>
+            <div
+              style={{
+                width: `${ratio * 100}%`,
+                height: "100%",
+                background: "#000",
+              }}
+            />
+          </div>
+        )}
+      </Slider.Track>
+      <Slider.Thumb>
+        {({ isDragging }) => (
+          <div
+            style={{
+              width: "16px",
+              height: "16px",
+              background: isDragging ? "#000" : "#fff",
+              border: "1px solid #000",
+              borderRadius: "50%",
+            }}
+          />
+        )}
+      </Slider.Thumb>
+    </Slider.Root>
+  );
+}
+```
+
+## Components
+
+### Root
+
+The main container component that manages the slider state.
+
+#### Props
+
+| Name     | Type                         | Description                    |
+| -------- | ---------------------------- | ------------------------------ |
+| children | `React.ReactNode`            | Child components               |
+| value    | `number`                     | Current value                  |
+| onChange | `(value: number) => void`    | Callback when value changes    |
+| min      | `number`                     | Minimum value                  |
+| max      | `number`                     | Maximum value                  |
+| step     | `number`                     | Step value for increments      |
+| disabled | `boolean`                    | Whether the slider is disabled |
+| dir      | `"horizontal" \| "vertical"` | Slider orientation             |
+
+### Track
+
+The track component that shows the slider's range.
+
+#### Props
+
+| Name     | Type                                                                             | Description                       |
+| -------- | -------------------------------------------------------------------------------- | --------------------------------- |
+| children | `(props: { value: number; ratio: number; isDragging: boolean }) => ReactElement` | Render function for track content |
+
+### Thumb
+
+The draggable thumb component.
+
+#### Props
+
+| Name     | Type                                                                             | Description                       |
+| -------- | -------------------------------------------------------------------------------- | --------------------------------- |
+| children | `(props: { value: number; ratio: number; isDragging: boolean }) => ReactElement` | Render function for thumb content |

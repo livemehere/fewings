@@ -1,0 +1,36 @@
+# useClickOutside
+
+A hook that detects clicks outside of a specified element. It can also exclude certain elements from triggering the outside click handler.
+
+## Usage
+
+```tsx
+import { useClickOutside } from "@fewings/react";
+
+function Dropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useClickOutside(() => setIsOpen(false));
+
+  return (
+    <div ref={dropdownRef}>
+      <button onClick={() => setIsOpen(!isOpen)}>Toggle Dropdown</button>
+      {isOpen && <div>Dropdown content</div>}
+    </div>
+  );
+}
+```
+
+## API
+
+### Parameters
+
+| Name    | Type                             | Description                                                                  |
+| ------- | -------------------------------- | ---------------------------------------------------------------------------- |
+| handler | `(event: MouseEvent) => void`    | Callback function to call when clicking outside                              |
+| exclude | `RefObject<HTMLElement \| null>` | Optional ref to an element that should not trigger the outside click handler |
+
+### Returns
+
+| Name | Type                             | Description                                           |
+| ---- | -------------------------------- | ----------------------------------------------------- |
+| ref  | `RefObject<HTMLElement \| null>` | Ref to attach to the element to detect outside clicks |

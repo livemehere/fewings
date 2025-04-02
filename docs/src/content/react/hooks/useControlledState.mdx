@@ -1,0 +1,54 @@
+# useControlledState
+
+A hook that manages both controlled and uncontrolled state. It allows components to work in both controlled and uncontrolled modes, providing flexibility in state management.
+
+## Usage
+
+```tsx
+import { useControlledState } from "@fewings/react";
+
+function Toggle({ value, defaultValue, onChange }) {
+  const [state, setState] = useControlledState({
+    value,
+    defaultValue,
+    onChange,
+  });
+
+  return (
+    <button onClick={() => setState(!state)}>
+      {state ? "On" : "Off"}
+    </button>
+  );
+}
+
+// Controlled usage
+<Toggle value={isOn} onChange={setIsOn} />
+
+// Uncontrolled usage
+<Toggle defaultValue={false} />
+```
+
+## API
+
+```tsx
+const [state, setState] = useControlledState<T>({
+  value?: T,
+  defaultValue?: T,
+  onChange?: (state: T) => void,
+})
+```
+
+### Parameters
+
+| Name         | Type                 | Description                                 |
+| ------------ | -------------------- | ------------------------------------------- |
+| value        | `T`                  | Controlled value                            |
+| defaultValue | `T`                  | Default value for uncontrolled mode         |
+| onChange     | `(state: T) => void` | Callback function called when state changes |
+
+### Returns
+
+| Name     | Type                                          | Description              |
+| -------- | --------------------------------------------- | ------------------------ |
+| state    | `T`                                           | Current state value      |
+| setState | `(state: T \| ((prevState: T) => T)) => void` | Function to update state |

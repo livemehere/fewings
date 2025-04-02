@@ -1,0 +1,63 @@
+# usePagination
+
+A hook that helps manage pagination state and calculates page numbers for pagination components. It provides utilities for handling page groups and visible page buttons.
+
+## Usage
+
+```tsx
+import { usePagination } from "@fewings/react";
+
+function Pagination({ currentPage, totalPages, onPageChange }) {
+  const { pageNumbers, currentGroupIdx, totalGroupLength, isLastGroup } =
+    usePagination({
+      currentPage,
+      totalPages,
+      maxVisiblePageButtons: 5,
+    });
+
+  return (
+    <div>
+      {pageNumbers.map((page) => (
+        <button
+          key={page}
+          onClick={() => onPageChange(page)}
+          disabled={page === currentPage}
+        >
+          {page}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+## API
+
+```tsx
+const result = usePagination({
+  currentPage: number,
+  totalPages: number,
+  maxVisiblePageButtons: number,
+});
+```
+
+### Parameters
+
+| Name                  | Type     | Description                                    |
+| --------------------- | -------- | ---------------------------------------------- |
+| currentPage           | `number` | Current page number (1 or greater)             |
+| totalPages            | `number` | Total number of pages (1 or greater)           |
+| maxVisiblePageButtons | `number` | Maximum number of page buttons to show at once |
+
+### Returns
+
+| Name             | Type       | Description                               |
+| ---------------- | ---------- | ----------------------------------------- |
+| pageNumbers      | `number[]` | Array of page numbers to display          |
+| currentGroupIdx  | `number`   | Index of the current page group           |
+| totalGroupLength | `number`   | Total number of page groups               |
+| isLastGroup      | `boolean`  | Whether the current group is the last one |
+
+```
+
+```

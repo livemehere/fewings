@@ -1,0 +1,53 @@
+# useDragPosition
+
+A hook that enables drag functionality for elements. It provides controlled and uncontrolled modes for both dragging state and position style.
+
+## Usage
+
+```tsx
+import { useDragPosition } from "@fewings/react";
+
+function DraggableElement() {
+  const { style, isDragging, handleRef, boundRef } = useDragPosition({
+    dir: "xy",
+    defaultStyle: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+    },
+  });
+
+  return (
+    <div
+      ref={boundRef}
+      style={{ position: "relative", width: 500, height: 500 }}
+    >
+      <div ref={handleRef} style={style}>
+        Drag me!
+      </div>
+    </div>
+  );
+}
+```
+
+## API
+
+### Parameters
+
+| Name             | Type                            | Description                           |
+| ---------------- | ------------------------------- | ------------------------------------- |
+| dir              | `"x" \| "y" \| "xy"`            | Direction of dragging (default: "xy") |
+| style            | `DragStyle`                     | Controlled position style             |
+| defaultStyle     | `DragStyle`                     | Initial position style                |
+| onChangeStyle    | `(style: DragStyle) => void`    | Callback when style changes           |
+| isDragging       | `boolean`                       | Controlled dragging state             |
+| onChangeDragging | `(isDragging: boolean) => void` | Callback when dragging state changes  |
+
+### Returns
+
+| Name       | Type                     | Description                   |
+| ---------- | ------------------------ | ----------------------------- |
+| style      | `DragStyle`              | Current position style        |
+| isDragging | `boolean`                | Current dragging state        |
+| handleRef  | `RefObject<HTMLElement>` | Ref for the draggable element |
+| boundRef   | `RefObject<HTMLElement>` | Ref for the boundary element  |

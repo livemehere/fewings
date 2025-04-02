@@ -1,0 +1,36 @@
+# useInterval
+
+A hook that sets up an interval to call a callback function at a specified delay. The interval is automatically cleaned up when the component unmounts.
+
+## Usage
+
+```tsx
+import { useInterval } from "@fewings/react";
+
+function Timer() {
+  const [count, setCount] = useState(0);
+
+  useInterval(() => {
+    setCount(count + 1);
+  }, 1000); // Call every 1 second
+
+  return <div>{count}</div>;
+}
+```
+
+## API
+
+```tsx
+useInterval(callback: () => void, delay: number)
+```
+
+### Parameters
+
+| Name     | Type         | Description                             |
+| -------- | ------------ | --------------------------------------- |
+| callback | `() => void` | Function to be called on each interval  |
+| delay    | `number`     | Delay in milliseconds between each call |
+
+### Returns
+
+`void`
