@@ -50,7 +50,7 @@ export class TransformHelper {
       axis,
     }: {
       axis: TAxis;
-    }
+    },
   ) {
     let startX: number;
     let startY: number;

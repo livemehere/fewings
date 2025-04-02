@@ -76,7 +76,7 @@ export class Frame extends Container {
       bounds.left,
       bounds.top,
       bounds.right - bounds.left,
-      bounds.bottom - bounds.top
+      bounds.bottom - bounds.top,
     );
     ctx.closePath();
     ctx.fill();
@@ -91,7 +91,7 @@ export class Frame extends Container {
       bounds.left,
       bounds.top,
       bounds.right - bounds.left,
-      bounds.bottom - bounds.top
+      bounds.bottom - bounds.top,
     );
     ctx.closePath();
     ctx.fill();

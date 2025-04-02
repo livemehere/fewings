@@ -15,7 +15,7 @@ export abstract class Shape extends CNode implements IShape {
     x: number,
     y: number,
     width: number,
-    height: number
+    height: number,
   ): IPoint[];
 
   override get x(): number {

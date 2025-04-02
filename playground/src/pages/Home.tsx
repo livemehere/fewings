@@ -54,12 +54,12 @@ const Home = () => {
       listeners.push(
         rect.on("pointerenter", (e) => {
           e.target.fillStyle = "green";
-        })
+        }),
       );
       listeners.push(
         rect.on("pointerleave", (e) => {
           e.target.fillStyle = "black";
-        })
+        }),
       );
 
       listeners.push(TransformHelper.draggable(app, rect, "xy"));

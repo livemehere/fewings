@@ -13,7 +13,7 @@ export class Rect extends Shape {
     x: number,
     y: number,
     width: number,
-    height: number
+    height: number,
   ): IPoint[] {
     return VerticesHelper.createBoxVertices(x, y, width, height);
   }
