@@ -1,6 +1,7 @@
 export * from "./DummyArea";
 export * from "./Grid";
 export * from "./Popover";
+export * from "./ToolTip";
 
 export * from "./Accordion";
 export * from "./Slider";
