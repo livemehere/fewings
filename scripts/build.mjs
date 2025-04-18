@@ -9,7 +9,7 @@ const EXTERNAL_DEPENDENCIES = ["@fewings/*"];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>
-  resolve(__dirname, `../${pkg}`),
+  resolve(__dirname, `../${pkg}`)
 );
 
 const tasks = [];
@@ -35,7 +35,8 @@ function getEntries(pkg) {
 }
 
 function createEsbuildConfig(entries, outDir, pkg) {
-  return {
+  /** @type{esbuild.BuildOptions} */
+  const config = {
     entryPoints: entries,
     outdir: outDir,
     bundle: true,
@@ -44,7 +45,9 @@ function createEsbuildConfig(entries, outDir, pkg) {
     outbase: join(pkg, "src"),
     packages: "external",
     resolveExtensions: [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"],
+    minify: true,
   };
+  return config;
 }
 
 async function buildWithEsbuild(entries, outDir, pkg) {
@@ -143,8 +146,8 @@ async function processPackage(pkg) {
   tasks.push(
     buildWithTsup(
       entries.map((entry) => entry.replace(/\\/g, "/")),
-      outDir,
-    ),
+      outDir
+    )
   );
 
   // Update package.json exports
