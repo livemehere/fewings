@@ -21,10 +21,13 @@ export default function DummyArea({
   height = "100%",
   theme = "light",
   children,
-}: Props) {
+  style,
+  ...props
+}: Props & React.ComponentProps<"div">) {
   const { background, color } = COLOR_MAP[theme];
   return (
     <div
+      {...props}
       style={{
         width,
         height,
@@ -44,6 +47,7 @@ export default function DummyArea({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        ...style,
       }}
     >
       {children}
