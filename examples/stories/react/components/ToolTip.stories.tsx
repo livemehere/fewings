@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { ToolTip } from "@fewings/react/components";
+import { DummyArea, ToolTip } from "@fewings/react/components";
 
 const meta: Meta<typeof ToolTip> = {
   title: "react/components/ToolTip",
@@ -16,17 +16,9 @@ const meta: Meta<typeof ToolTip> = {
   tags: ["autodocs"],
   args: {
     children: (
-      <button
-        style={{
-          border: "none",
-          background: "#2387d8",
-          color: "#fff",
-          padding: 10,
-          borderRadius: 4,
-        }}
-      >
-        KONG
-      </button>
+      <DummyArea width={100} height={80}>
+        Hover me
+      </DummyArea>
     ),
     content: (
       <div
@@ -48,28 +40,29 @@ const meta: Meta<typeof ToolTip> = {
   },
   argTypes: {
     children: {
-      description: "Trigger element",
+      description: "ReactNode",
       control: false,
     },
     content: {
-      description: "Content to display in the tooltip",
+      description: "ReactNode",
       control: false,
     },
     dir: {
-      description: "Direction of the tooltip",
+      description: "Direction of the tooltip content",
       control: "select",
       options: ["top", "bottom", "left", "right"],
     },
     arrowColor: {
-      description: "Tooltip arrow color",
       control: "color",
+      description: "Color of the arrow. Match with the content background",
     },
     open: {
       description: "Controlled open state",
       control: "boolean",
     },
     gap: {
-      description: "Gap between the content and the trigger",
+      description:
+        "Gap between the content and the trigger (use this or use `padding`, `margin` on your content)",
       control: "number",
     },
   },
