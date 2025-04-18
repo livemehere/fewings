@@ -1,28 +1,24 @@
-import { ComponentType, Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 
-export interface OverlayBaseProps {
-  close: () => void;
-  resolve: <Result = any>(v: Result) => void;
-  reject: <Reason = any>(reason: Reason) => void;
+export interface OverlayBaseProps<Resolve> {
+  resolve: (v: Resolve) => void;
+  reject: (reason: any) => void;
 }
 
 export interface OverlayOptions {
-  onClickOutsideClose?: boolean;
-  disableScroll?: boolean;
-  enableInsideScroll?: boolean;
-  errorOnClose?: boolean;
+  closeOnClickOutside?: boolean;
 }
 
-export interface OverlayItem<P = any> extends OverlayBaseProps {
+export interface OverlayItem<Resolve> {
   id: number;
-  component: ComponentType<P>;
-  props: P;
+  render: (props: OverlayBaseProps<Resolve>) => ReactNode;
+  resolve: (v: Resolve) => void;
+  reject: (reason: any) => void;
   options?: OverlayOptions;
 }
 
 export interface OverlayContextProps {
-  items: OverlayItem[];
-  setItems: Dispatch<SetStateAction<OverlayItem[]>>;
+  items: OverlayItem<any>[];
+  setItems: Dispatch<SetStateAction<OverlayItem<any>[]>>;
   idRef: { current: number };
-  errorOnClose: boolean;
 }

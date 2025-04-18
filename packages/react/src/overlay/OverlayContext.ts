@@ -5,5 +5,4 @@ export const OverlayContext = createContext<OverlayContextProps>({
   items: [],
   setItems: () => {},
   idRef: { current: 0 },
-  errorOnClose: false,
 });
