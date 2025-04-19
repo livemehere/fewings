@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Accordion, DummyArea } from "@fewings/react/components";
+import { Accordion, DummyArea, Space } from "@fewings/react/components";
 
 type ArgsType = React.ComponentProps<typeof Accordion.Root>;
 
@@ -48,6 +48,8 @@ export const Basic: Story = {
           <DummyArea height={200}>Accordion.Panel</DummyArea>
         </Accordion.Panel>
       </Accordion.Root>
+      <Space y={20} />
+      <DummyArea height={80}>Other Content</DummyArea>
     </div>
   ),
 };

@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Accordion, DummyArea, Float, Slider } from "@fewings/react/components";
+import { DummyArea, Float, Slider } from "@fewings/react/components";
 import { useState } from "react";
 
-type ArgsType = React.ComponentProps<typeof Accordion.Root>;
+type ArgsType = React.ComponentProps<typeof Slider.Root>;
 
 const meta: Meta<ArgsType> = {
   title: "react/components/Slider",
@@ -16,7 +16,11 @@ const meta: Meta<ArgsType> = {
     },
   },
   tags: ["autodocs"],
-  args: {},
+  args: {
+    min: 0,
+    max: 100,
+    step: 1,
+  },
   argTypes: {},
 };
 
@@ -27,14 +31,7 @@ export const Basic: Story = {
   render: (args) => {
     const [v, setV] = useState(0);
     return (
-      <Slider.Root
-        value={v}
-        min={0}
-        max={100}
-        step={1}
-        setValue={setV}
-        dir="horizontal"
-      >
+      <Slider.Root {...args} value={v} setValue={setV} dir="horizontal">
         <Slider.Track>
           {({ value, ratio }) => (
             <DummyArea
