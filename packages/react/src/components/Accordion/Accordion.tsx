@@ -1,5 +1,4 @@
 import React, { useContext, cloneElement, Children } from "react";
-import { Wrappable } from "@fewings/react/types";
 import { useControlledState } from "@fewings/react/hooks";
 import { AccordionContext } from "./AccordionContext";
 
@@ -49,7 +48,10 @@ Trigger.displayName = "AccordionTrigger";
 const Panel = ({
   children,
   wrapper,
-}: { children: React.ReactNode } & Wrappable) => {
+}: {
+  children: React.ReactNode;
+  wrapper?: React.ComponentType;
+}) => {
   const Wrapper = wrapper || React.Fragment;
   const { open } = useContext(AccordionContext);
   return <Wrapper>{open && children}</Wrapper>;
