@@ -1,7 +1,7 @@
 import { transpileConstMap, transpileIconComponent } from "./transpile.mjs";
 import fs from "fs";
 import path from "path";
-import { getRelativePath } from "@fewings/core/path";
+import { resolveRelativeImportPath } from "@fewings/core/path";
 
 /**
  *
@@ -28,7 +28,7 @@ export function build(options) {
 
   // Read all files and folders recursively
   const svgFilesWithKeys = readFilesRecursively(svgDirPath);
-  const relPathFromOutDir = getRelativePath(outDirPath, svgDirPath);
+  const relPathFromOutDir = resolveRelativeImportPath(outDirPath, svgDirPath);
 
   if (!fs.existsSync(outDirPath)) {
     fs.mkdirSync(outDirPath, { recursive: true });
@@ -42,14 +42,14 @@ export function build(options) {
       importBase: svgImportBase ?? relPathFromOutDir,
       constName,
       typeName,
-    }),
+    })
   );
 
   // Create icon component file
   if (componentName) {
     fs.writeFileSync(
       `${outDirPath}/${componentName}.tsx`,
-      transpileIconComponent({ constName, componentName, typeName }),
+      transpileIconComponent({ constName, componentName, typeName })
     );
   }
 }
