@@ -68,6 +68,7 @@ async function buildWithEsbuild(entries, outDir, pkg) {
 }
 
 async function buildWithTsup(entries, outDir) {
+  console.log("entries", entries);
   await tsup.build({
     entry: entries,
     format: ["cjs", "esm"],
@@ -77,7 +78,16 @@ async function buildWithTsup(entries, outDir) {
     external: EXTERNAL_DEPENDENCIES,
     logLevel: "silent",
   });
-  console.log(`TSC: TypeScript build completed`);
+  console.log("---------");
+  console.log(
+    `TSC: ${entries
+      .map((e) => {
+        const depths = e.split("/");
+        const srcIdx = depths.indexOf("src");
+        return depths.slice(srcIdx - 1).join("/");
+      })
+      .join("\n")} build completed`
+  );
 }
 
 async function updatePackageJsonExports(pkg, entries) {
