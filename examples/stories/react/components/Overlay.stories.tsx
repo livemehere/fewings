@@ -1,3 +1,4 @@
+import { DummyArea } from "@fewings/react/components";
 import { OverlayProvider, useOverlay } from "@fewings/react/overlay";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -30,12 +31,20 @@ const OverlayExample = () => {
             left: "50%",
             top: "50%",
             transform: "translate(-50%,-50%)",
+            textAlign: "center",
           }}
         >
           <h1>Modal</h1>
           <p>Name: John Doe</p>
           <p>Age: 30</p>
-          <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              marginTop: "20px",
+              justifyContent: "center",
+            }}
+          >
             <button onClick={() => resolve("Success!")}>Confirm</button>
             <button onClick={() => reject("Cancel")}>Close</button>
           </div>
@@ -47,8 +56,12 @@ const OverlayExample = () => {
   };
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Overlay Example</h2>
-      <button onClick={handleOpen}>Open Modal</button>
+      <DummyArea
+        onClick={handleOpen}
+        style={{ width: 150, height: 60, padding: 12, cursor: "pointer" }}
+      >
+        Click to Open Modal
+      </DummyArea>
     </div>
   );
 };
