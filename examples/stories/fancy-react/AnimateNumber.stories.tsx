@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { withCommas } from "@fewings/core/converter";
-import { AnimateNumber } from "@fewings/fancy-react";
+import { AnimateNumber } from "@fewings/fancy-react/AnimateNumber";
 
 const meta: Meta<typeof AnimateNumber> = {
   title: "fancy-react/AnimateNumber",
