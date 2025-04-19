@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { TOOLTIP_DEFAULT_OPTIONS, ToolTipOptions } from "./schema";
+import { TOOLTIP_DEFAULT_OPTIONS, TToolTipOptions } from "./schema";
 
 const ROTATE_MAP = {
   top: 180,
@@ -8,7 +8,7 @@ const ROTATE_MAP = {
   right: 270,
 };
 
-export function useTooltip(options: ToolTipOptions = {}) {
+export function useTooltip(options: TToolTipOptions = {}) {
   const mergedOptions = useMemo(() => {
     const filteredOptions = Object.fromEntries(
       Object.entries(options).filter(

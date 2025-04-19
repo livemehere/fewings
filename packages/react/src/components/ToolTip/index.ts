@@ -1,3 +1,3 @@
-export type { ToolTipDirection, ToolTipOptions } from "./schema";
+export type { TToolTipDirection, TToolTipOptions } from "./schema";
 
 export { default as ToolTip } from "./ToolTip";

@@ -1,8 +1,8 @@
 import { useTooltip } from "./useTooltip";
-import { ToolTipOptions } from "./schema";
+import { TToolTipOptions } from "./schema";
 import { Popover } from "../Popover";
 
-interface Props extends ToolTipOptions {
+interface Props extends TToolTipOptions {
   children: React.ReactElement;
   content: React.ReactNode;
   open?: boolean;
