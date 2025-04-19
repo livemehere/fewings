@@ -8,7 +8,7 @@ interface Props extends TToolTipOptions {
   open?: boolean;
 }
 
-export default function ToolTip({
+export function ToolTip({
   children,
   content,
   open,

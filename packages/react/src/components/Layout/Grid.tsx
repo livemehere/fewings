@@ -11,7 +11,7 @@ const GridContext = createContext<{
   colGap?: number;
 }>({ rowGap: 0, colGap: 0 });
 
-export default function Grid({
+export function Grid({
   children,
   className,
   style,

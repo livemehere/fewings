@@ -1,1 +1,1 @@
-export { default as DummyArea } from "./DummyArea";
+export * from "./DummyArea";

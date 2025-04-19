@@ -9,7 +9,7 @@ interface Props {
   containerClassName?: string;
 }
 
-export default function OverlayProvider({
+export function OverlayProvider({
   children,
   containerStyle,
   containerClassName,

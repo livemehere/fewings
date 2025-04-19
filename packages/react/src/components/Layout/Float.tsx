@@ -1,5 +1,3 @@
-import { resolveCssValue } from "@fewings/core/converter";
-
 type Props<T extends keyof React.JSX.IntrinsicElements> =
   React.PropsWithChildren<{
     position?: "absolute" | "fixed" | "relative" | "sticky";
@@ -12,7 +10,7 @@ type Props<T extends keyof React.JSX.IntrinsicElements> =
   }> &
     React.ComponentProps<"div">;
 
-export const Float = <T extends keyof React.JSX.IntrinsicElements>({
+export function Float<T extends keyof React.JSX.IntrinsicElements>({
   children,
   position = "absolute",
   top,
@@ -23,16 +21,16 @@ export const Float = <T extends keyof React.JSX.IntrinsicElements>({
   style = {},
   as = "div" as T,
   ...props
-}: Props<T>) => {
+}: Props<T>) {
   const Tag: any = as;
   return (
     <Tag
       style={{
         position,
-        top: top ? resolveCssValue(top) : undefined,
-        right: right ? resolveCssValue(right) : undefined,
-        bottom: bottom ? resolveCssValue(bottom) : undefined,
-        left: left ? resolveCssValue(left) : undefined,
+        top,
+        right,
+        bottom,
+        left,
         zIndex,
         ...style,
       }}
@@ -41,4 +39,4 @@ export const Float = <T extends keyof React.JSX.IntrinsicElements>({
       {children}
     </Tag>
   );
-};
+}

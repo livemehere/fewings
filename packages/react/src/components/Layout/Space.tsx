@@ -1,10 +1,4 @@
-export const Space = ({
-  x,
-  y,
-}: {
-  x?: string | number;
-  y?: string | number;
-}) => {
+export function Space({ x, y }: { x?: string | number; y?: string | number }) {
   return (
     <div
       style={{
@@ -17,4 +11,4 @@ export const Space = ({
       }}
     />
   );
-};
+}

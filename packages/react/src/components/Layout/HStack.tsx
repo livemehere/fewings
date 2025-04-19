@@ -1,5 +1,3 @@
-import { resolveCssValue } from "@fewings/core/converter";
-
 type Props<T extends keyof React.JSX.IntrinsicElements> =
   React.PropsWithChildren<{
     inline?: boolean;
@@ -17,7 +15,7 @@ type Props<T extends keyof React.JSX.IntrinsicElements> =
   }> &
     React.ComponentProps<"div">;
 
-export const HStack = <T extends keyof React.JSX.IntrinsicElements>({
+export function HStack<T extends keyof React.JSX.IntrinsicElements>({
   inline,
   children,
   gap = 0,
@@ -27,17 +25,17 @@ export const HStack = <T extends keyof React.JSX.IntrinsicElements>({
   style = {},
   as = "div" as T,
   ...props
-}: Props<T>) => {
+}: Props<T>) {
   const Tag: any = as;
   return (
     <Tag
       style={{
         display: inline ? "inline-flex" : "flex",
         flexDirection: "row",
-        gap: resolveCssValue(gap),
+        gap,
         alignItems: align,
         justifyContent: justify,
-        padding: padding ? resolveCssValue(padding) : undefined,
+        padding,
         ...style,
       }}
       {...props}
@@ -45,4 +43,4 @@ export const HStack = <T extends keyof React.JSX.IntrinsicElements>({
       {children}
     </Tag>
   );
-};
+}

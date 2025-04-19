@@ -3,7 +3,7 @@ import { OverlayContext } from "./OverlayContext";
 import { OverlayOptions, OverlayBaseProps, OverlayItem } from "./types";
 import { useContextSelector } from "@fewings/react/contextSelector";
 
-export default function useOverlay() {
+export function useOverlay() {
   const setItems = useContextSelector(OverlayContext, (v) => v.setItems);
   const idRef = useContextSelector(OverlayContext, (v) => v.idRef);
 
