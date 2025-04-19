@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { parse, stringify } from ".";
 
-describe("qs core", () => {
+describe("core/qs", () => {
   it("parse string to object", () => {
     const searchStr =
       "?name=kong&idx=3%2C4&serviceId=430011481&serverId=5&placementId=1";
@@ -44,7 +44,7 @@ describe("qs core", () => {
     };
     const result = stringify(obj);
     expect(result).toBe(
-      "?name=kong&idx=3%2C4&serviceId=430011481&serverId=5&placementId=1",
+      "?name=kong&idx=3%2C4&serviceId=430011481&serverId=5&placementId=1"
     );
   });
 
