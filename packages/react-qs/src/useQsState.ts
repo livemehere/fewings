@@ -7,7 +7,7 @@ type Options = {
   navigateMode?: "replace" | "push";
 };
 
-export default function useQsState<State extends Record<string, QsValue>>(
+export function useQsState<State extends Record<string, QsValue>>(
   initialState: State = {} as State,
   options?: Options
 ) {
