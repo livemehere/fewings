@@ -1,6 +1,6 @@
 import { withCommas } from "./index";
 
-describe("core/number", () => {
+describe("core/converter/withCommas", () => {
   describe("addCommas", () => {
     it("should add commas to a number", () => {
       expect(withCommas(123456789)).toBe("123,456,789");
