@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ComponentProps, useEffect, useMemo, useRef } from "react";
 
 import { Chars } from "./Chars";
+import { isNumberString } from "./utils";
 
 type Props = {
   value: number;
@@ -10,18 +11,14 @@ type Props = {
   format?: (value: number) => string;
 };
 
-const isNumberString = (str: string) => {
-  return /^\d+$/.test(str);
-};
-
-export const AnimateNumber = ({
+export function AnimateNumber({
   value,
   countDur = 0.5,
   sizeDur = 0.3,
   format = (v) => `${v}`,
   style,
   ...props
-}: Props & ComponentProps<"div">) => {
+}: Props & ComponentProps<"div">) {
   const formatRef = useRef(format);
   const chars = useMemo(() => formatRef.current(value).split(""), [value]);
 
@@ -66,9 +63,9 @@ export const AnimateNumber = ({
             >
               {char}
             </motion.div>
-          ),
+          )
         )}
       </AnimatePresence>
     </div>
   );
-};
+}
