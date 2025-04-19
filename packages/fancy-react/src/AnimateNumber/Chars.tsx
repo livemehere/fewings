@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useAnimate } from "motion/react";
+import { usePrevState } from "@fewings/react/hooks";
 
 type TCharSize = {
   w: number;
@@ -19,10 +20,8 @@ export function Chars({
   direction?: "up" | "down" | "random";
   onSizeChange?: (size: TCharSize) => void;
 }) {
-  const isUp = useMemo(
-    () => direction === "up" || (direction === "random" && Math.random() > 0.5),
-    [direction],
-  );
+  const prev = usePrevState(to) ?? 0;
+  const isUp = useMemo(() => direction === "up" || prev < to, [direction, to]);
   const [size, setSize] = useState<TCharSize>({ w: 0, h: 0 });
 
   const doneTimerRef = useRef<number | null>(null);
@@ -54,7 +53,7 @@ export function Chars({
   const nums = useMemo(() => {
     const arr = Array.from(
       { length: Math.abs(to - from) + 1 },
-      (_, i) => from + i * countDir,
+      (_, i) => from + i * countDir
     );
     return isUp ? arr : arr.reverse();
   }, [to, from, isUp]);
@@ -78,10 +77,10 @@ export function Chars({
             () => {
               setDone(true);
             },
-            (countDur + 1) * 1000,
+            (countDur + 1) * 1000
           );
         },
-      },
+      }
     );
     return () => {
       clearDoneTimer();
