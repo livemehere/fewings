@@ -1,1 +1,1 @@
-export * from "./useQsState";
+export { default as useQsState } from "./useQsState";

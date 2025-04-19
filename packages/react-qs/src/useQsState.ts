@@ -7,10 +7,10 @@ type Options = {
   navigateMode?: "replace" | "push";
 };
 
-export const useQsState = <State extends Record<string, QsValue>>(
+export default function useQsState<State extends Record<string, QsValue>>(
   initialState: State = {} as State,
-  options?: Options,
-) => {
+  options?: Options
+) {
   const update = useForceUpdate();
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,19 +18,19 @@ export const useQsState = <State extends Record<string, QsValue>>(
 
   const urlQueryState = useMemo(
     () => parse(location.search),
-    [location.search],
+    [location.search]
   );
   const initialQueryState = useRef(
     typeof initialState === "function"
       ? (initialState as () => State)()
-      : initialState,
+      : initialState
   );
   const state = useMemo(
     () => ({
       ...initialQueryState.current,
       ...urlQueryState,
     }),
-    [urlQueryState],
+    [urlQueryState]
   );
 
   const setState = (newState: SetStateAction<State>) => {
@@ -49,10 +49,10 @@ export const useQsState = <State extends Record<string, QsValue>>(
       {
         replace: navigateMode === "replace",
         state: location.state,
-      },
+      }
     );
     update();
   };
 
   return [state, setState] as const;
-};
+}
