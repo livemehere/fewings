@@ -1,1 +1,1 @@
-export * from "./contextSelector";
+export { createContext, useContextSelector } from "./contextSelector";
