@@ -38,16 +38,6 @@
     "@types/react-dom": "^19.0.3"
   },
   "exports": {
-    "./useFileInput": {
-      "import": {
-        "default": "./dist/useFileInput/index.mjs",
-        "types": "./dist/useFileInput/index.d.mts"
-      },
-      "require": {
-        "default": "./dist/useFileInput/index.js",
-        "types": "./dist/useFileInput/index.d.ts"
-      }
-    },
     "./overlay": {
       "import": {
         "default": "./dist/overlay/index.mjs",
@@ -66,6 +56,16 @@
       "require": {
         "default": "./dist/hooks/index.js",
         "types": "./dist/hooks/index.d.ts"
+      }
+    },
+    "./handleFile": {
+      "import": {
+        "default": "./dist/handleFile/index.mjs",
+        "types": "./dist/handleFile/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/handleFile/index.js",
+        "types": "./dist/handleFile/index.d.ts"
       }
     },
     "./contextSelector": {
