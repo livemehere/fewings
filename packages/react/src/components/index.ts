@@ -5,7 +5,6 @@ export * from "./Popover";
 export * from "./Slider";
 export * from "./ToolTip";
 
-export * from "./Accordion/Accordion";
 export * from "./Space";
 export * from "./Float";
 export * from "./VStack";
