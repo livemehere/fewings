@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { clamp } from ".";
 
-describe("clamp function", () => {
+describe("core/clamp", () => {
   it("should return the value when it's between min and max", () => {
     expect(clamp(5, 0, 10)).toBe(5);
     expect(clamp(3.5, 1, 10)).toBe(3.5);

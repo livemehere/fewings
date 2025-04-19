@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { map } from ".";
 
-describe("map function", () => {
+describe("core/map", () => {
   it("should accurately map a value to a new range", () => {
     // Basic mapping tests
     expect(map(5, 0, 10, 0, 100)).toBe(50);

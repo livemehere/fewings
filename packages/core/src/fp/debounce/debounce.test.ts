@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { debounce } from ".";
 
-describe("debounce", () => {
+describe("core/fp/debounce", () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
