@@ -104,7 +104,7 @@ export class App extends Emitter<TAppEvents> {
 
   private appRenderRoutine(
     ctx: CanvasRenderingContext2D,
-    callback: () => void,
+    callback: () => void
   ) {
     ctx.save();
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
