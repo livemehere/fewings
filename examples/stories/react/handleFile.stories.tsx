@@ -23,7 +23,8 @@ const meta: Meta<THandleFileOptions> = {
     maxBytes: 10 * 1024 * 1024, // 10MB
     maxFiles: 5,
     customValidator: async (file) => {
-      throw new Error("just no"); // way1. throw error can user own error message
+      return true;
+      //   throw new Error("just no"); // way1. throw error can user own error message
 
       //   return file.name.includes("test"); // way2. return boolean, just validate. use default error message
     },
