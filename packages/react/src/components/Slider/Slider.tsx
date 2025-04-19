@@ -2,46 +2,23 @@ import {
   cloneElement,
   ReactElement,
   ReactNode,
-  RefObject,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import {
-  createContext,
-  useContextSelector,
-} from "@fewings/react/contextSelector";
+import { useContextSelector } from "@fewings/react/contextSelector";
 import { map, snap } from "@fewings/core/math";
 import { DragStyle, useDragPosition } from "@fewings/react/hooks";
 import { percentToRatio, ratioToPercent } from "@fewings/core/converter";
-
-interface SliderContextValue {
-  value: number;
-  setValue: (value: number) => void;
-  min: number;
-  max: number;
-  step: number;
-  disabled?: boolean;
-  dir: "horizontal" | "vertical";
-  //
-  thumbRef: RefObject<HTMLElement | null>;
-  trackRef: RefObject<HTMLElement | null>;
-  ratio: number;
-  isDragging: boolean;
-  setIsDragging: (isDragging: boolean) => void;
-}
-
-const SliderContext = createContext<SliderContextValue>(
-  null as unknown as SliderContextValue
-);
+import { SliderContext, TSliderContext } from "./SliderContext";
 
 const SliderRoot = ({
   children,
   dir,
   ...props
 }: { children: ReactNode } & Omit<
-  SliderContextValue,
+  TSliderContext,
   | "ratio"
   | "thumbRef"
   | "trackRef"
