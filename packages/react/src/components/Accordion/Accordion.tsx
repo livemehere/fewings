@@ -1,21 +1,7 @@
-import React, {
-  createContext,
-  useContext,
-  cloneElement,
-  Children,
-} from "react";
+import React, { useContext, cloneElement, Children } from "react";
 import { Wrappable } from "@fewings/react/types";
 import { useControlledState } from "@fewings/react/hooks";
-
-type TAccordionContextValue = {
-  open: boolean;
-  setOpen: (v: boolean) => void;
-};
-
-const AccordionContext = createContext<TAccordionContextValue>({
-  open: false,
-  setOpen: (() => {}) as (v: boolean) => void,
-});
+import { AccordionContext } from "./AccordionContext";
 
 const Root = ({
   children,
@@ -55,7 +41,7 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
         }
         setOpen(!open);
       },
-    }),
+    })
   );
 };
 Trigger.displayName = "AccordionTrigger";
