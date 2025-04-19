@@ -23,6 +23,7 @@ async function cleanOutputDirectory(outDir) {
       });
     });
   }
+  return Promise.resolve();
 }
 
 function getEntries(pkg) {
@@ -68,9 +69,14 @@ async function buildWithEsbuild(entries, outDir, pkg) {
 }
 
 async function buildWithTsup(entries, outDir) {
-  console.log("entries", entries);
   await tsup.build({
-    entry: entries,
+    entry:
+      entries.length === 1
+        ? {
+            [entries[0].replace(/^.*?src\//, "").replace(/\.ts$/, "")]:
+              entries[0],
+          }
+        : entries,
     format: ["cjs", "esm"],
     dts: { only: true },
     outDir: outDir,
