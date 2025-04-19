@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { shade } from ".";
 
-describe("shade", () => {
+describe("core/color/shade", () => {
   it("should brighten a 6-digit hex color", () => {
     expect(shade("#000000", 100)).toBe("#ffffff");
     expect(shade("#123456", 50)).toMatch(/^#[0-9a-fA-F]{6}$/);
