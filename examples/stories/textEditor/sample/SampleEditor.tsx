@@ -3,7 +3,7 @@ import {
   TextEditorBody,
   TextEditorProvider,
   TextEditorView,
-} from "@fewings/textEditor";
+} from "@fewings/text-editor";
 import TextEditorToolbar from "./TextEditorToolbar";
 import { Space } from "@fewings/react/components";
 

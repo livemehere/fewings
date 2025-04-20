@@ -5,7 +5,7 @@ import {
   CursorAPI,
   useTextEditor,
   useTextEditorCursorState,
-} from "@fewings/textEditor";
+} from "@fewings/text-editor";
 import { Popover } from "@fewings/react/components";
 
 export default function TextEditorToolbar() {

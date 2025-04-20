@@ -1,5 +1,5 @@
 {
-  "name": "@fewings/textEditor",
+  "name": "@fewings/text-editor",
   "author": "livemehere",
   "version": "0.1.0",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "react",
     "text-editor"
   ],
-  "homepage": "https://github.com/livemehere/fewings/tree/master/packages/textEditor",
+  "homepage": "https://github.com/livemehere/fewings/tree/master/packages/text-editor",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/livemehere/fewings.git"
@@ -19,8 +19,7 @@
   },
   "files": [
     "dist",
-    "package.json",
-    "TextEditorTheme.css"
+    "package.json"
   ],
   "scripts": {
     "publish": "pnpm publish --access public --no-git-checks"

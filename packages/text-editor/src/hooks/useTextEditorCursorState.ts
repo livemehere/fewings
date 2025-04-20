@@ -1,4 +1,4 @@
-import { TCursorStatus } from "./../core/TextEditor";
+import { TCursorStatus } from "../core/TextEditor";
 import useTextEditorEffect from "./useTextEditorEffect";
 import { useState } from "react";
 
