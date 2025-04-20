@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 
-import { TextEditorConfig } from "../../../packages/textEditor/src";
+import { TextEditorConfig } from "@fewings/textEditor";
 
 import "./sample/Theme.css";
 import "./sample/Editor.css";
