@@ -35,6 +35,13 @@ Additionally, it provides Selection and Range related APIs designed to support t
 ## Installation
 
 ```bash
+# npm
+npm install @fewings/text-editor
+
+# yarn
+yarn add @fewings/text-editor
+
+# pnpm
 pnpm add @fewings/text-editor
 ```
 
