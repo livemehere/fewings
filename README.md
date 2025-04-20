@@ -2,11 +2,6 @@
 
 Solution for building web applications with React.
 
-> 🚧 This project is under construction 🚧 (WIP)  
-> Please waiting for the `1.0.0` release and documentation!
-
-## (WIP) [Documentation](https://livemehere.github.io/fewings/docs)
-
 ## Packages
 
 | Package                                                                                        | Version                                                                                                         | Description                                                    |
