@@ -28,7 +28,8 @@
       "@fewings/core/*": ["packages/core/src/*"],
       "@fewings/fancy-react/*": ["packages/fancy-react/src/*"],
       "@fewings/react-qs/*": ["packages/react-qs/src/*"],
-      "@fewings/svgr/*": ["packages/svgr/src/*"]
+      "@fewings/svgr/*": ["packages/svgr/src/*"],
+      "@fewings/textEditor/*": ["packages/textEditor/src/*"]
     }
   }
 }
