@@ -35,23 +35,21 @@ jobs:
           fetch-depth: 0
 
       - name: Build Storybook
-        run: pnpm build-storybook
-        with:
-          working-directory: packages/examples
+        run: cd examples && pnpm build-storybook
 
       - name: upload to artifact
         uses: actions/upload-artifact@v3
-        id: output
+        id: dist
         with:
-          path: packages/examples/storybook-static
+          path: examples/packages/storybook-static
 
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.dist.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Deploy to GitHub Pages
-        id: output
+        id: dist
         uses: actions/deploy-pages@v4
