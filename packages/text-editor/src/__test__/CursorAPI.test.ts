@@ -173,8 +173,6 @@ describe('CursorAPI', () => {
       container = document.createElement('div');
       container.setAttribute(TextEditor.TARGET_ELEMENT_ATTR_NAME, 'true');
       document.body.appendChild(container);
-
-      vi.spyOn(CursorAPI, 'getEditorElement').mockReturnValue(container);
     });
 
     afterEach(() => {
