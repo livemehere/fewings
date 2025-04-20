@@ -12,6 +12,8 @@
         <a href="https://livemehere.github.io/fewings/?path=/story/text-editor-sample--default">Demo</a>
          &middot;
         <a href="https://www.npmjs.com/package/@fewings/text-editor">npm</a>
+        &middot;
+        <a href="https://github.com/livemehere/fewings/blob/master/packages/text-editor/README.ko.md">한국어</a>
     </p>
 </>
 
