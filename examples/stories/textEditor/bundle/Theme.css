@@ -1,0 +1,40 @@
+[data-editor-body] {
+  outline: none;
+  padding: 8px 12px;
+
+  /* Each line (div) */
+  [data-block-id] {
+    box-sizing: border-box;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    position: relative;
+    padding: 4px 0;
+
+    /* --- */
+    ul,
+    ol {
+      padding-left: 24px;
+    }
+
+    a {
+      cursor: pointer;
+      color: #208fff;
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  }
+
+  /* Edit Mode only */
+  &[contenteditable="true"] {
+    [data-block-id] {
+      /* where cursor is */
+      &.block-selected {
+        background: #f7f8fb7c;
+      }
+    }
+  }
+}
