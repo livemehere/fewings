@@ -86,7 +86,7 @@ useElementPositionObserver(
     // 요소의 위치가 변경될 때 실행할 콜백
     console.log(rect.top, rect.left);
   },
-  isActive // 관찰 활성화 여부
+  isActive, // 관찰 활성화 여부
 );
 ```
 

@@ -1,5 +1,5 @@
-import { BlockAPI } from './BlockAPI';
-import { InlineAPI } from './InlineAPI';
+import { BlockAPI } from "./BlockAPI";
+import { InlineAPI } from "./InlineAPI";
 
 export class DomAPI {
   // return inline tag or div tag
@@ -18,18 +18,18 @@ export class DomAPI {
     return cur;
   }
 
-  static merge(elements: HTMLElement[] | HTMLElement, tagName: 'ul' | 'ol') {
+  static merge(elements: HTMLElement[] | HTMLElement, tagName: "ul" | "ol") {
     const _elements = Array.isArray(elements) ? elements : [elements];
     if (_elements.length === 0) {
-      throw new Error('DomAPI.merge: no elements provided');
+      throw new Error("DomAPI.merge: no elements provided");
     }
 
     const wrapEl = document.createElement(tagName);
     _elements.forEach((element) => {
       const ancestors = BlockAPI.getAncestorElements(element);
-      const hasLi = ancestors.some((e) => e.tagName === 'LI');
+      const hasLi = ancestors.some((e) => e.tagName === "LI");
       if (!hasLi) {
-        const li = document.createElement('li');
+        const li = document.createElement("li");
         li.appendChild(element.cloneNode(true));
         wrapEl.appendChild(li);
       } else {

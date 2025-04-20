@@ -105,7 +105,7 @@ function SearchPage() {
 ```tsx
 const [filter, setFilter] = useQsState(
   { sort: "newest", view: "grid" },
-  { navigateMode: "replace" }
+  { navigateMode: "replace" },
 );
 ```
 

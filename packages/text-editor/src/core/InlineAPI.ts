@@ -22,7 +22,7 @@ export class InlineAPI {
 
   static isInlineElement(element: HTMLElement) {
     return this.INLINE_TAGS.includes(
-      element.tagName.toUpperCase() as TInlineTag
+      element.tagName.toUpperCase() as TInlineTag,
     );
   }
 

@@ -42,14 +42,14 @@ const HomePage = () => {
                 e.currentTarget.classList.add(
                   "transform",
                   "-translate-y-0.5",
-                  "shadow-md"
+                  "shadow-md",
                 );
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.classList.remove(
                   "transform",
                   "-translate-y-0.5",
-                  "shadow-md"
+                  "shadow-md",
                 );
               }}
             >
@@ -185,14 +185,14 @@ const HomePage = () => {
               e.currentTarget.classList.add(
                 "transform",
                 "-translate-y-0.5",
-                "shadow-md"
+                "shadow-md",
               );
             }}
             onMouseLeave={(e) => {
               e.currentTarget.classList.remove(
                 "transform",
                 "-translate-y-0.5",
-                "shadow-md"
+                "shadow-md",
               );
             }}
           >

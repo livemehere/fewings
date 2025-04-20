@@ -10,8 +10,8 @@ describe("core/path", () => {
       expect(
         resolveRelativeImportPath(
           "/Users/repo/fekit/playground/src/Icon",
-          "/Users/repo/fekit/playground/public/assets/svg"
-        )
+          "/Users/repo/fekit/playground/public/assets/svg",
+        ),
       ).toBe("../../public/assets/svg");
     });
 
@@ -19,8 +19,8 @@ describe("core/path", () => {
       expect(
         resolveRelativeImportPath(
           "/Users/repo/fekit/playground/src/Icon",
-          "/Users/repo/fekit/playground/src/assets"
-        )
+          "/Users/repo/fekit/playground/src/assets",
+        ),
       ).toBe("../assets");
     });
 
@@ -28,8 +28,8 @@ describe("core/path", () => {
       expect(
         resolveRelativeImportPath(
           "/Users/repo/fekit/playground/src",
-          "/Users/repo/fekit/playground/src"
-        )
+          "/Users/repo/fekit/playground/src",
+        ),
       ).toBe("./");
     });
 
@@ -37,8 +37,8 @@ describe("core/path", () => {
       expect(
         resolveRelativeImportPath(
           "/Users/repo/fekit/playground/src",
-          "/Users/repo/fekit/playground/src/assets"
-        )
+          "/Users/repo/fekit/playground/src/assets",
+        ),
       ).toBe("./assets");
     });
   });
@@ -48,8 +48,8 @@ describe("core/path", () => {
       expect(
         getPathDepthDiff(
           "/Users/repo/fekit/playground",
-          "/Users/repo/fekit/playground/public/assets/svg"
-        )
+          "/Users/repo/fekit/playground/public/assets/svg",
+        ),
       ).toBe(3);
     });
 
@@ -57,8 +57,8 @@ describe("core/path", () => {
       expect(
         getPathDepthDiff(
           "/Users/repo/fekit/playground/src",
-          "/Users/repo/fekit/playground/src/assets"
-        )
+          "/Users/repo/fekit/playground/src/assets",
+        ),
       ).toBe(1);
     });
 
@@ -66,8 +66,8 @@ describe("core/path", () => {
       expect(
         getPathDepthDiff(
           "/Users/repo/fekit/playground/src",
-          "/Users/repo/fekit/playground/src"
-        )
+          "/Users/repo/fekit/playground/src",
+        ),
       ).toBe(0);
     });
 
@@ -75,8 +75,8 @@ describe("core/path", () => {
       expect(
         getPathDepthDiff(
           "/Users/repo/fekit/playground/src",
-          "/Users/repo/fekit/playground/src/assets"
-        )
+          "/Users/repo/fekit/playground/src/assets",
+        ),
       ).toBe(1);
     });
   });
@@ -86,8 +86,8 @@ describe("core/path", () => {
       expect(
         getSharedPathPrefix(
           "/Users/repo/fekit/playground/src/Icon",
-          "/Users/repo/fekit/playground/public/assets/svg"
-        )
+          "/Users/repo/fekit/playground/public/assets/svg",
+        ),
       ).toBe("/Users/repo/fekit/playground");
     });
 
@@ -95,8 +95,8 @@ describe("core/path", () => {
       expect(
         getSharedPathPrefix(
           "/Users/repo/fekit/playground/src/Icon",
-          "/Users/repo/fekit/playground/src/assets"
-        )
+          "/Users/repo/fekit/playground/src/assets",
+        ),
       ).toBe("/Users/repo/fekit/playground/src");
     });
 
@@ -104,8 +104,8 @@ describe("core/path", () => {
       expect(
         getSharedPathPrefix(
           "/Users/repo/fekit/playground/src",
-          "/Users/repo/fekit/playground/src"
-        )
+          "/Users/repo/fekit/playground/src",
+        ),
       ).toBe("/Users/repo/fekit/playground/src");
     });
 
@@ -113,8 +113,8 @@ describe("core/path", () => {
       expect(
         getSharedPathPrefix(
           "/Users/repo/fekit/playground/src2",
-          "/Users/repo/fekit/playground/src/assets"
-        )
+          "/Users/repo/fekit/playground/src/assets",
+        ),
       ).toBe("/Users/repo/fekit/playground");
     });
   });

@@ -63,7 +63,7 @@ export function AnimateNumber({
             >
               {char}
             </motion.div>
-          )
+          ),
         )}
       </AnimatePresence>
     </div>

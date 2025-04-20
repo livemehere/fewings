@@ -14,7 +14,7 @@ import { useEffect, useRef } from "react";
 export const useElementPositionObserver = (
   ref: React.RefObject<HTMLElement | null>,
   onChange: (rect: DOMRect) => void,
-  active: boolean
+  active: boolean,
 ) => {
   const prevRectRef = useRef<DOMRect | null>(null);
 

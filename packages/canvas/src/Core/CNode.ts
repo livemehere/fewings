@@ -135,7 +135,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
 
   protected renderRoutine(
     ctx: CanvasRenderingContext2D,
-    renderCallback: () => void
+    renderCallback: () => void,
   ): void {
     ctx.save();
     const bounds = this.getBounds();
@@ -205,7 +205,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
       bounds.left,
       bounds.top,
       bounds.right - bounds.left,
-      bounds.bottom - bounds.top
+      bounds.bottom - bounds.top,
     );
     ctx.stroke();
     ctx.closePath();
@@ -221,12 +221,12 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     ctx.fillText(
       `w: ${(bounds.right - bounds.left).toFixed(2)}`,
       baseX,
-      baseY + gap * 3
+      baseY + gap * 3,
     );
     ctx.fillText(
       `h: ${(bounds.bottom - bounds.top).toFixed(2)}`,
       baseX,
-      baseY + gap * 4
+      baseY + gap * 4,
     );
     ctx.restore();
   }
@@ -278,7 +278,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
         if (!pointerEvent._propagationStopped) {
           this.parent.dispatch(
             event,
-            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>)
+            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>),
           );
         }
       }
@@ -287,13 +287,13 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
 
   override on<E extends keyof ICNodeEvents>(
     event: E,
-    listener: ICNodeEvents[E]
+    listener: ICNodeEvents[E],
   ): () => void {
     super.on(event, listener);
     CNode.totalListeners++;
     return () => {
       this.listener[event] = this.listener[event]?.filter(
-        (l) => l !== listener
+        (l) => l !== listener,
       );
       CNode.totalListeners--;
     };

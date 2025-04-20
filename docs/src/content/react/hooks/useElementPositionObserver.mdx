@@ -17,7 +17,7 @@ A hook that observes element position changes using `requestAnimationFrame` per 
 declare const useElementPositionObserver: (
   ref: React.RefObject<HTMLElement | null>,
   onChange: (rect: DOMRect) => void,
-  active: boolean
+  active: boolean,
 ) => void;
 ```
 
@@ -46,7 +46,7 @@ function PositionTracker() {
         height: rect.height,
       });
     },
-    true
+    true,
   );
 
   return (

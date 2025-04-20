@@ -9,7 +9,7 @@ const EXTERNAL_DEPENDENCIES = ["@fewings/*"];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>
-  resolve(__dirname, `../${pkg}`)
+  resolve(__dirname, `../${pkg}`),
 );
 
 const tasks = [];
@@ -92,7 +92,7 @@ async function buildWithTsup(entries, outDir) {
         const srcIdx = depths.indexOf("src");
         return depths.slice(srcIdx - 1).join("/");
       })
-      .join("\n")} build completed`
+      .join("\n")} build completed`,
   );
 }
 
@@ -162,8 +162,8 @@ async function processPackage(pkg) {
   tasks.push(
     buildWithTsup(
       entries.map((entry) => entry.replace(/\\/g, "/")),
-      outDir
-    )
+      outDir,
+    ),
   );
 
   // Update package.json exports

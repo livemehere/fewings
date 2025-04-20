@@ -6,7 +6,7 @@ export default function TextEditorBody(props: ComponentProps<"div">) {
   const editor = useContextSelector(TextEditorContext, (ctx) => ctx.editor);
   const setEditorEl = useContextSelector(
     TextEditorContext,
-    (ctx) => ctx.setEditorEl
+    (ctx) => ctx.setEditorEl,
   );
   return (
     <>

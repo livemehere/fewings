@@ -28,7 +28,7 @@ const SliderRoot = ({
 >) => {
   const ratio = useMemo(
     () => map(props.value, props.min, props.max, 0, 1),
-    [props.value, props.min, props.max]
+    [props.value, props.min, props.max],
   );
   const trackRef = useRef<HTMLElement>(null);
   const thumbRef = useRef<HTMLElement>(null);
@@ -82,7 +82,7 @@ const SliderThumb = ({
   const isDragging = useContextSelector(SliderContext, (v) => v.isDragging);
   const setIsDragging = useContextSelector(
     SliderContext,
-    (v) => v.setIsDragging
+    (v) => v.setIsDragging,
   );
 
   const style = useMemo<DragStyle>(
@@ -91,7 +91,7 @@ const SliderThumb = ({
       top: dir === "horizontal" ? 0 : ratioToPercent(ratio),
       left: dir === "horizontal" ? ratioToPercent(ratio) : 0,
     }),
-    [dir, ratio]
+    [dir, ratio],
   );
 
   const setLeft = (left: number | string) => {

@@ -17,7 +17,7 @@ export function useOverlay() {
 
   const open = <Resolve>(
     render: (props: OverlayBaseProps<Resolve>) => ReactNode,
-    options?: OverlayOptions
+    options?: OverlayOptions,
   ) => {
     return new Promise<Resolve>((resolve, reject) => {
       const overlayId = idRef.current++;

@@ -102,7 +102,7 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
         triggerRef.current = el;
         ref.current = el;
       },
-    })
+    }),
   );
 };
 Trigger.displayName = "PopoverTrigger";
@@ -190,7 +190,7 @@ const Panel = ({
           throw new Error("Invalid anchor");
       }
     },
-    [anchor, fitOnTriggerWidth]
+    [anchor, fitOnTriggerWidth],
   );
 
   useElementPositionObserver(triggerRef, setPanelPosition, open);
@@ -202,7 +202,7 @@ const Panel = ({
         setPanelPosition(triggerRect);
       }
     },
-    open
+    open,
   );
 
   useLayoutEffect(() => {
@@ -235,13 +235,13 @@ const Panel = ({
         {children}
       </div>
     ),
-    [open, zIndex, type]
+    [open, zIndex, type],
   );
 
   if (portal) {
     return createPortal(
       <Wrapper>{open && <Content>{children}</Content>}</Wrapper>,
-      document.body
+      document.body,
     );
   }
   return <Wrapper>{open && <Content>{children}</Content>}</Wrapper>;

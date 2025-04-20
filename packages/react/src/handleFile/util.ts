@@ -11,7 +11,7 @@ import {
  */
 export function setUpOptions(
   inputEl: HTMLInputElement,
-  options?: THandleFileOptions
+  options?: THandleFileOptions,
 ) {
   inputEl.type = "file";
   inputEl.accept = options?.accept
@@ -52,7 +52,7 @@ export function convertFilesWithMeta(files: FileList): TFileWithMeta[] {
  */
 export async function validateOptions(
   files: FileList,
-  options?: THandleFileOptions
+  options?: THandleFileOptions,
 ): Promise<void> {
   if (options?.multiple === false && files.length > 1) {
     throw new Error("Multiple files are not allowed");
@@ -60,20 +60,20 @@ export async function validateOptions(
 
   if (options?.maxFiles && files.length > options?.maxFiles) {
     throw new Error(
-      `Number of files(${files.length}) exceeds the limit: ${options?.maxFiles}`
+      `Number of files(${files.length}) exceeds the limit: ${options?.maxFiles}`,
     );
   }
 
   for (const file of files) {
     if (options?.accept && !verifyAccept(file.type, options.accept)) {
       throw new Error(
-        `File type(${file.type}) is not allowed: ${options.accept}`
+        `File type(${file.type}) is not allowed: ${options.accept}`,
       );
     }
 
     if (options?.maxBytes && file.size > options.maxBytes) {
       throw new Error(
-        `File size(${file.size}bytes) exceeds the limit: ${options.maxBytes}bytes`
+        `File size(${file.size}bytes) exceeds the limit: ${options.maxBytes}bytes`,
       );
     }
 
@@ -95,7 +95,7 @@ export async function validateOptions(
  */
 export function verifyAccept(type: string, accept: string | string[]): boolean {
   const allowed = (typeof accept === "string" ? accept.split(",") : accept).map(
-    (x) => x.trim().replace(/\./g, "")
+    (x) => x.trim().replace(/\./g, ""),
   );
   const format = type.split("/")[1];
   return (

@@ -12,8 +12,8 @@ export function useTooltip(options: TToolTipOptions = {}) {
   const mergedOptions = useMemo(() => {
     const filteredOptions = Object.fromEntries(
       Object.entries(options).filter(
-        ([_, value]) => value !== null && value !== undefined
-      )
+        ([_, value]) => value !== null && value !== undefined,
+      ),
     );
 
     return {

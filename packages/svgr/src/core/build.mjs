@@ -42,14 +42,14 @@ export function build(options) {
       importBase: svgImportBase ?? relPathFromOutDir,
       constName,
       typeName,
-    })
+    }),
   );
 
   // Create icon component file
   if (componentName) {
     fs.writeFileSync(
       `${outDirPath}/${componentName}.tsx`,
-      transpileIconComponent({ constName, componentName, typeName })
+      transpileIconComponent({ constName, componentName, typeName }),
     );
   }
 }

@@ -95,7 +95,7 @@ export class CursorAPI {
             ? NodeFilter.FILTER_ACCEPT
             : NodeFilter.FILTER_REJECT;
         },
-      }
+      },
     );
     while (walker.nextNode()) {
       textNodes.push(walker.currentNode as Text);
@@ -119,7 +119,7 @@ export class CursorAPI {
             ? NodeFilter.FILTER_ACCEPT
             : NodeFilter.FILTER_REJECT;
         },
-      }
+      },
     );
 
     let i = 0;

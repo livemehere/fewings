@@ -18,5 +18,5 @@ export interface TSliderContext {
 }
 
 export const SliderContext = createContext<TSliderContext>(
-  null as unknown as TSliderContext
+  null as unknown as TSliderContext,
 );

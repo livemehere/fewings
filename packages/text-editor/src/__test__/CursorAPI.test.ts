@@ -6,7 +6,7 @@ describe("CursorAPI", () => {
   let container: HTMLElement;
   function getEditorElement() {
     return document.querySelector(
-      TextEditor.TARGET_ELEMENT_SELECTOR
+      TextEditor.TARGET_ELEMENT_SELECTOR,
     ) as HTMLElement;
   }
 
@@ -141,7 +141,7 @@ describe("CursorAPI", () => {
       expect(texts).toEqual(["llo", "Wo"]);
 
       const allText = Array.from(container.querySelectorAll("p")).flatMap((p) =>
-        Array.from(p.childNodes).map((n) => n.textContent)
+        Array.from(p.childNodes).map((n) => n.textContent),
       );
       expect(allText).toEqual(["He", "llo", "Wo", "rld"]);
     });

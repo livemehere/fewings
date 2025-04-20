@@ -7,7 +7,7 @@ A hook that detects clicks outside of a specified element. It can also exclude c
 ```tsx
 declare const useClickOutside: (
   handler: (event: MouseEvent) => void,
-  exclude?: RefObject<HTMLElement | null>
+  exclude?: RefObject<HTMLElement | null>,
 ) => RefObject<HTMLElement | null>;
 ```
 

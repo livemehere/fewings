@@ -17,7 +17,7 @@ export default function TextEditorToolbar() {
 
   const linkTargetText = linkRange?.startContainer.textContent?.slice(
     linkRange.startOffset,
-    linkRange.endOffset
+    linkRange.endOffset,
   );
 
   return (
@@ -224,7 +224,7 @@ export default function TextEditorToolbar() {
                 if (cursorStatus?.link) {
                   setLink(cursorStatus.link);
                   const linkEl = cursorStatus.curElements.find(
-                    (e) => e.tagName === "A"
+                    (e) => e.tagName === "A",
                   )!;
                   const r = CursorAPI.createRangeFromElementTextNode(linkEl);
                   setLinkRange(r);

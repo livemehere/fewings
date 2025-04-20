@@ -153,7 +153,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   private _initElement(
     target: HTMLElement,
     mode: TEditorMode,
-    spellcheck: boolean
+    spellcheck: boolean,
   ) {
     this.setMode(mode);
     target.draggable = false;
@@ -196,7 +196,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   private _dispatchCursorChanged() {
     if (!CursorAPI.isRangeInElement(this.element, CursorAPI.getRange())) return;
     const curElements = BlockAPI.getAncestorElements(
-      CursorAPI.getRange().startContainer
+      CursorAPI.getRange().startContainer,
     );
     const curBlock = BlockAPI.getCurrentCursorBlock();
 
@@ -389,7 +389,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       const cur = CursorAPI.getRange();
       const ancestors = BlockAPI.getAncestorElements(cur.startContainer);
       const canTabAction = ancestors.some(
-        (e) => e.tagName === "UL" || e.tagName === "OL"
+        (e) => e.tagName === "UL" || e.tagName === "OL",
       );
       if (canTabAction) {
         if (e.shiftKey) {
@@ -431,7 +431,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
           !["h1", "h2", "h3", "h4", "h5", "h6"].includes(value)
         ) {
           throw new Error(
-            "TextEditor.apply: heading value must be a string and one of h1, h2, h3, h4, h5, h6"
+            "TextEditor.apply: heading value must be a string and one of h1, h2, h3, h4, h5, h6",
           );
         }
         InlineAPI.heading(value as TActionValueMap["heading"]);
@@ -531,7 +531,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       DomAPI.merge(selectedElements, tagName);
     } else {
       throw new Error(
-        "CursorAPI.merge: selected elements must be block or normal element"
+        "CursorAPI.merge: selected elements must be block or normal element",
       );
     }
   }

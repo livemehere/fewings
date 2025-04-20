@@ -6,7 +6,7 @@ A hook that creates a stable callback reference that always points to the latest
 
 ```tsx
 declare const useCallbackRef: <T extends (...args: any[]) => any>(
-  callback: T | undefined
+  callback: T | undefined,
 ) => T;
 ```
 

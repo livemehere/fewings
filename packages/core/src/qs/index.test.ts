@@ -44,7 +44,7 @@ describe("core/qs", () => {
     };
     const result = stringify(obj);
     expect(result).toBe(
-      "?name=kong&idx=3%2C4&serviceId=430011481&serverId=5&placementId=1"
+      "?name=kong&idx=3%2C4&serviceId=430011481&serverId=5&placementId=1",
     );
   });
 

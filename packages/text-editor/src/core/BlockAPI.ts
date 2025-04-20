@@ -67,7 +67,7 @@ export class BlockAPI {
 
   static getAllEmptyMarkedBlocks(element: HTMLElement): HTMLElement[] {
     return Array.from(
-      element.querySelectorAll(`[${BlockAPI.EMPTY_MARKER_ATTR_NAME}="true"]`)
+      element.querySelectorAll(`[${BlockAPI.EMPTY_MARKER_ATTR_NAME}="true"]`),
     );
   }
 
@@ -82,7 +82,7 @@ export class BlockAPI {
   static getByIndexRange(
     element: HTMLElement,
     start: number,
-    end: number
+    end: number,
   ): HTMLElement[] {
     const blocks = this.getAll(element);
     return Array.from(blocks).slice(start, end);
@@ -161,7 +161,7 @@ export class BlockAPI {
     const walker = document.createTreeWalker(
       blockElement,
       NodeFilter.SHOW_ELEMENT,
-      null
+      null,
     );
 
     let currentNode = walker.nextNode();

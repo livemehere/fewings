@@ -59,7 +59,7 @@ describe("BlockAPI", () => {
       const wrappedBlock = container.querySelector("div");
       expect(wrappedBlock).not.toBeNull();
       expect(wrappedBlock?.getAttribute(BlockAPI.BLOCK_ID_ATTR_NAME)).toBe(
-        "wrapped"
+        "wrapped",
       );
       expect(wrappedBlock?.querySelector("span")?.textContent).toBe("text");
     });
@@ -172,7 +172,7 @@ describe("BlockAPI", () => {
 
     it("should throw error on empty block list", () => {
       expect(() => BlockAPI.merge([], "ul")).toThrow(
-        "No block elements provided"
+        "No block elements provided",
       );
     });
 
@@ -180,7 +180,7 @@ describe("BlockAPI", () => {
       const block = BlockAPI.create();
       container.append(block);
       expect(() => BlockAPI.merge(block, "div" as any)).toThrow(
-        "unsupported block type"
+        "unsupported block type",
       );
     });
   });

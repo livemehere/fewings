@@ -106,7 +106,7 @@ By default, when state changes, a new history entry is created. Using `replace` 
 ```tsx
 const [filter, setFilter] = useQsState(
   { sort: "newest", view: "grid" },
-  { navigateMode: "replace" }
+  { navigateMode: "replace" },
 );
 ```
 

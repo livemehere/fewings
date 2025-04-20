@@ -9,7 +9,7 @@ interface TTextEditorContext {
 }
 
 export const TextEditorContext = createContext<TTextEditorContext>(
-  {} as TTextEditorContext
+  {} as TTextEditorContext,
 );
 
 type Props = {

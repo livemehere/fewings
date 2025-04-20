@@ -50,7 +50,7 @@ const OverlayExample = () => {
           </div>
         </div>
       ),
-      { closeOnClickOutside: true }
+      { closeOnClickOutside: true },
     );
     console.log("Result:", result);
   };

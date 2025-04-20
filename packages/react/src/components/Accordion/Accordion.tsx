@@ -40,7 +40,7 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
         }
         setOpen(!open);
       },
-    })
+    }),
   );
 };
 Trigger.displayName = "AccordionTrigger";

@@ -86,7 +86,7 @@ useElementPositionObserver(
     // Callback to execute when the element's position changes
     console.log(rect.top, rect.left);
   },
-  isActive // Whether observation is active
+  isActive, // Whether observation is active
 );
 ```
 

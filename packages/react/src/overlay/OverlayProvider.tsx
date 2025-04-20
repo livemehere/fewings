@@ -64,7 +64,7 @@ export function OverlayProvider({
               </div>
             ))}
           </div>,
-          document.body
+          document.body,
         )}
       {children}
     </OverlayContext.Provider>
