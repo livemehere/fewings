@@ -1,3 +1,5 @@
 import { defineConfig } from "vite";
-
-export default defineConfig({});
+import tsconfigPaths from "vite-tsconfig-paths";
+export default defineConfig({
+  plugins: [tsconfigPaths()],
+});
