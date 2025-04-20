@@ -10,6 +10,8 @@
         <a href="https://livemehere.github.io/fewings/">github</a>
         &middot;
         <a href="https://www.npmjs.com/org/fewings">npm</a>
+        &middot;
+        <a href="https://github.com/livemehere/fewings/blob/master/README.ko.md">한국어</a>
     </p>
 </p>
 
