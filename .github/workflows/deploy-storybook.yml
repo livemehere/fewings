@@ -18,6 +18,15 @@ jobs:
     runs-on: ubuntu-latest
     # Job steps
     steps:
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9.15.5
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --recursive
+
       # Manual Checkout
       - uses: actions/checkout@v4
         with:
