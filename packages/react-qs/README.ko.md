@@ -13,7 +13,7 @@
         &middot;
         <a href="https://github.com/livemehere/fewings/blob/master/packages/react-qs/README.md">English</a>
     </p>
-</>
+</p>
 
 ## Motivation
 

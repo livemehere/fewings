@@ -13,7 +13,7 @@
         &middot;
         <a href="https://github.com/livemehere/fewings/blob/master/packages/react-qs/README.ko.md">한국어</a>
     </p>
-</>
+</p>
 
 ## Motivation
 

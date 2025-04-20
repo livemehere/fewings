@@ -1,16 +1,20 @@
 {
   "name": "@fewings/svgr",
   "author": "livemehere",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "Cli for generating svg files to type and constants.",
   "keywords": [
     "react",
     "cli",
-    "svgr"
+    "svgr",
+    "vite-plugin",
+    "vite",
+    "svg",
+    "fewings"
   ],
-  "homepage": "https://github.com/livemehere/fewings/tree/master/packages/react",
+  "homepage": "https://github.com/livemehere/fewings/tree/master/packages/svgr",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/livemehere/fewings.git"

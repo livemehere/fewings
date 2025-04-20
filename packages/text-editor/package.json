@@ -1,13 +1,17 @@
 {
   "name": "@fewings/text-editor",
   "author": "livemehere",
-  "version": "0.1.0",
+  "version": "1.0.2",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "text editor implementation for browser and react",
   "keywords": [
     "react",
-    "text-editor"
+    "text-editor",
+    "editor",
+    "fewings",
+    "rich-text",
+    "WYSIWYG"
   ],
   "homepage": "https://github.com/livemehere/fewings/tree/master/packages/text-editor",
   "repository": {

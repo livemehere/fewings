@@ -15,9 +15,9 @@
         &middot;
         <a href="https://github.com/livemehere/fewings/blob/master/packages/text-editor/README.ko.md">한국어</a>
     </p>
-</>
+</p>
 
-![alt text](docs/example1.png)
+![example](https://github.com/livemehere/fewings/blob/master/packages/text-editor/docs/example1.png?raw=true)
 
 ## Motivation
 

@@ -15,7 +15,7 @@
     &middot;
     <a href="https://github.com/livemehere/fewings/blob/master/packages/text-editor/README.md">English</a>
   </p>
-</>
+</p>
 
 ![alt text](docs/example1.png)
 

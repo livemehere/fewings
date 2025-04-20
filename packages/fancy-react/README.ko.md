@@ -15,7 +15,7 @@
         &middot;
         <a href="https://github.com/livemehere/fewings/blob/master/packages/fancy-react/README.md">English</a>
     </p>
-</>
+</p>
 
 ## 소개
 

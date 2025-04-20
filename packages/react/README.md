@@ -9,11 +9,13 @@
     Provides tools for efficient React application development
     </p>
     <p align="center">
+        <a href="https://livemehere.github.io/fewings/?path=/docs/react-components-accordion--docs">DEMO</a>
+        &middot;
         <a href="https://www.npmjs.com/package/@fewings/react">npm</a>
         &middot;
         <a href="https://github.com/livemehere/fewings/blob/master/packages/react/README.ko.md">한국어</a>
     </p>
-</>
+</p>
 
 ## Introduction
 

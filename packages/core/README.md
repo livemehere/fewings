@@ -15,7 +15,7 @@
         &middot;
         <a href="https://github.com/livemehere/fewings/blob/master/packages/core/README.ko.md">한국어</a>
     </p>
-</>
+</p>
 
 ## Introduction
 
