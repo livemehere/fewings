@@ -3,10 +3,9 @@ import { EditorIcon } from "./Icons";
 import {
   BlockAPI,
   CursorAPI,
-  TextEditorView,
   useTextEditor,
   useTextEditorCursorState,
-} from "@fewings/textEditor";
+} from "../../../../packages/textEditor/src";
 import { Popover, ToolTip } from "@fewings/react/components";
 
 export default function TextEditorToolbar() {
