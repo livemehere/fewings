@@ -319,7 +319,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   private _onKeyDown = (e: KeyboardEvent) => {
     this._ensureEditorHasBlock();
     this._dispatchHtmlChange();
-    // this._shortcutHandler(e);
+    this._shortcutHandler(e);
 
     this.dispatch("onKeyDown", e);
   };
@@ -397,21 +397,6 @@ export class TextEditor extends Emitter<TextEditorEvent> {
           InlineAPI.indent();
         }
         CursorAPI.setCursor(cur);
-      }
-    }
-
-    if (e.ctrlKey && e.key === "c") {
-      const blocks = BlockAPI.getSelectedBlocks(this.element);
-      /** if copy block elements not inline, action custom copy */
-      if (blocks.length > 1) {
-        e.preventDefault();
-        const template = document.createElement("template");
-        blocks.forEach((block) => {
-          template.content.appendChild(block.cloneNode(true));
-        });
-        const text = template.innerHTML;
-        navigator.clipboard.writeText(text); // block html strings
-        // copy blocks
       }
     }
   }
