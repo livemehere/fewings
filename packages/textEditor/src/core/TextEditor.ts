@@ -194,6 +194,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   }
 
   private _dispatchCursorChanged() {
+    if (!CursorAPI.isRangeInElement(this.element, CursorAPI.getRange())) return;
     const curElements = BlockAPI.getAncestorElements(
       CursorAPI.getRange().startContainer
     );
@@ -490,7 +491,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
 
   private _merge(tagName: "ul" | "ol") {
     const range = CursorAPI.getRange();
-    CursorAPI.preventApplyToEditor(range);
+    CursorAPI.preventApplyToEditor(this.element, range);
 
     const selectedElements = [];
     const start = DomAPI.unwrapInlineElement(range.startContainer);

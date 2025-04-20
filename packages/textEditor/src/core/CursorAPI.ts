@@ -1,23 +1,28 @@
 import { DomAPI } from "./DomAPI";
-import { TextEditor } from "./TextEditor";
 
 export class CursorAPI {
-  static getEditorElement() {
-    return document.querySelector(TextEditor.TARGET_ELEMENT_SELECTOR);
-  }
-
-  static preventApplyToEditor(range: Range) {
-    const editorEl = this.getEditorElement();
-    if (!editorEl) {
+  static isRangeInElement(element: HTMLElement, range: Range) {
+    if (!element) {
       throw new Error("TextEditor Element not found");
     }
 
     if (
-      range.startContainer === editorEl ||
-      range.endContainer === editorEl ||
-      !editorEl.contains(range.startContainer) ||
-      !editorEl.contains(range.endContainer)
+      range.startContainer === element ||
+      range.endContainer === element ||
+      !element.contains(range.startContainer) ||
+      !element.contains(range.endContainer)
     ) {
+      return false;
+    }
+    return true;
+  }
+
+  static preventApplyToEditor(editorEl: HTMLElement, range: Range) {
+    if (!editorEl) {
+      throw new Error("TextEditor Element not found");
+    }
+
+    if (!CursorAPI.isRangeInElement(editorEl, range)) {
       throw new Error("CursorAPI.validateMutate: range is a editor or outside");
     }
   }

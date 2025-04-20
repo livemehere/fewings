@@ -5,7 +5,9 @@ import { CursorAPI } from "../core/CursorAPI";
 describe("CursorAPI", () => {
   let container: HTMLElement;
   function getEditorElement() {
-    return document.querySelector(TextEditor.TARGET_ELEMENT_SELECTOR)!;
+    return document.querySelector(
+      TextEditor.TARGET_ELEMENT_SELECTOR
+    ) as HTMLElement;
   }
 
   beforeEach(() => {
@@ -26,17 +28,18 @@ describe("CursorAPI", () => {
       range.setStart(editor, 0);
       range.setEnd(editor, 0);
 
-      expect(() => CursorAPI.preventApplyToEditor(range)).toThrow();
+      expect(() => CursorAPI.preventApplyToEditor(editor, range)).toThrow();
     });
 
     it("should do nothing if range is not inside editor element", () => {
       const child = document.createElement("div");
+      const editor = getEditorElement();
       container.appendChild(child);
       const range = document.createRange();
       range.setStart(child, 0);
       range.setEnd(child, 0);
 
-      expect(() => CursorAPI.preventApplyToEditor(range)).not.toThrow();
+      expect(() => CursorAPI.preventApplyToEditor(editor, range)).not.toThrow();
     });
   });
 
