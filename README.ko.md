@@ -1,6 +1,6 @@
 # @fewings
 
-`@fewings` is a collection of library packages that provide essential features, components, and development environment elements needed for web development.
+`@fewings`는 웹 개발에 필요한 핵심 기능, 컴포넌트, 개발 환경 구성 요소들을 패키지 형태로 모은 라이브러리 컬렉션입니다.
 
 ## Packages
 
