@@ -1,10 +1,10 @@
-import { Slider } from "../../../packages/react/src/components/Slider";
-import { useState } from "react";
+import { Slider } from '../../../packages/react/src/components/Slider';
+import { useState } from 'react';
 const Page2 = () => {
   const [horizontalValue, setHorizontalValue] = useState(0);
   const [step] = useState(1);
   return (
-    <div style={{ padding: "2rem" }}>
+    <div style={{ padding: '2rem' }}>
       <Slider.Root
         value={horizontalValue}
         setValue={setHorizontalValue}
@@ -17,18 +17,18 @@ const Page2 = () => {
           {({ ratio }) => (
             <div
               style={{
-                width: "300px",
-                height: "8px",
-                background: "#374151",
-                borderRadius: "4px",
+                width: '300px',
+                height: '8px',
+                background: '#374151',
+                borderRadius: '4px',
               }}
             >
               <div
                 style={{
                   width: `${ratio * 100}%`,
-                  height: "100%",
-                  background: "#3b82f6",
-                  borderRadius: "4px",
+                  height: '100%',
+                  background: '#3b82f6',
+                  borderRadius: '4px',
                 }}
               />
             </div>
@@ -38,15 +38,15 @@ const Page2 = () => {
           {({ isDragging }) => (
             <div
               style={{
-                width: "20px",
-                height: "20px",
-                background: isDragging ? "red" : "#3b82f6",
-                border: "2px solid #2563eb",
-                borderRadius: "50%",
-                transform: "translate(-50%, -8px)",
-                cursor: "pointer",
-                transition: "background 0.2s",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                width: '20px',
+                height: '20px',
+                background: isDragging ? 'red' : '#3b82f6',
+                border: '2px solid #2563eb',
+                borderRadius: '50%',
+                transform: 'translate(-50%, -8px)',
+                cursor: 'pointer',
+                transition: 'background 0.2s',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
               }}
             ></div>
           )}

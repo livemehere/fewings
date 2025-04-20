@@ -1,19 +1,19 @@
 const meta = {
-  index: "Introduction",
+  index: 'Introduction',
   core: {
-    title: "@fewings/core",
+    title: '@fewings/core',
   },
   react: {
-    title: "@fewings/react",
+    title: '@fewings/react',
   },
-  "fancy-react": {
-    title: "@fewings/fancy-react",
+  'fancy-react': {
+    title: '@fewings/fancy-react',
   },
-  "react-qs": {
-    title: "@fewings/react-qs",
+  'react-qs': {
+    title: '@fewings/react-qs',
   },
   svgr: {
-    title: "@fewings/svgr",
+    title: '@fewings/svgr',
   },
 };
 

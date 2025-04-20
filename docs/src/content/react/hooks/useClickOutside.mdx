@@ -7,14 +7,14 @@ A hook that detects clicks outside of a specified element. It can also exclude c
 ```tsx
 declare const useClickOutside: (
   handler: (event: MouseEvent) => void,
-  exclude?: RefObject<HTMLElement | null>,
+  exclude?: RefObject<HTMLElement | null>
 ) => RefObject<HTMLElement | null>;
 ```
 
 ## Example
 
 ```tsx
-import { useClickOutside } from "@fewings/react/hooks";
+import { useClickOutside } from '@fewings/react/hooks';
 
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);

@@ -11,8 +11,8 @@ declare const useIsomorphicLayoutEffect: typeof useEffect;
 ## Example
 
 ```tsx
-import { useIsomorphicLayoutEffect } from "@fewings/react/hooks";
-import { useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from '@fewings/react/hooks';
+import { useRef, useState } from 'react';
 
 function MeasureComponent() {
   const ref = useRef<HTMLDivElement>(null);
@@ -29,7 +29,7 @@ function MeasureComponent() {
     <>
       <div
         ref={ref}
-        style={{ width: "100%", height: "100px", background: "#f0f0f0" }}
+        style={{ width: '100%', height: '100px', background: '#f0f0f0' }}
       >
         My Component
       </div>
@@ -44,7 +44,7 @@ function MeasureComponent() {
 ## Usage
 
 ```tsx
-import { useIsomorphicLayoutEffect } from "@fewings/react";
+import { useIsomorphicLayoutEffect } from '@fewings/react';
 
 function MyComponent() {
   useIsomorphicLayoutEffect(() => {

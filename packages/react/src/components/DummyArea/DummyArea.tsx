@@ -2,28 +2,28 @@ interface Props {
   width?: number | string;
   height?: number | string;
   children?: React.ReactNode;
-  theme?: "dark" | "light";
+  theme?: 'dark' | 'light';
 }
 
 const COLOR_MAP = {
   light: {
-    background: "rgba(0, 0, 0, 0.2)",
-    color: "rgba(0, 0, 0, 0.8)",
+    background: 'rgba(0, 0, 0, 0.2)',
+    color: 'rgba(0, 0, 0, 0.8)',
   },
   dark: {
-    background: "rgba(255, 255, 255, 0.2)",
-    color: "rgba(255, 255, 255, 0.8)",
+    background: 'rgba(255, 255, 255, 0.2)',
+    color: 'rgba(255, 255, 255, 0.8)',
   },
 };
 
 export function DummyArea({
-  width = "100%",
-  height = "100%",
-  theme = "light",
+  width = '100%',
+  height = '100%',
+  theme = 'light',
   children,
   style,
   ...props
-}: Props & React.ComponentProps<"div">) {
+}: Props & React.ComponentProps<'div'>) {
   const { background, color } = COLOR_MAP[theme];
   return (
     <div
@@ -31,8 +31,8 @@ export function DummyArea({
       style={{
         width,
         height,
-        borderRadius: "2px",
-        border: "1px solid #ccc",
+        borderRadius: '2px',
+        border: '1px solid #ccc',
         backgroundImage: `repeating-linear-gradient(
           135deg,
           ${background} 0px,
@@ -40,13 +40,13 @@ export function DummyArea({
           transparent 1px,
           transparent 6px
         )`,
-        backgroundSize: "8px 8px",
-        backgroundPosition: "top left",
+        backgroundSize: '8px 8px',
+        backgroundPosition: 'top left',
         color,
-        fontWeight: "bold",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        fontWeight: 'bold',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         ...style,
       }}
     >

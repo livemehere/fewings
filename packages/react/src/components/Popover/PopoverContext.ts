@@ -1,5 +1,5 @@
-import { createContext } from "react";
-import { TPopoverContext } from "./types";
+import { createContext } from 'react';
+import { TPopoverContext } from './types';
 
 export const PopoverContext = createContext<TPopoverContext>({
   open: false,
@@ -7,6 +7,6 @@ export const PopoverContext = createContext<TPopoverContext>({
   triggerRef: { current: null },
   panelRef: { current: null },
   closeOnClickOutSide: true,
-  type: "click",
+  type: 'click',
   controlled: false,
 });

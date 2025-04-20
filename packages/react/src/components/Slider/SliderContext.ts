@@ -1,5 +1,5 @@
-import { createContext } from "@fewings/react/contextSelector";
-import { RefObject } from "react";
+import { createContext } from '@fewings/react/contextSelector';
+import { RefObject } from 'react';
 
 export interface TSliderContext {
   value: number;
@@ -8,7 +8,7 @@ export interface TSliderContext {
   max: number;
   step: number;
   disabled?: boolean;
-  dir: "horizontal" | "vertical";
+  dir: 'horizontal' | 'vertical';
   //
   thumbRef: RefObject<HTMLElement | null>;
   trackRef: RefObject<HTMLElement | null>;
@@ -18,5 +18,5 @@ export interface TSliderContext {
 }
 
 export const SliderContext = createContext<TSliderContext>(
-  null as unknown as TSliderContext,
+  null as unknown as TSliderContext
 );

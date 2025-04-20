@@ -56,17 +56,17 @@ The text editor works on a DOM basis. First, prepare the HTML element where the 
 ```
 
 ```javascript
-import { TextEditor } from "@fewings/text-editor";
+import { TextEditor } from '@fewings/text-editor';
 
 // Get the editor container element
-const editorElement = document.getElementById("editor-container");
+const editorElement = document.getElementById('editor-container');
 
 // Create TextEditor instance
 const editor = new TextEditor({
   element: editorElement,
   initialHtml:
     "<div data-block-id='w1u2oultf'>Hello, this is a text editor.</div>", // Initial HTML content ⚠️ Must follow the DOM structure mentioned earlier (direct child elements must be HTMLDivElement with data-block-id)
-  mode: "edit", // Specify 'edit' or 'view' mode
+  mode: 'edit', // Specify 'edit' or 'view' mode
   spellcheck: true, // Enable or disable spell checking
 });
 ```
@@ -77,8 +77,8 @@ TextEditor provides several core events (more coming soon).
 
 ```javascript
 // Cursor position change event
-editor.on("cursorChanged", (cursorStatus) => {
-  console.log("Current cursor status:", cursorStatus);
+editor.on('cursorChanged', (cursorStatus) => {
+  console.log('Current cursor status:', cursorStatus);
 
   // cursorStatus object contains style information about the currently selected text:
   // isH1, isBold, isItalic, color, bgColor, etc.
@@ -87,15 +87,15 @@ editor.on("cursorChanged", (cursorStatus) => {
 });
 
 // HTML content change event
-editor.on("onChange", (html) => {
-  console.log("Editor content changed:", html);
+editor.on('onChange', (html) => {
+  console.log('Editor content changed:', html);
 
   // You can save or process the changed HTML
 });
 
 // Block add event (triggered whenever a new line is added)
-editor.on("blockAdded", (blockElement) => {
-  console.log("New block added:", blockElement);
+editor.on('blockAdded', (blockElement) => {
+  console.log('New block added:', blockElement);
 });
 ```
 
@@ -105,30 +105,30 @@ You can apply various text styling and formatting actions.
 
 ```javascript
 // Apply bold
-document.getElementById("bold-button").addEventListener("click", () => {
-  editor.action("bold");
+document.getElementById('bold-button').addEventListener('click', () => {
+  editor.action('bold');
 });
 
 // Apply italic
-document.getElementById("italic-button").addEventListener("click", () => {
-  editor.action("italic");
+document.getElementById('italic-button').addEventListener('click', () => {
+  editor.action('italic');
 });
 
 // Apply heading style
-document.getElementById("h1-button").addEventListener("click", () => {
-  editor.action("heading", "h1");
+document.getElementById('h1-button').addEventListener('click', () => {
+  editor.action('heading', 'h1');
 });
 
 // Change text color
-document.getElementById("color-picker").addEventListener("change", (e) => {
-  editor.action("color", e.target.value);
+document.getElementById('color-picker').addEventListener('change', (e) => {
+  editor.action('color', e.target.value);
 });
 
 // Insert link
-document.getElementById("link-button").addEventListener("click", () => {
-  const url = prompt("Enter URL");
+document.getElementById('link-button').addEventListener('click', () => {
+  const url = prompt('Enter URL');
   if (url) {
-    editor.action("link", url);
+    editor.action('link', url);
   }
 });
 ```
@@ -138,18 +138,18 @@ document.getElementById("link-button").addEventListener("click", () => {
 In React applications, you can use the provided components and hooks to use the editor more easily.
 
 ```tsx
-import { useState } from "react";
+import { useState } from 'react';
 import {
   TextEditorBody,
   TextEditorProvider,
   TextEditorView,
-} from "@fewings/text-editor";
+} from '@fewings/text-editor';
 
 const initialHtml =
   "<div data-block-id='w1u2oultf'>Hello, this is a text editor.</div>";
 
 interface Props {
-  mode?: "edit" | "view";
+  mode?: 'edit' | 'view';
   spellcheck?: boolean;
   showPreview?: boolean;
 }
@@ -169,7 +169,7 @@ export default function SampleTextEditor({
         spellcheck={spellcheck}
       >
         <div className="editor_layout">
-          <TextEditorBody style={{ height: 400, overflowY: "scroll" }} />
+          <TextEditorBody style={{ height: 400, overflowY: 'scroll' }} />
         </div>
       </TextEditorProvider>
       {showPreview && <TextEditorView html={preview} className="preview" />}
@@ -185,11 +185,11 @@ export default function SampleTextEditor({
 const html = editor.toHtml();
 
 // Set editor content
-editor.setHtml("<p>This is new content.</p>");
+editor.setHtml('<p>This is new content.</p>');
 
 // Change editor mode (edit/read-only)
-editor.setMode("view"); // Change to read-only
-editor.setMode("edit"); // Change to editable
+editor.setMode('view'); // Change to read-only
+editor.setMode('edit'); // Change to editable
 ```
 
 ### 6. Cleaning up the editor

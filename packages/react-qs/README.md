@@ -48,14 +48,14 @@ pnpm add @fewings/react-qs react-router
 The `useQsState` hook works similarly to React's `useState`, but the state is stored in URL query parameters:
 
 ```tsx
-import { useQsState } from "@fewings/react-qs";
+import { useQsState } from '@fewings/react-qs';
 
 function SearchPage() {
   // Use URL query parameters as state
   const [search, setSearch] = useQsState({
-    query: "",
-    page: "1",
-    category: "all",
+    query: '',
+    page: '1',
+    category: 'all',
   });
 
   return (
@@ -105,8 +105,8 @@ By default, when state changes, a new history entry is created. Using `replace` 
 
 ```tsx
 const [filter, setFilter] = useQsState(
-  { sort: "newest", view: "grid" },
-  { navigateMode: "replace" },
+  { sort: 'newest', view: 'grid' },
+  { navigateMode: 'replace' }
 );
 ```
 
@@ -115,7 +115,7 @@ const [filter, setFilter] = useQsState(
 Like `useState`, functional updates are supported:
 
 ```tsx
-const [pagination, setPagination] = useQsState({ page: "1", perPage: "10" });
+const [pagination, setPagination] = useQsState({ page: '1', perPage: '10' });
 
 // Update based on previous state using functional update
 setPagination((prev) => ({
@@ -136,9 +136,9 @@ interface SearchParams {
 }
 
 const [search, setSearch] = useQsState<SearchParams>({
-  query: "",
-  page: "1",
-  category: "all",
+  query: '',
+  page: '1',
+  category: 'all',
 });
 ```
 
@@ -148,8 +148,8 @@ When the component is first mounted, if there are no query parameters in the URL
 
 ```tsx
 const [filter, setFilter] = useQsState({
-  sort: "newest", // Uses "newest" as default if ?sort= parameter doesn't exist in URL
-  view: "grid", // Uses "grid" as default if ?view= parameter doesn't exist in URL
+  sort: 'newest', // Uses "newest" as default if ?sort= parameter doesn't exist in URL
+  view: 'grid', // Uses "grid" as default if ?view= parameter doesn't exist in URL
 });
 ```
 

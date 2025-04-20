@@ -13,7 +13,7 @@ import {
   useContext as useContextOrg,
   ReactNode,
   Provider,
-} from "react";
+} from 'react';
 
 interface Store<T> {
   value: T;
@@ -25,7 +25,7 @@ export const createContext = <T extends unknown>(initialValue: T) => Context<T>;
 
 export const useContextSelector = <T, R>(
   context: Context<T>,
-  selector: (value: T) => R,
+  selector: (value: T) => R
 ) => R;
 ```
 
@@ -35,22 +35,22 @@ export const useContextSelector = <T, R>(
 import {
   createContext,
   useContextSelector,
-} from "@fewings/react/contextSelector";
-import { useState } from "react";
+} from '@fewings/react/contextSelector';
+import { useState } from 'react';
 
 // Create a context with user data
 const UserContext = createContext({
-  name: "John Doe",
+  name: 'John Doe',
   age: 30,
-  email: "john@example.com",
+  email: 'john@example.com',
 });
 
 // Create a provider component
 function UserProvider({ children }) {
   const [userData, setUserData] = useState({
-    name: "John Doe",
+    name: 'John Doe',
     age: 30,
-    email: "john@example.com",
+    email: 'john@example.com',
   });
 
   return (

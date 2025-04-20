@@ -11,7 +11,7 @@ declare function withCommas(amount: number | string): string;
 ## Example
 
 ```ts
-import { withCommas } from "@fewings/core/converter";
+import { withCommas } from '@fewings/core/converter';
 
 console.log(withCommas(1000)); // "1,000"
 console.log(withCommas(1000000)); // "1,000,000"
@@ -26,6 +26,6 @@ console.log(withCommas(1000000000000000000)); // "1,000,000,000,000,000,000"
 If the number has a decimal part, the function will round the number unexpectedly. (javascript limitation)
 
 ```ts
-expect(withCommas(123456789.123456789)).not.toBe("123,456,789.123456789");
-expect(withCommas(123456789.123456789)).toBe("123,456,789.12345679");
+expect(withCommas(123456789.123456789)).not.toBe('123,456,789.123456789');
+expect(withCommas(123456789.123456789)).toBe('123,456,789.12345679');
 ```

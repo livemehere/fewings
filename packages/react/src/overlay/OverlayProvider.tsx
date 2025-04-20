@@ -1,7 +1,7 @@
-import { ReactNode, useRef, useState } from "react";
-import { OverlayContext } from "./OverlayContext";
-import { OverlayItem } from "./types";
-import { createPortal } from "react-dom";
+import { ReactNode, useRef, useState } from 'react';
+import { OverlayContext } from './OverlayContext';
+import { OverlayItem } from './types';
+import { createPortal } from 'react-dom';
 
 interface Props {
   children: ReactNode;
@@ -19,12 +19,12 @@ export function OverlayProvider({
 
   const handleClickOutside = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    const isOverlayContent = target.closest("[data-overlay-content]");
+    const isOverlayContent = target.closest('[data-overlay-content]');
 
     if (!isOverlayContent) {
       const lastOverlay = overlays[overlays.length - 1];
       if (lastOverlay?.options?.closeOnClickOutside) {
-        lastOverlay.reject("clickOutside");
+        lastOverlay.reject('clickOutside');
       }
     }
   };
@@ -43,10 +43,10 @@ export function OverlayProvider({
             data-overlay-container
             onClick={handleClickOutside}
             style={{
-              position: "fixed",
+              position: 'fixed',
               inset: 0,
               zIndex: 9999,
-              background: "#08090ACC",
+              background: '#08090ACC',
               ...containerStyle,
             }}
             className={containerClassName}
@@ -64,7 +64,7 @@ export function OverlayProvider({
               </div>
             ))}
           </div>,
-          document.body,
+          document.body
         )}
       {children}
     </OverlayContext.Provider>

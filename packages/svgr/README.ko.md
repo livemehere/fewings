@@ -89,18 +89,18 @@ Vite 플러그인은 개발 중에 SVG 파일의 변경 사항을 자동으로 �
 
 ```typescript
 // vite.config.ts
-import { defineConfig } from "vite";
-import { fewingsSvgrVitePlugin } from "@fewings/svgr";
-import svgr from "vite-plugin-svgr";
+import { defineConfig } from 'vite';
+import { fewingsSvgrVitePlugin } from '@fewings/svgr';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [
     svgr(), // SVG를 React 컴포넌트로 임포트하기 위한 표준 SVGR 플러그인
     fewingsSvgrVitePlugin({
-      svgPath: "./public/assets/svg",
-      outDir: "./src/Icon",
-      componentName: "Icon",
-      importBase: "@assets/svg", // 선택사항: SVG 임포트 기본 경로
+      svgPath: './public/assets/svg',
+      outDir: './src/Icon',
+      componentName: 'Icon',
+      importBase: '@assets/svg', // 선택사항: SVG 임포트 기본 경로
     }),
   ],
 });
@@ -129,7 +129,7 @@ export default defineConfig({
 
 ```tsx
 // 생성된 Icon 컴포넌트 사용
-import { Icon } from "./src/Icon/Icon";
+import { Icon } from './src/Icon/Icon';
 
 function App() {
   return (
@@ -141,7 +141,7 @@ function App() {
 }
 
 // 생성된 맵 직접 사용
-import { IconMap, IconKeys } from "./src/Icon/IconMap";
+import { IconMap, IconKeys } from './src/Icon/IconMap';
 
 function CustomIcon({
   name,

@@ -7,14 +7,14 @@
 ```ts
 declare function debounce<T extends (...args: any[]) => any>(
   fn: T,
-  wait: number,
+  wait: number
 ): T;
 ```
 
 ## Example
 
 ```ts
-import { debounce } from "@fewings/core/fp";
+import { debounce } from '@fewings/core/fp';
 
 const fn = debounce((x: number, y: number) => {
   console.log(x, y);

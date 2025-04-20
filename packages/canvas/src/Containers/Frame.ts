@@ -1,6 +1,6 @@
-import { CNode, TNodeProps } from "../Core/CNode";
-import { Bounds, IPoint, ModelTypeMap, TModelType } from "../types";
-import { Container } from "./Container";
+import { CNode, TNodeProps } from '../Core/CNode';
+import { Bounds, IPoint, ModelTypeMap, TModelType } from '../types';
+import { Container } from './Container';
 
 export type TFrameProps = TNodeProps & {
   overflowClip?: boolean;
@@ -76,7 +76,7 @@ export class Frame extends Container {
       bounds.left,
       bounds.top,
       bounds.right - bounds.left,
-      bounds.bottom - bounds.top,
+      bounds.bottom - bounds.top
     );
     ctx.closePath();
     ctx.fill();
@@ -91,7 +91,7 @@ export class Frame extends Container {
       bounds.left,
       bounds.top,
       bounds.right - bounds.left,
-      bounds.bottom - bounds.top,
+      bounds.bottom - bounds.top
     );
     ctx.closePath();
     ctx.fill();
@@ -100,15 +100,15 @@ export class Frame extends Container {
   }
 
   toJSON(): string {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   fromJSON(json: string): CNode {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   clone(): CNode {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   getGlobalBounds(): Bounds {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 }

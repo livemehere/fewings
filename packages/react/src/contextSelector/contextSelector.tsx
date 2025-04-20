@@ -7,7 +7,7 @@ import {
   useRef,
   useSyncExternalStore,
   Provider,
-} from "react";
+} from 'react';
 
 interface Store<T> {
   value: T;
@@ -60,7 +60,7 @@ export const createContext = <T,>(initialValue: T) => {
 
 export const useContextSelector = <T, R>(
   context: Context<T>,
-  selector: (value: T) => R,
+  selector: (value: T) => R
 ) => {
   const store = useContextOrg(context) as Store<T>;
   return useSyncExternalStore(store.subscribe, () => selector(store.value));

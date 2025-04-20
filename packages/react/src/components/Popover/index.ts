@@ -1,4 +1,4 @@
-export type { TPopoverAnchor, TPopoverTrigger, TPopoverContext } from "./types";
+export type { TPopoverAnchor, TPopoverTrigger, TPopoverContext } from './types';
 
-export { Popover } from "./Popover";
-export { PopoverContext } from "./PopoverContext";
+export { Popover } from './Popover';
+export { PopoverContext } from './PopoverContext';

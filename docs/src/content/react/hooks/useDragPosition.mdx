@@ -6,12 +6,12 @@ A hook that enables drag functionality for elements. It provides controlled and 
 
 ```tsx
 interface DragStyle {
-  position: "absolute";
+  position: 'absolute';
   top: number | string;
   left: number | string;
 }
 interface UseDragPositionProps {
-  dir?: "x" | "y" | "xy";
+  dir?: 'x' | 'y' | 'xy';
   style?: DragStyle;
   defaultStyle?: DragStyle;
   onChangeStyle?: (style: DragStyle) => void;
@@ -35,14 +35,14 @@ declare const useDragPosition: (opt?: UseDragPositionProps) => {
 ## Example
 
 ```tsx
-import { useDragPosition } from "@fewings/react/hooks";
-import { useState } from "react";
+import { useDragPosition } from '@fewings/react/hooks';
+import { useState } from 'react';
 
 function DraggableElement() {
   const { style, isDragging, handleRef, boundRef } = useDragPosition({
-    dir: "xy",
+    dir: 'xy',
     defaultStyle: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
     },
@@ -52,10 +52,10 @@ function DraggableElement() {
     <div
       ref={boundRef}
       style={{
-        position: "relative",
+        position: 'relative',
         width: 500,
         height: 500,
-        border: "1px solid black",
+        border: '1px solid black',
       }}
     >
       <div
@@ -63,10 +63,10 @@ function DraggableElement() {
         style={{
           ...style,
           padding: 20,
-          background: isDragging ? "#e0e0e0" : "#f5f5f5",
-          cursor: "move",
-          userSelect: "none",
-          border: "1px solid #ccc",
+          background: isDragging ? '#e0e0e0' : '#f5f5f5',
+          cursor: 'move',
+          userSelect: 'none',
+          border: '1px solid #ccc',
         }}
       >
         Drag me!

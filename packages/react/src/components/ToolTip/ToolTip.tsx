@@ -1,6 +1,6 @@
-import { useTooltip } from "./useTooltip";
-import { TToolTipOptions } from "./schema";
-import { Popover } from "../Popover";
+import { useTooltip } from './useTooltip';
+import { TToolTipOptions } from './schema';
+import { Popover } from '../Popover';
 
 interface Props extends TToolTipOptions {
   children: React.ReactElement;
@@ -28,7 +28,7 @@ export function ToolTip({
       <Popover.Panel anchor={`${dir}-center`} portal={true}>
         <div
           style={{
-            position: "relative",
+            position: 'relative',
             ...marginStyle,
           }}
         >

@@ -6,12 +6,12 @@ import {
   useMemo,
   useRef,
   useState,
-} from "react";
-import { useContextSelector } from "@fewings/react/contextSelector";
-import { map, snap } from "@fewings/core/math";
-import { DragStyle, useDragPosition } from "@fewings/react/hooks";
-import { percentToRatio, ratioToPercent } from "@fewings/core/converter";
-import { SliderContext, TSliderContext } from "./SliderContext";
+} from 'react';
+import { useContextSelector } from '@fewings/react/contextSelector';
+import { map, snap } from '@fewings/core/math';
+import { DragStyle, useDragPosition } from '@fewings/react/hooks';
+import { percentToRatio, ratioToPercent } from '@fewings/core/converter';
+import { SliderContext, TSliderContext } from './SliderContext';
 
 const SliderRoot = ({
   children,
@@ -19,16 +19,16 @@ const SliderRoot = ({
   ...props
 }: { children: ReactNode } & Omit<
   TSliderContext,
-  | "ratio"
-  | "thumbRef"
-  | "trackRef"
-  | "isDragging"
-  | "setIsDragging"
-  | "setRatio"
+  | 'ratio'
+  | 'thumbRef'
+  | 'trackRef'
+  | 'isDragging'
+  | 'setIsDragging'
+  | 'setRatio'
 >) => {
   const ratio = useMemo(
     () => map(props.value, props.min, props.max, 0, 1),
-    [props.value, props.min, props.max],
+    [props.value, props.min, props.max]
   );
   const trackRef = useRef<HTMLElement>(null);
   const thumbRef = useRef<HTMLElement>(null);
@@ -48,9 +48,9 @@ const SliderRoot = ({
     >
       <div
         style={{
-          position: "relative",
-          width: "fit-content",
-          height: "fit-content",
+          position: 'relative',
+          width: 'fit-content',
+          height: 'fit-content',
         }}
       >
         {children}
@@ -82,21 +82,21 @@ const SliderThumb = ({
   const isDragging = useContextSelector(SliderContext, (v) => v.isDragging);
   const setIsDragging = useContextSelector(
     SliderContext,
-    (v) => v.setIsDragging,
+    (v) => v.setIsDragging
   );
 
   const style = useMemo<DragStyle>(
     () => ({
-      position: "absolute",
-      top: dir === "horizontal" ? 0 : ratioToPercent(ratio),
-      left: dir === "horizontal" ? ratioToPercent(ratio) : 0,
+      position: 'absolute',
+      top: dir === 'horizontal' ? 0 : ratioToPercent(ratio),
+      left: dir === 'horizontal' ? ratioToPercent(ratio) : 0,
     }),
-    [dir, ratio],
+    [dir, ratio]
   );
 
   const setLeft = (left: number | string) => {
     const xRatio =
-      typeof left === "string"
+      typeof left === 'string'
         ? percentToRatio(left)
         : map(left, bounds.minLeft, bounds.maxLeft, 0, 1);
     setValue(snap(map(xRatio, 0, 1, min, max), step));
@@ -104,19 +104,19 @@ const SliderThumb = ({
 
   const setTop = (top: number | string) => {
     const yRatio =
-      typeof top === "string"
+      typeof top === 'string'
         ? percentToRatio(top)
         : map(top, bounds.minTop, bounds.maxTop, 0, 1);
     setValue(snap(map(yRatio, 0, 1, min, max), step));
   };
 
   const { handleRef, boundRef, bounds } = useDragPosition({
-    dir: dir === "horizontal" ? "x" : "y",
+    dir: dir === 'horizontal' ? 'x' : 'y',
     isDragging,
     onChangeDragging: setIsDragging,
     style,
     onChangeStyle: (style) => {
-      if (dir === "horizontal") {
+      if (dir === 'horizontal') {
         setLeft(style.left);
       } else {
         setTop(style.top);

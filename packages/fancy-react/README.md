@@ -47,7 +47,7 @@ The AnimateNumber component applies a smooth animation effect when numeric value
 ### Basic Usage
 
 ```tsx
-import { AnimateNumber } from "@fewings/fancy-react/AnimateNumber";
+import { AnimateNumber } from '@fewings/fancy-react/AnimateNumber';
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -88,9 +88,9 @@ You can style it like a regular div element:
 <AnimateNumber
   value={score}
   style={{
-    fontSize: "2rem",
-    fontWeight: "bold",
-    color: "#2563eb",
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: '#2563eb',
   }}
 />
 ```

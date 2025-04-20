@@ -1,5 +1,5 @@
-import { djb2 } from "@fewings/core/hash";
-import { Emitter } from "@fewings/core/classes/Emitter";
+import { djb2 } from '@fewings/core/hash';
+import { Emitter } from '@fewings/core/classes/Emitter';
 
 import {
   IPoint,
@@ -9,9 +9,9 @@ import {
   TFillStyle,
   TModelType,
   TStrokeStyle,
-} from "../types";
-import { Container } from "../Containers/Container";
-import { TPointerEvent } from "./InteractionManager";
+} from '../types';
+import { Container } from '../Containers/Container';
+import { TPointerEvent } from './InteractionManager';
 
 export type ICNodeEvents = {
   pointerdown: (e: TPointerEvent) => void;
@@ -23,7 +23,7 @@ export type ICNodeEvents = {
 };
 
 export type TNodeProps = IDrawAttrs &
-  Partial<Omit<ICNode, "id" | "type" | "tags">> & {
+  Partial<Omit<ICNode, 'id' | 'type' | 'tags'>> & {
     tags?: string[];
   };
 
@@ -62,7 +62,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     CNode.idSeq += 10;
     this.id = (0x1000000 + djb2(`${CNode.idSeq}`))
       .toString(16)
-      .replace(/^1/, "#");
+      .replace(/^1/, '#');
     CNode.idMap.set(this.id, this);
 
     this.visible = props.visible ?? true;
@@ -71,8 +71,8 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     this.isStatic = props.isStatic ?? false;
     this.debug = props.debug ?? false;
     /** draw attrs */
-    this.fillStyle = props.fillStyle ?? "black";
-    this.strokeStyle = props.strokeStyle ?? "black";
+    this.fillStyle = props.fillStyle ?? 'black';
+    this.strokeStyle = props.strokeStyle ?? 'black';
     this.strokeWidth = props.strokeWidth ?? 1;
     this.rotate = props.rotate ?? 0;
 
@@ -135,7 +135,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
 
   protected renderRoutine(
     ctx: CanvasRenderingContext2D,
-    renderCallback: () => void,
+    renderCallback: () => void
   ): void {
     ctx.save();
     const bounds = this.getBounds();
@@ -143,7 +143,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     const centerY = (bounds.top + bounds.bottom) / 2;
     ctx.translate(centerX, centerY);
     ctx.rotate(this.rotate);
-    if ("scale" in this) {
+    if ('scale' in this) {
       ctx.scale(this.scale as number, this.scale as number);
     }
     ctx.translate(-centerX, -centerY);
@@ -195,8 +195,8 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     const bounds = this.getBounds();
     ctx.beginPath();
     ctx.lineWidth = 4;
-    ctx.strokeStyle = "red";
-    ctx.shadowColor = "none";
+    ctx.strokeStyle = 'red';
+    ctx.shadowColor = 'none';
     ctx.shadowBlur = 0;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
@@ -205,7 +205,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
       bounds.left,
       bounds.top,
       bounds.right - bounds.left,
-      bounds.bottom - bounds.top,
+      bounds.bottom - bounds.top
     );
     ctx.stroke();
     ctx.closePath();
@@ -214,19 +214,19 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
     const baseX = bounds.right + 10;
     const baseY = bounds.top;
     ctx.font = `bold ${fontSize}px Arial`;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = 'black';
     ctx.fillText(this.id, baseX, baseY);
     ctx.fillText(`x: ${bounds.left.toFixed(2)}`, baseX, baseY + gap);
     ctx.fillText(`y: ${bounds.top.toFixed(2)}`, baseX, baseY + gap * 2);
     ctx.fillText(
       `w: ${(bounds.right - bounds.left).toFixed(2)}`,
       baseX,
-      baseY + gap * 3,
+      baseY + gap * 3
     );
     ctx.fillText(
       `h: ${(bounds.bottom - bounds.top).toFixed(2)}`,
       baseX,
-      baseY + gap * 4,
+      baseY + gap * 4
     );
     ctx.restore();
   }
@@ -268,7 +268,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
   ): void {
     super.dispatch(event, ...payload);
     if (this.parent) {
-      if (event === "pointerdown") {
+      if (event === 'pointerdown') {
         const pointerEvent = payload[0] as TPointerEvent;
         const bubbledEvent: TPointerEvent = {
           ...pointerEvent,
@@ -278,7 +278,7 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
         if (!pointerEvent._propagationStopped) {
           this.parent.dispatch(
             event,
-            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>),
+            ...([bubbledEvent] as Parameters<ICNodeEvents[E]>)
           );
         }
       }
@@ -287,13 +287,13 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
 
   override on<E extends keyof ICNodeEvents>(
     event: E,
-    listener: ICNodeEvents[E],
+    listener: ICNodeEvents[E]
   ): () => void {
     super.on(event, listener);
     CNode.totalListeners++;
     return () => {
       this.listener[event] = this.listener[event]?.filter(
-        (l) => l !== listener,
+        (l) => l !== listener
       );
       CNode.totalListeners--;
     };

@@ -1,20 +1,20 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { withCommas } from "@fewings/core/converter";
-import { AnimateNumber } from "@fewings/fancy-react/AnimateNumber";
+import { Meta, StoryObj } from '@storybook/react';
+import { withCommas } from '@fewings/core/converter';
+import { AnimateNumber } from '@fewings/fancy-react/AnimateNumber';
 
 const meta: Meta<typeof AnimateNumber> = {
-  title: "fancy-react/AnimateNumber",
+  title: 'fancy-react/AnimateNumber',
   component: AnimateNumber,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "AnimateNumber is a component that animates a number from a start value to an end value over a specified duration.",
+          'AnimateNumber is a component that animates a number from a start value to an end value over a specified duration.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     value: 1234567,
     countDur: 0.3,
@@ -23,17 +23,17 @@ const meta: Meta<typeof AnimateNumber> = {
   argTypes: {
     value: {
       control: {
-        type: "number",
+        type: 'number',
       },
     },
     countDur: {
       control: {
-        type: "number",
+        type: 'number',
       },
     },
     sizeDur: {
       control: {
-        type: "number",
+        type: 'number',
       },
     },
   },
@@ -50,7 +50,7 @@ export const Default: Story = {
         <AnimateNumber
           {...args}
           format={(v) => withCommas(v)}
-          style={{ fontSize: 32, fontWeight: "bold" }}
+          style={{ fontSize: 32, fontWeight: 'bold' }}
         />
       </div>
     );

@@ -1,4 +1,4 @@
-export const TOOLTIP_DIRS = ["top", "bottom", "left", "right"] as const;
+export const TOOLTIP_DIRS = ['top', 'bottom', 'left', 'right'] as const;
 
 export type TToolTipDirection = (typeof TOOLTIP_DIRS)[number];
 export type TToolTipOptions = {
@@ -8,7 +8,7 @@ export type TToolTipOptions = {
 };
 
 export const TOOLTIP_DEFAULT_OPTIONS: Required<TToolTipOptions> = {
-  dir: "bottom",
+  dir: 'bottom',
   gap: 8,
-  arrowColor: "#262626",
+  arrowColor: '#262626',
 };

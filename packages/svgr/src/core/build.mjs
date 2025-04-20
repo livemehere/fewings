@@ -1,7 +1,7 @@
-import { transpileConstMap, transpileIconComponent } from "./transpile.mjs";
-import fs from "fs";
-import path from "path";
-import { resolveRelativeImportPath } from "@fewings/core/path";
+import { transpileConstMap, transpileIconComponent } from './transpile.mjs';
+import fs from 'fs';
+import path from 'path';
+import { resolveRelativeImportPath } from '@fewings/core/path';
 
 /**
  *
@@ -18,8 +18,8 @@ export function build(options) {
     rootPath,
     svgRelPath,
     outDirRelPath,
-    constName = "IconMap",
-    typeName = "IconKeys",
+    constName = 'IconMap',
+    typeName = 'IconKeys',
     svgImportBase,
     componentName,
   } = options;
@@ -42,14 +42,14 @@ export function build(options) {
       importBase: svgImportBase ?? relPathFromOutDir,
       constName,
       typeName,
-    }),
+    })
   );
 
   // Create icon component file
   if (componentName) {
     fs.writeFileSync(
       `${outDirPath}/${componentName}.tsx`,
-      transpileIconComponent({ constName, componentName, typeName }),
+      transpileIconComponent({ constName, componentName, typeName })
     );
   }
 }
@@ -60,7 +60,7 @@ export function build(options) {
  * @param parentKey {string} Key prefix for nested folders
  * @returns {Array<{ key: string, path: string }>}
  */
-function readFilesRecursively(dirPath, parentKey = "") {
+function readFilesRecursively(dirPath, parentKey = '') {
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
   const files = [];
 
@@ -68,14 +68,14 @@ function readFilesRecursively(dirPath, parentKey = "") {
     const entryPath = path.join(dirPath, entry.name);
     const entryKey = parentKey
       ? `${parentKey}/${entry.name}`
-      : entry.name.replace(".svg", "");
+      : entry.name.replace('.svg', '');
 
     if (entry.isDirectory()) {
       // If it's a folder, recursively read its contents
       files.push(...readFilesRecursively(entryPath, entryKey));
-    } else if (entry.isFile() && entry.name.endsWith(".svg")) {
+    } else if (entry.isFile() && entry.name.endsWith('.svg')) {
       // If it's a file, add it to the list
-      files.push({ key: entryKey.replace(/\.svg$/, ""), path: entryPath });
+      files.push({ key: entryKey.replace(/\.svg$/, ''), path: entryPath });
     }
   });
 

@@ -1,19 +1,19 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { DummyArea, Grid } from "@fewings/react/components";
+import { Meta, StoryObj } from '@storybook/react';
+import { DummyArea, Grid } from '@fewings/react/components';
 
 const meta: Meta<typeof Grid> = {
-  title: "react/components/Grid",
+  title: 'react/components/Grid',
   component: Grid,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "Declarative grid layout component implemented with css `flex`.",
+          'Declarative grid layout component implemented with css `flex`.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     gap: 12,
     rowGap: 12,
@@ -21,16 +21,16 @@ const meta: Meta<typeof Grid> = {
   },
   argTypes: {
     gap: {
-      control: { type: "number" },
+      control: { type: 'number' },
     },
     rowGap: {
-      control: { type: "number" },
+      control: { type: 'number' },
     },
     colGap: {
-      control: { type: "number" },
+      control: { type: 'number' },
     },
     children: {
-      description: "Content inside the grid",
+      description: 'Content inside the grid',
       control: false,
     },
     className: {

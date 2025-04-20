@@ -11,8 +11,8 @@ declare function getRelativePath(from: string, to: string): string;
 ## Example
 
 ```ts
-import { getRelativePath } from "@fewings/core/path";
+import { getRelativePath } from '@fewings/core/path';
 
-console.log(getRelativePath("/path/to/file1.txt", "/path/to/file2.txt")); // file2.txt
-console.log(getRelativePath("/path/to/file1.txt", "/path/to/other/file2.txt")); // ../other/file2.txt
+console.log(getRelativePath('/path/to/file1.txt', '/path/to/file2.txt')); // file2.txt
+console.log(getRelativePath('/path/to/file1.txt', '/path/to/other/file2.txt')); // ../other/file2.txt
 ```

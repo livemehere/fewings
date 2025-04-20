@@ -1,25 +1,25 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from '@storybook/react';
 import {
   TFileWithMeta,
   useHandleFile,
   THandleFileOptions,
-} from "../../../packages/react/src/handleFile";
-import { DummyArea, Space } from "@fewings/react/components";
-import { useState } from "react";
+} from '../../../packages/react/src/handleFile';
+import { DummyArea, Space } from '@fewings/react/components';
+import { useState } from 'react';
 
 const meta: Meta<THandleFileOptions> = {
-  title: "react/handleFile",
+  title: 'react/handleFile',
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
-        component: "Handle file input and drag-and-drop functionality.",
+        component: 'Handle file input and drag-and-drop functionality.',
       },
     },
   },
   args: {
     multiple: true,
-    accept: "image/*",
+    accept: 'image/*',
     maxBytes: 10 * 1024 * 1024, // 10MB
     maxFiles: 5,
     customValidator: async (file) => {
@@ -29,7 +29,7 @@ const meta: Meta<THandleFileOptions> = {
       //   return file.name.includes("test"); // way2. return boolean, just validate. use default error message
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 };
 
 export default meta;
@@ -43,7 +43,7 @@ export const Default: Story = {
     const { register, isDragOver, select } = useHandleFile({
       onChange: setFiles,
       onError: (error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
         setError(error.message);
       },
       ...args,
@@ -54,9 +54,9 @@ export const Default: Story = {
         <DummyArea
           onClick={async () => {
             const res = await select();
-            console.log("Selected files:", res);
+            console.log('Selected files:', res);
           }}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
           height={80}
         >
           open programmatically
@@ -66,14 +66,14 @@ export const Default: Story = {
           {...register()}
           style={{
             height: 200,
-            border: isDragOver ? "2px dashed blue" : "none",
+            border: isDragOver ? '2px dashed blue' : 'none',
           }}
         >
           Drop or Click
         </DummyArea>
         <div>
           {error && (
-            <div style={{ color: "red", marginTop: 10 }}>
+            <div style={{ color: 'red', marginTop: 10 }}>
               <strong>Error:</strong> {error}
             </div>
           )}
@@ -81,7 +81,7 @@ export const Default: Story = {
         <ul>
           {files.map((file, index) => (
             <li key={index}>
-              <strong>{file.origin.name}</strong> - {file.toUnit("MB", 2)}
+              <strong>{file.origin.name}</strong> - {file.toUnit('MB', 2)}
             </li>
           ))}
           {files.length === 0 && <li>No files uploaded.</li>}

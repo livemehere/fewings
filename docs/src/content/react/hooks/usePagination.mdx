@@ -31,8 +31,8 @@ declare const usePagination: ({
 ## Example
 
 ```tsx
-import { usePagination } from "@fewings/react/hooks";
-import { useState } from "react";
+import { usePagination } from '@fewings/react/hooks';
+import { useState } from 'react';
 
 function PaginationExample() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,8 +63,8 @@ function PaginationExample() {
             key={page}
             onClick={() => setCurrentPage(page)}
             style={{
-              fontWeight: page === currentPage ? "bold" : "normal",
-              margin: "0 4px",
+              fontWeight: page === currentPage ? 'bold' : 'normal',
+              margin: '0 4px',
             }}
           >
             {page}
@@ -86,7 +86,7 @@ function PaginationExample() {
       </div>
 
       <div>
-        Page {currentPage} of {totalPages} | Group {currentGroupIdx + 1} of{" "}
+        Page {currentPage} of {totalPages} | Group {currentGroupIdx + 1} of{' '}
         {totalGroupLength}
       </div>
     </div>

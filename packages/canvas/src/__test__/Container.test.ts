@@ -1,7 +1,7 @@
-import { Container } from "../Containers/Container";
-import { CNode, TNodeProps } from "../Core/CNode";
-import { Rect } from "../Shapes/Rect";
-import { TModelType, Bounds, ModelTypeMap } from "../types";
+import { Container } from '../Containers/Container';
+import { CNode, TNodeProps } from '../Core/CNode';
+import { Rect } from '../Shapes/Rect';
+import { TModelType, Bounds, ModelTypeMap } from '../types';
 
 class SampleContainer extends Container {
   readonly type: TModelType = ModelTypeMap.CONTAINER;
@@ -9,53 +9,53 @@ class SampleContainer extends Container {
     super(props);
   }
   get x(): number {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   set x(v: number) {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   get y(): number {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   set y(v: number) {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   get width(): number {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   set width(v: number) {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   get height(): number {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   set height(v: number) {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   _render(ctx: CanvasRenderingContext2D): void {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   _hitMapRender(ctx: CanvasRenderingContext2D): void {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   toJSON(): string {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   fromJSON(json: string): CNode {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   clone(): CNode {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   getBounds(): Bounds {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   getGlobalBounds(): Bounds {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 }
 
-describe("Container", () => {
+describe('Container', () => {
   let container: Container;
   let shape: Rect;
   let innerContainer: Container;
@@ -68,7 +68,7 @@ describe("Container", () => {
       width: 100,
       height: 100,
     });
-    shape.addTag("test-shape");
+    shape.addTag('test-shape');
     innerContainer = new SampleContainer();
     innerShape = new Rect({
       x: 0,
@@ -76,15 +76,15 @@ describe("Container", () => {
       width: 100,
       height: 100,
     });
-    innerShape.addTag(["test-shape", "inner-shape"]);
+    innerShape.addTag(['test-shape', 'inner-shape']);
     innerContainer.addChild(innerShape);
   });
 
-  it("should have empty children by default", () => {
+  it('should have empty children by default', () => {
     expect(container.children.length).toEqual(0);
   });
 
-  it("addChild", () => {
+  it('addChild', () => {
     container.addChild(shape);
     container.addChild(innerContainer);
 
@@ -101,14 +101,14 @@ describe("Container", () => {
     expect(container.children[1]).toEqual(shape);
   });
 
-  it("bringToFront when child is already included", () => {
+  it('bringToFront when child is already included', () => {
     container.addChild(shape);
     container.addChild(shape);
     expect(container.children.length).toEqual(1);
     expect(container.children[0]).toEqual(shape);
   });
 
-  it("move child from container to other container", () => {
+  it('move child from container to other container', () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     expect(innerShape.parent).toEqual(innerContainer);
@@ -122,13 +122,13 @@ describe("Container", () => {
     expect(innerShape.parent).toEqual(container);
   });
 
-  it("removeChild", () => {
+  it('removeChild', () => {
     container.addChild(shape);
     container.removeChild(shape);
     expect(container.children.length).toEqual(0);
   });
 
-  it("bringToFront", () => {
+  it('bringToFront', () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     expect(container.children[0]).toEqual(shape);
@@ -138,7 +138,7 @@ describe("Container", () => {
     expect(container.children[1]).toEqual(shape);
   });
 
-  it("sendToBack", () => {
+  it('sendToBack', () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     expect(container.children[0]).toEqual(shape);
@@ -148,7 +148,7 @@ describe("Container", () => {
     expect(container.children[1]).toEqual(shape);
   });
 
-  it("traverse", () => {
+  it('traverse', () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     let i = 0;
@@ -162,23 +162,23 @@ describe("Container", () => {
     });
   });
 
-  it("findById", () => {
+  it('findById', () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     expect(container.findById(shape.id)).toEqual(shape);
     expect(container.findById(innerShape.id)).toEqual(innerShape);
-    expect(container.findById("not found")).toEqual(null);
+    expect(container.findById('not found')).toEqual(null);
   });
 
-  it("findByTag", () => {
+  it('findByTag', () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     innerContainer.addChild(innerShape);
-    expect(container.findByTag("test-shape")).toEqual([shape, innerShape]);
-    expect(container.findByTag("not found")).toEqual([]);
+    expect(container.findByTag('test-shape')).toEqual([shape, innerShape]);
+    expect(container.findByTag('not found')).toEqual([]);
   });
 
-  it("findAll", () => {
+  it('findAll', () => {
     container.addChild(shape);
     container.addChild(innerContainer);
     innerContainer.addChild(innerShape);
@@ -186,10 +186,10 @@ describe("Container", () => {
     expect(container.findAll((node) => node.id === innerShape.id)).toEqual([
       innerShape,
     ]);
-    expect(container.findAll((node) => node.id === "not found")).toEqual([]);
+    expect(container.findAll((node) => node.id === 'not found')).toEqual([]);
   });
 
-  it.todo("toJSON");
-  it.todo("fromJSON");
-  it.todo("clone");
+  it.todo('toJSON');
+  it.todo('fromJSON');
+  it.todo('clone');
 });

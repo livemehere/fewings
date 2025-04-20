@@ -11,21 +11,21 @@ declare const useMount: () => boolean;
 ## Example
 
 ```tsx
-import { useMount } from "@fewings/react/hooks";
-import { useEffect } from "react";
+import { useMount } from '@fewings/react/hooks';
+import { useEffect } from 'react';
 
 function MyComponent() {
   const isMounted = useMount();
 
   useEffect(() => {
     if (isMounted) {
-      console.log("Component is now mounted");
+      console.log('Component is now mounted');
     }
   }, [isMounted]);
 
   return (
     <div>
-      {isMounted ? "Component is mounted" : "Component is not mounted yet"}
+      {isMounted ? 'Component is mounted' : 'Component is not mounted yet'}
     </div>
   );
 }

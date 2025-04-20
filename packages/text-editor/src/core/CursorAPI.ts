@@ -1,9 +1,9 @@
-import { DomAPI } from "./DomAPI";
+import { DomAPI } from './DomAPI';
 
 export class CursorAPI {
   static isRangeInElement(element: HTMLElement, range: Range) {
     if (!element) {
-      throw new Error("TextEditor Element not found");
+      throw new Error('TextEditor Element not found');
     }
 
     if (
@@ -19,18 +19,18 @@ export class CursorAPI {
 
   static preventApplyToEditor(editorEl: HTMLElement, range: Range) {
     if (!editorEl) {
-      throw new Error("TextEditor Element not found");
+      throw new Error('TextEditor Element not found');
     }
 
     if (!CursorAPI.isRangeInElement(editorEl, range)) {
-      throw new Error("CursorAPI.validateMutate: range is a editor or outside");
+      throw new Error('CursorAPI.validateMutate: range is a editor or outside');
     }
   }
 
   static getRange(): Range {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
-      throw new Error("[getRange] selection is null");
+      throw new Error('[getRange] selection is null');
     }
     return selection.getRangeAt(0);
   }
@@ -39,7 +39,7 @@ export class CursorAPI {
     const range = document.createRange();
     const textNode = element.childNodes[0] as Text;
     if (!textNode) {
-      throw new Error("[createRangeFromElementTextNode] textNode is null");
+      throw new Error('[createRangeFromElementTextNode] textNode is null');
     }
     range.selectNodeContents(textNode);
     range.setEnd(textNode, textNode.textContent!.length);
@@ -49,7 +49,7 @@ export class CursorAPI {
   static setRange(range: Range) {
     const selection = window.getSelection();
     if (!selection) {
-      throw new Error("[setRange] selection is null");
+      throw new Error('[setRange] selection is null');
     }
     selection.removeAllRanges();
     selection.addRange(range);
@@ -95,7 +95,7 @@ export class CursorAPI {
             ? NodeFilter.FILTER_ACCEPT
             : NodeFilter.FILTER_REJECT;
         },
-      },
+      }
     );
     while (walker.nextNode()) {
       textNodes.push(walker.currentNode as Text);
@@ -119,7 +119,7 @@ export class CursorAPI {
             ? NodeFilter.FILTER_ACCEPT
             : NodeFilter.FILTER_REJECT;
         },
-      },
+      }
     );
 
     let i = 0;

@@ -65,7 +65,7 @@ const Strikethrough = () => {
   );
 };
 
-const Font = ({ color = "#707987" }: { color?: string }) => {
+const Font = ({ color = '#707987' }: { color?: string }) => {
   return (
     <svg width="12" height="14" fill="none">
       <path

@@ -1,14 +1,14 @@
-import { CursorAPI } from "./CursorAPI";
-import { DomAPI } from "./DomAPI";
+import { CursorAPI } from './CursorAPI';
+import { DomAPI } from './DomAPI';
 
 export class BlockAPI {
-  static BLOCK_ID_ATTR_NAME = "data-block-id"; // ⚠️ if change, also change in `TextEditorStyle.css`
-  static SELECTED_BLOCK_CLASS_NAME = "block-selected"; // ⚠️ if change, also change in `TextEditorStyle.css`
+  static BLOCK_ID_ATTR_NAME = 'data-block-id'; // ⚠️ if change, also change in `TextEditorStyle.css`
+  static SELECTED_BLOCK_CLASS_NAME = 'block-selected'; // ⚠️ if change, also change in `TextEditorStyle.css`
   static BLOCK_ELEMENT_SELECTOR = `[${BlockAPI.BLOCK_ID_ATTR_NAME}]`;
-  static EMPTY_MARKER_ATTR_NAME = "data-empty";
+  static EMPTY_MARKER_ATTR_NAME = 'data-empty';
 
   static isBlockHtmlString(str: string) {
-    return str.startsWith("<div data-block-id");
+    return str.startsWith('<div data-block-id');
   }
 
   static isBlock(element: Node): element is HTMLElement {
@@ -32,7 +32,7 @@ export class BlockAPI {
   }
 
   static setEmptyMarker(element: HTMLElement) {
-    element.setAttribute(BlockAPI.EMPTY_MARKER_ATTR_NAME, "true");
+    element.setAttribute(BlockAPI.EMPTY_MARKER_ATTR_NAME, 'true');
   }
 
   static removeEmptyMarker(element: HTMLElement) {
@@ -40,7 +40,7 @@ export class BlockAPI {
   }
 
   static create(forceId?: string): HTMLElement {
-    const div = document.createElement("div");
+    const div = document.createElement('div');
     this.setId(div, forceId);
     return div;
   }
@@ -67,7 +67,7 @@ export class BlockAPI {
 
   static getAllEmptyMarkedBlocks(element: HTMLElement): HTMLElement[] {
     return Array.from(
-      element.querySelectorAll(`[${BlockAPI.EMPTY_MARKER_ATTR_NAME}="true"]`),
+      element.querySelectorAll(`[${BlockAPI.EMPTY_MARKER_ATTR_NAME}="true"]`)
     );
   }
 
@@ -82,7 +82,7 @@ export class BlockAPI {
   static getByIndexRange(
     element: HTMLElement,
     start: number,
-    end: number,
+    end: number
   ): HTMLElement[] {
     const blocks = this.getAll(element);
     return Array.from(blocks).slice(start, end);
@@ -101,22 +101,22 @@ export class BlockAPI {
     return selected;
   }
 
-  static merge(blockElements: HTMLElement[] | HTMLElement, type: "ul" | "ol") {
+  static merge(blockElements: HTMLElement[] | HTMLElement, type: 'ul' | 'ol') {
     const blocks = Array.isArray(blockElements)
       ? blockElements
       : [blockElements];
 
     if (blocks.length === 0) {
-      throw new Error("No block elements provided");
+      throw new Error('No block elements provided');
     }
 
     const newBlock = BlockAPI.create();
     switch (type) {
-      case "ul":
-      case "ol":
+      case 'ul':
+      case 'ol':
         const listEl = document.createElement(type);
         blocks.forEach((blockElement) => {
-          const li = document.createElement("li");
+          const li = document.createElement('li');
           li.innerHTML = blockElement.innerHTML;
           listEl.appendChild(li);
         });
@@ -128,7 +128,7 @@ export class BlockAPI {
         });
         break;
       default:
-        throw new Error("unsupported block type");
+        throw new Error('unsupported block type');
     }
 
     return newBlock;
@@ -154,14 +154,14 @@ export class BlockAPI {
 
   static getDescendantElements(blockElement: HTMLElement): HTMLElement[] {
     if (!BlockAPI.isBlock(blockElement)) {
-      throw new Error("Element is not a block element");
+      throw new Error('Element is not a block element');
     }
 
     const elements: HTMLElement[] = [];
     const walker = document.createTreeWalker(
       blockElement,
       NodeFilter.SHOW_ELEMENT,
-      null,
+      null
     );
 
     let currentNode = walker.nextNode();
@@ -176,7 +176,7 @@ export class BlockAPI {
   }
 
   static stringify(blocks: HTMLElement[]) {
-    const template = document.createElement("template");
+    const template = document.createElement('template');
     blocks.forEach((block) => {
       template.content.appendChild(block.cloneNode(true));
     });
@@ -184,7 +184,7 @@ export class BlockAPI {
   }
 
   static parse(html: string) {
-    const template = document.createElement("template");
+    const template = document.createElement('template');
     template.innerHTML = html;
     return template.content;
   }

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { rand } from "@fewings/core/math";
-import { AnimateNumber } from "@fewings/fancy-react";
-import { withCommas } from "@fewings/core/converter";
-import { HStack, Space, VStack } from "@fewings/react/components";
-import Input from "@/components/Input";
+import { useEffect, useState } from 'react';
+import { rand } from '@fewings/core/math';
+import { AnimateNumber } from '@fewings/fancy-react';
+import { withCommas } from '@fewings/core/converter';
+import { HStack, Space, VStack } from '@fewings/react/components';
+import Input from '@/components/Input';
 
 const nums = [0, 12030, 12445823, 938293, 2353, 2999993435, 24];
 
@@ -28,8 +28,8 @@ const AnimateNumberExample = () => {
   return (
     <div>
       <Space y={40} />
-      <HStack justify={"center"} gap={20}>
-        <VStack align={"center"} gap={8}>
+      <HStack justify={'center'} gap={20}>
+        <VStack align={'center'} gap={8}>
           <Input
             type="number"
             step={0.01}
@@ -38,7 +38,7 @@ const AnimateNumberExample = () => {
           />
           <div>Rolling Duration</div>
         </VStack>
-        <VStack align={"center"} gap={8}>
+        <VStack align={'center'} gap={8}>
           <Input
             type="number"
             step={0.01}
@@ -49,7 +49,7 @@ const AnimateNumberExample = () => {
         </VStack>
       </HStack>
       <Space y={50} />
-      <HStack justify={"center"}>
+      <HStack justify={'center'}>
         <AnimateNumber
           value={value}
           countDur={countDur}
@@ -57,8 +57,8 @@ const AnimateNumberExample = () => {
           format={(v) => withCommas(v)}
           style={{
             fontSize: 38,
-            fontWeight: "bold",
-            lineHeight: "100%",
+            fontWeight: 'bold',
+            lineHeight: '100%',
           }}
         />
       </HStack>

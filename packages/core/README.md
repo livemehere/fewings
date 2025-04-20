@@ -54,26 +54,26 @@ Each module can be imported independently, allowing only the necessary functiona
 
 ```javascript
 // Import specific function from math module
-import { clamp } from "@fewings/core/math";
+import { clamp } from '@fewings/core/math';
 
 // Limit a value to a specific range
 const limitedValue = clamp(150, 0, 100); // Returns 100
 
 // Import specific function from fp module
-import { debounce } from "@fewings/core/fp";
+import { debounce } from '@fewings/core/fp';
 
 // Create a debounced function
 const debouncedFunction = debounce(() => {
-  console.log("Window resize completed");
+  console.log('Window resize completed');
 }, 300);
 
 // Apply to event listener
-window.addEventListener("resize", debouncedFunction);
+window.addEventListener('resize', debouncedFunction);
 
 // Use hash module
-import { djb2 } from "@fewings/core/hash";
+import { djb2 } from '@fewings/core/hash';
 
-const hash = djb2("hello world"); // Generate hash from string
+const hash = djb2('hello world'); // Generate hash from string
 ```
 
 ## Contributing

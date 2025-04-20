@@ -1,5 +1,5 @@
-import { NavLink, Outlet, useLocation } from "react-router";
-import { css } from "@emotion/react";
+import { NavLink, Outlet, useLocation } from 'react-router';
+import { css } from '@emotion/react';
 
 const Layout = () => {
   const { search } = useLocation();
@@ -14,10 +14,10 @@ const Layout = () => {
           `}
         >
           <li>
-            <NavLink to={"/" + search}>Home</NavLink>
+            <NavLink to={'/' + search}>Home</NavLink>
           </li>
           <li>
-            <NavLink to={"/page2" + search}>Page2</NavLink>
+            <NavLink to={'/page2' + search}>Page2</NavLink>
           </li>
         </ul>
       </nav>

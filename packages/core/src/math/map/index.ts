@@ -3,7 +3,7 @@ export function map(
   min: number,
   max: number,
   newMin: number,
-  newMax: number,
+  newMax: number
 ) {
   if (value < min) return newMin;
   if (value > max) return newMax;

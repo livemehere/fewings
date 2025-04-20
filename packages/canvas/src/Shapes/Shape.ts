@@ -1,5 +1,5 @@
-import { Bounds, IBox, IPoint, IShape } from "../types";
-import { CNode, TNodeProps } from "../Core/CNode";
+import { Bounds, IBox, IPoint, IShape } from '../types';
+import { CNode, TNodeProps } from '../Core/CNode';
 
 export type TShapeProps = TNodeProps & IPoint & IBox;
 
@@ -15,7 +15,7 @@ export abstract class Shape extends CNode implements IShape {
     x: number,
     y: number,
     width: number,
-    height: number,
+    height: number
   ): IPoint[];
 
   override get x(): number {
@@ -82,15 +82,15 @@ export abstract class Shape extends CNode implements IShape {
   abstract _hitMapRender(ctx: CanvasRenderingContext2D): void;
 
   override toJSON(): string {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   override fromJSON(json: string): CNode {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   override clone(): CNode {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   override getGlobalBounds(): Bounds {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 }

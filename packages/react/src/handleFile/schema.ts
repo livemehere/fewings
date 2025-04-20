@@ -1,13 +1,13 @@
 export const FILE_UNITS = [
-  "B",
-  "KB",
-  "MB",
-  "GB",
-  "TB",
-  "PB",
-  "EB",
-  "ZB",
-  "YB",
+  'B',
+  'KB',
+  'MB',
+  'GB',
+  'TB',
+  'PB',
+  'EB',
+  'ZB',
+  'YB',
 ] as const;
 export type TUnit = (typeof FILE_UNITS)[number];
 export type TGetUnitFn = (unit: TUnit, fixed?: number) => string;

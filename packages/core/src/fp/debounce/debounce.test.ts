@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { debounce } from ".";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { debounce } from '.';
 
-describe("core/fp/debounce", () => {
+describe('core/fp/debounce', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -11,7 +11,7 @@ describe("core/fp/debounce", () => {
     vi.restoreAllMocks();
   });
 
-  it("should delay function execution", () => {
+  it('should delay function execution', () => {
     const fn = vi.fn();
     const debounced = debounce(fn, 100);
 
@@ -25,7 +25,7 @@ describe("core/fp/debounce", () => {
     expect(fn).toHaveBeenCalledTimes(1);
   });
 
-  it("should debounce multiple calls and only run the last one", () => {
+  it('should debounce multiple calls and only run the last one', () => {
     const fn = vi.fn();
     const debounced = debounce(fn, 100);
 
@@ -39,7 +39,7 @@ describe("core/fp/debounce", () => {
     expect(fn).toHaveBeenCalledTimes(1);
   });
 
-  it("should run immediately if immediate=true", () => {
+  it('should run immediately if immediate=true', () => {
     const fn = vi.fn();
     const debounced = debounce(fn, 100, true);
 
@@ -56,7 +56,7 @@ describe("core/fp/debounce", () => {
     expect(fn).toHaveBeenCalledTimes(2);
   });
 
-  it("should cancel delayed invocation", () => {
+  it('should cancel delayed invocation', () => {
     const fn = vi.fn();
     const debounced = debounce(fn, 100);
 
@@ -67,7 +67,7 @@ describe("core/fp/debounce", () => {
     expect(fn).not.toHaveBeenCalled();
   });
 
-  it("should flush the pending invocation immediately", () => {
+  it('should flush the pending invocation immediately', () => {
     const fn = vi.fn();
     const debounced = debounce(fn, 100);
 
@@ -87,7 +87,7 @@ describe("core/fp/debounce", () => {
       },
     };
 
-    const spy = vi.spyOn(context, "fn");
+    const spy = vi.spyOn(context, 'fn');
     const debounced = debounce(context.fn, 100);
 
     debounced.call(context);

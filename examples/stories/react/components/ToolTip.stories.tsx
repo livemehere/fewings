@@ -1,19 +1,19 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { DummyArea, ToolTip } from "@fewings/react/components";
+import { Meta, StoryObj } from '@storybook/react';
+import { DummyArea, ToolTip } from '@fewings/react/components';
 
 const meta: Meta<typeof ToolTip> = {
-  title: "react/components/ToolTip",
+  title: 'react/components/ToolTip',
   component: ToolTip,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "`ToolTip` is an Additional implementation with `Popover` component.",
+          '`ToolTip` is an Additional implementation with `Popover` component.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     children: (
       <DummyArea width={100} height={80}>
@@ -23,11 +23,11 @@ const meta: Meta<typeof ToolTip> = {
     content: (
       <div
         style={{
-          backgroundColor: "#262626",
-          color: "#fff",
+          backgroundColor: '#262626',
+          color: '#fff',
           padding: 8,
           borderRadius: 4,
-          boxSizing: "border-box",
+          boxSizing: 'border-box',
           width: 500,
         }}
       >
@@ -40,30 +40,30 @@ const meta: Meta<typeof ToolTip> = {
   },
   argTypes: {
     children: {
-      description: "ReactNode",
+      description: 'ReactNode',
       control: false,
     },
     content: {
-      description: "ReactNode",
+      description: 'ReactNode',
       control: false,
     },
     dir: {
-      description: "Direction of the tooltip content",
-      control: "select",
-      options: ["top", "bottom", "left", "right"],
+      description: 'Direction of the tooltip content',
+      control: 'select',
+      options: ['top', 'bottom', 'left', 'right'],
     },
     arrowColor: {
-      control: "color",
-      description: "Color of the arrow. Match with the content background",
+      control: 'color',
+      description: 'Color of the arrow. Match with the content background',
     },
     open: {
-      description: "Controlled open state",
-      control: "boolean",
+      description: 'Controlled open state',
+      control: 'boolean',
     },
     gap: {
       description:
-        "Gap between the content and the trigger (use this or use `padding`, `margin` on your content)",
-      control: "number",
+        'Gap between the content and the trigger (use this or use `padding`, `margin` on your content)',
+      control: 'number',
     },
   },
 };

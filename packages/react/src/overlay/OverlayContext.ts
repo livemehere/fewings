@@ -1,5 +1,5 @@
-import { OverlayContextProps } from "./types";
-import { createContext } from "@fewings/react/contextSelector";
+import { OverlayContextProps } from './types';
+import { createContext } from '@fewings/react/contextSelector';
 
 export const OverlayContext = createContext<OverlayContextProps>({
   items: [],

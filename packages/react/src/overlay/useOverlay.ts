@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
-import { OverlayContext } from "./OverlayContext";
-import { OverlayOptions, OverlayBaseProps, OverlayItem } from "./types";
-import { useContextSelector } from "@fewings/react/contextSelector";
+import { ReactNode } from 'react';
+import { OverlayContext } from './OverlayContext';
+import { OverlayOptions, OverlayBaseProps, OverlayItem } from './types';
+import { useContextSelector } from '@fewings/react/contextSelector';
 
 export function useOverlay() {
   const setItems = useContextSelector(OverlayContext, (v) => v.setItems);
@@ -17,7 +17,7 @@ export function useOverlay() {
 
   const open = <Resolve>(
     render: (props: OverlayBaseProps<Resolve>) => ReactNode,
-    options?: OverlayOptions,
+    options?: OverlayOptions
   ) => {
     return new Promise<Resolve>((resolve, reject) => {
       const overlayId = idRef.current++;

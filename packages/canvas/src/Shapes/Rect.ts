@@ -1,6 +1,6 @@
-import { Shape, TShapeProps } from "./Shape";
-import { IPoint, ModelTypeMap, TModelType } from "../types";
-import { VerticesHelper } from "../Helpers/VerticesHelper";
+import { Shape, TShapeProps } from './Shape';
+import { IPoint, ModelTypeMap, TModelType } from '../types';
+import { VerticesHelper } from '../Helpers/VerticesHelper';
 
 export class Rect extends Shape {
   readonly type: TModelType = ModelTypeMap.RECT;
@@ -13,7 +13,7 @@ export class Rect extends Shape {
     x: number,
     y: number,
     width: number,
-    height: number,
+    height: number
   ): IPoint[] {
     return VerticesHelper.createBoxVertices(x, y, width, height);
   }

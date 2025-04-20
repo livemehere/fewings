@@ -1,6 +1,6 @@
-import React, { useContext, cloneElement, Children } from "react";
-import { useControlledState } from "@fewings/react/hooks";
-import { AccordionContext } from "./AccordionContext";
+import React, { useContext, cloneElement, Children } from 'react';
+import { useControlledState } from '@fewings/react/hooks';
+import { AccordionContext } from './AccordionContext';
 
 const Root = ({
   children,
@@ -28,7 +28,7 @@ const Root = ({
     </AccordionContext.Provider>
   );
 };
-Root.displayName = "AccordionRoot";
+Root.displayName = 'AccordionRoot';
 
 const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
   const { open, setOpen } = useContext(AccordionContext);
@@ -40,10 +40,10 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
         }
         setOpen(!open);
       },
-    }),
+    })
   );
 };
-Trigger.displayName = "AccordionTrigger";
+Trigger.displayName = 'AccordionTrigger';
 
 const Panel = ({
   children,
@@ -56,7 +56,7 @@ const Panel = ({
   const { open } = useContext(AccordionContext);
   return <Wrapper>{open && children}</Wrapper>;
 };
-Panel.displayName = "AccordionPanel";
+Panel.displayName = 'AccordionPanel';
 
 export const Accordion = {
   Root,

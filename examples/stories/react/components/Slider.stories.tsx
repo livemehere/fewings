@@ -1,21 +1,21 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { DummyArea, Float, Slider } from "@fewings/react/components";
-import { useState } from "react";
+import { Meta, StoryObj } from '@storybook/react';
+import { DummyArea, Float, Slider } from '@fewings/react/components';
+import { useState } from 'react';
 
 type ArgsType = React.ComponentProps<typeof Slider.Root>;
 
 const meta: Meta<ArgsType> = {
-  title: "react/components/Slider",
+  title: 'react/components/Slider',
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "The Slider component is a customizable range slider that allows users to select a value from a specified range. It can be styled and configured for various use cases.",
+          'The Slider component is a customizable range slider that allows users to select a value from a specified range. It can be styled and configured for various use cases.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     min: 0,
     max: 100,
@@ -38,22 +38,22 @@ export const Basic: Story = {
               height={20}
               style={{
                 width: 500,
-                position: "relative",
+                position: 'relative',
               }}
             >
-              <Float top={0} left={0} style={{ width: "100%", height: "100%" }}>
+              <Float top={0} left={0} style={{ width: '100%', height: '100%' }}>
                 <div
                   style={{
                     width: `${ratio * 100}%`,
-                    background: "rgba(0, 0, 0, 0.4)",
-                    height: "100%",
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    height: '100%',
                   }}
                 ></div>
               </Float>
               <Float
-                top={"50%"}
-                left={"50%"}
-                style={{ transform: "translate(-50%, -50%)" }}
+                top={'50%'}
+                left={'50%'}
+                style={{ transform: 'translate(-50%, -50%)' }}
               >
                 {value}({ratio})
               </Float>
@@ -66,13 +66,13 @@ export const Basic: Story = {
               width={20}
               height={20}
               style={{
-                borderRadius: "50%",
-                position: "relative",
-                cursor: "grab",
-                transform: "translateX(-50%)",
+                borderRadius: '50%',
+                position: 'relative',
+                cursor: 'grab',
+                transform: 'translateX(-50%)',
               }}
             >
-              <Float top={"110%"}>
+              <Float top={'110%'}>
                 {value}({ratio})
               </Float>
             </DummyArea>

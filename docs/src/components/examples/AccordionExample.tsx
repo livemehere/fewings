@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { Accordion } from "@fewings/react/components";
-import { useState } from "react";
+import { Accordion } from '@fewings/react/components';
+import { useState } from 'react';
 
 const AccordionExample = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
         <h3
-          style={{ marginBottom: "10px", fontSize: "18px", fontWeight: "bold" }}
+          style={{ marginBottom: '10px', fontSize: '18px', fontWeight: 'bold' }}
         >
           Basic Accordion
         </h3>
@@ -18,13 +18,13 @@ const AccordionExample = () => {
           <Accordion.Trigger>
             <button
               style={{
-                padding: "8px 16px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                cursor: "pointer",
-                width: "100%",
-                textAlign: "left",
-                fontWeight: "bold",
+                padding: '8px 16px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                width: '100%',
+                textAlign: 'left',
+                fontWeight: 'bold',
               }}
             >
               Click to toggle
@@ -33,9 +33,9 @@ const AccordionExample = () => {
           <Accordion.Panel>
             <div
               style={{
-                padding: "16px",
-                border: "1px solid #eee",
-                borderTop: "none",
+                padding: '16px',
+                border: '1px solid #eee',
+                borderTop: 'none',
               }}
             >
               <p>
@@ -50,34 +50,34 @@ const AccordionExample = () => {
 
       <div>
         <h3
-          style={{ marginBottom: "10px", fontSize: "18px", fontWeight: "bold" }}
+          style={{ marginBottom: '10px', fontSize: '18px', fontWeight: 'bold' }}
         >
           Controlled Accordion
         </h3>
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: '10px' }}>
           <button
             onClick={() => setIsOpen(!isOpen)}
             style={{
-              padding: "6px 12px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              cursor: "pointer",
+              padding: '6px 12px',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              cursor: 'pointer',
             }}
           >
-            Toggle from outside: {isOpen ? "Close" : "Open"}
+            Toggle from outside: {isOpen ? 'Close' : 'Open'}
           </button>
         </div>
         <Accordion.Root open={isOpen} onChangeOpen={setIsOpen}>
           <Accordion.Trigger>
             <button
               style={{
-                padding: "8px 16px",
-                border: "1px solid #9090ff",
-                borderRadius: "4px",
-                cursor: "pointer",
-                width: "100%",
-                textAlign: "left",
-                fontWeight: "bold",
+                padding: '8px 16px',
+                border: '1px solid #9090ff',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                width: '100%',
+                textAlign: 'left',
+                fontWeight: 'bold',
               }}
             >
               Controlled accordion
@@ -86,9 +86,9 @@ const AccordionExample = () => {
           <Accordion.Panel>
             <div
               style={{
-                padding: "16px",
-                border: "1px solid #d0d0ff",
-                borderTop: "none",
+                padding: '16px',
+                border: '1px solid #d0d0ff',
+                borderTop: 'none',
               }}
             >
               <p>This accordion&apos;s state is controlled externally.</p>

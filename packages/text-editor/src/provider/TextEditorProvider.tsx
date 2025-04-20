@@ -1,7 +1,7 @@
-import { createContext } from "@fewings/react/contextSelector";
-import { TextEditor, TextEditorConfig } from "../core/TextEditor";
-import { ReactNode, useEffect, useState } from "react";
-import useTextEditorEffect from "../hooks/useTextEditorEffect";
+import { createContext } from '@fewings/react/contextSelector';
+import { TextEditor, TextEditorConfig } from '../core/TextEditor';
+import { ReactNode, useEffect, useState } from 'react';
+import useTextEditorEffect from '../hooks/useTextEditorEffect';
 
 interface TTextEditorContext {
   editor: TextEditor | null;
@@ -9,13 +9,13 @@ interface TTextEditorContext {
 }
 
 export const TextEditorContext = createContext<TTextEditorContext>(
-  {} as TTextEditorContext,
+  {} as TTextEditorContext
 );
 
 type Props = {
   children: ReactNode;
   onChange?: (html: string) => void;
-} & Omit<TextEditorConfig, "element">;
+} & Omit<TextEditorConfig, 'element'>;
 
 export const TextEditorProvider = ({
   children,
@@ -34,7 +34,7 @@ export const TextEditorProvider = ({
   }, [editorEl]);
 
   // bind event for onChange prop
-  useTextEditorEffect(editor!, "onChange", (html) => {
+  useTextEditorEffect(editor!, 'onChange', (html) => {
     onChange?.(html);
   });
 

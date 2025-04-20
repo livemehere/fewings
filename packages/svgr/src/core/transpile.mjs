@@ -1,5 +1,5 @@
-import { toPascalCase } from "@fewings/core/converter";
-import { constMapTemplate, iconComponentTemplate } from "./templates.mjs";
+import { toPascalCase } from '@fewings/core/converter';
+import { constMapTemplate, iconComponentTemplate } from './templates.mjs';
 
 /**
  * Generates a constant map file content with imports and mappings.
@@ -12,29 +12,29 @@ import { constMapTemplate, iconComponentTemplate } from "./templates.mjs";
  */
 export function transpileConstMap({ files, importBase, constName, typeName }) {
   // Map to PascalCase and create imports
-  const resolveCompName = (name) => toPascalCase(name).replaceAll("/", "_");
+  const resolveCompName = (name) => toPascalCase(name).replaceAll('/', '_');
   const imports = files
     .map(
       (file) =>
-        `import ${resolveCompName(file.key)}Icon from '${importBase}/${file.key}.svg?react';`,
+        `import ${resolveCompName(file.key)}Icon from '${importBase}/${file.key}.svg?react';`
     )
-    .join("\n");
+    .join('\n');
 
   // Generate type keys
-  const keys = files.map((file) => `'${file.key}'`).join(" | ");
+  const keys = files.map((file) => `'${file.key}'`).join(' | ');
 
   // Generate icon map
   const map = files
     .map((file) => `'${file.key}': ${resolveCompName(file.key)}Icon`)
-    .join(",\n");
+    .join(',\n');
 
   // Replace template placeholders
   return constMapTemplate
-    .replaceAll("__TYPE_NAME__", typeName)
-    .replaceAll("__CONST_NAME__", constName)
-    .replaceAll("__IMPORTS__", imports)
-    .replaceAll("__KEYS__", keys)
-    .replaceAll("__MAPS__", map);
+    .replaceAll('__TYPE_NAME__', typeName)
+    .replaceAll('__CONST_NAME__', constName)
+    .replaceAll('__IMPORTS__', imports)
+    .replaceAll('__KEYS__', keys)
+    .replaceAll('__MAPS__', map);
 }
 
 /**
@@ -47,7 +47,7 @@ export function transpileConstMap({ files, importBase, constName, typeName }) {
  */
 export function transpileIconComponent({ constName, componentName, typeName }) {
   return iconComponentTemplate
-    .replaceAll("__CONST_NAME__", constName)
-    .replaceAll("__TYPE_NAME__", typeName)
-    .replaceAll("__COMPONENT_NAME__", componentName);
+    .replaceAll('__CONST_NAME__', constName)
+    .replaceAll('__TYPE_NAME__', typeName)
+    .replaceAll('__COMPONENT_NAME__', componentName);
 }

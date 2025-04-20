@@ -1,1 +1,1 @@
-export * from "./fewingsSvgrVitePlugin";
+export * from './fewingsSvgrVitePlugin';

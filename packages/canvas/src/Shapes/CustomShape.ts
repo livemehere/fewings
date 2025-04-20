@@ -1,6 +1,6 @@
-import { TShapeProps, Shape } from "./Shape";
-import { IPoint, ModelTypeMap, TModelType } from "../types";
-import { VerticesHelper } from "../Helpers/VerticesHelper";
+import { TShapeProps, Shape } from './Shape';
+import { IPoint, ModelTypeMap, TModelType } from '../types';
+import { VerticesHelper } from '../Helpers/VerticesHelper';
 
 export type TCustomShapeProps = TShapeProps & {
   render: (ctx: CanvasRenderingContext2D) => void;
@@ -30,7 +30,7 @@ export class CustomShape extends Shape {
     x: number,
     y: number,
     width: number,
-    height: number,
+    height: number
   ): IPoint[] {
     return VerticesHelper.createBoxVertices(x, y, width, height);
   }

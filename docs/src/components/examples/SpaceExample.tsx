@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Space } from "@fewings/react/components";
-import { useState } from "react";
+import { Space } from '@fewings/react/components';
+import { useState } from 'react';
 
 const SpaceExample = () => {
   const [horizontal, setHorizontal] = useState(40);
@@ -10,26 +10,26 @@ const SpaceExample = () => {
   return (
     <div
       style={{
-        backgroundColor: "#1f2937",
-        color: "white",
-        padding: "2rem",
-        borderRadius: "0.5rem",
+        backgroundColor: '#1f2937',
+        color: 'white',
+        padding: '2rem',
+        borderRadius: '0.5rem',
       }}
     >
-      <div style={{ marginBottom: "1.5rem" }}>
+      <div style={{ marginBottom: '1.5rem' }}>
         <h3
           style={{
-            fontSize: "1.125rem",
+            fontSize: '1.125rem',
             fontWeight: 500,
-            marginBottom: "1rem",
-            color: "#f3f4f6",
+            marginBottom: '1rem',
+            color: '#f3f4f6',
           }}
         >
           Adjust Spacing
         </h3>
 
-        <div style={{ marginBottom: "1rem" }}>
-          <label style={{ display: "block", marginBottom: "0.5rem" }}>
+        <div style={{ marginBottom: '1rem' }}>
+          <label style={{ display: 'block', marginBottom: '0.5rem' }}>
             Horizontal space (x): {horizontal}px
           </label>
           <input
@@ -38,12 +38,12 @@ const SpaceExample = () => {
             max="100"
             value={horizontal}
             onChange={(e) => setHorizontal(Number(e.target.value))}
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
           />
         </div>
 
         <div>
-          <label style={{ display: "block", marginBottom: "0.5rem" }}>
+          <label style={{ display: 'block', marginBottom: '0.5rem' }}>
             Vertical space (y): {vertical}px
           </label>
           <input
@@ -52,27 +52,27 @@ const SpaceExample = () => {
             max="100"
             value={vertical}
             onChange={(e) => setVertical(Number(e.target.value))}
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
           />
         </div>
       </div>
 
       <div
         style={{
-          border: "1px dashed #4b5563",
-          padding: "1.5rem",
-          borderRadius: "0.375rem",
+          border: '1px dashed #4b5563',
+          padding: '1.5rem',
+          borderRadius: '0.375rem',
         }}
       >
-        <h3 style={{ color: "#f3f4f6", marginBottom: "1rem" }}>
+        <h3 style={{ color: '#f3f4f6', marginBottom: '1rem' }}>
           Vertical Spacing Example
         </h3>
 
         <div
           style={{
-            padding: "1rem",
-            backgroundColor: "#374151",
-            borderRadius: "0.375rem",
+            padding: '1rem',
+            backgroundColor: '#374151',
+            borderRadius: '0.375rem',
           }}
         >
           First element
@@ -82,9 +82,9 @@ const SpaceExample = () => {
 
         <div
           style={{
-            padding: "1rem",
-            backgroundColor: "#374151",
-            borderRadius: "0.375rem",
+            padding: '1rem',
+            backgroundColor: '#374151',
+            borderRadius: '0.375rem',
           }}
         >
           Second element
@@ -94,9 +94,9 @@ const SpaceExample = () => {
 
         <div
           style={{
-            padding: "1rem",
-            backgroundColor: "#374151",
-            borderRadius: "0.375rem",
+            padding: '1rem',
+            backgroundColor: '#374151',
+            borderRadius: '0.375rem',
           }}
         >
           Third element
@@ -107,21 +107,21 @@ const SpaceExample = () => {
 
       <div
         style={{
-          border: "1px dashed #4b5563",
-          padding: "1.5rem",
-          borderRadius: "0.375rem",
+          border: '1px dashed #4b5563',
+          padding: '1.5rem',
+          borderRadius: '0.375rem',
         }}
       >
-        <h3 style={{ color: "#f3f4f6", marginBottom: "1rem" }}>
+        <h3 style={{ color: '#f3f4f6', marginBottom: '1rem' }}>
           Horizontal Spacing Example
         </h3>
 
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <div
             style={{
-              padding: "1rem",
-              backgroundColor: "#374151",
-              borderRadius: "0.375rem",
+              padding: '1rem',
+              backgroundColor: '#374151',
+              borderRadius: '0.375rem',
             }}
           >
             First
@@ -131,9 +131,9 @@ const SpaceExample = () => {
 
           <div
             style={{
-              padding: "1rem",
-              backgroundColor: "#374151",
-              borderRadius: "0.375rem",
+              padding: '1rem',
+              backgroundColor: '#374151',
+              borderRadius: '0.375rem',
             }}
           >
             Second
@@ -143,9 +143,9 @@ const SpaceExample = () => {
 
           <div
             style={{
-              padding: "1rem",
-              backgroundColor: "#374151",
-              borderRadius: "0.375rem",
+              padding: '1rem',
+              backgroundColor: '#374151',
+              borderRadius: '0.375rem',
             }}
           >
             Third

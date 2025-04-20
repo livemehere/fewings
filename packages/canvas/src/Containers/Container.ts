@@ -1,4 +1,4 @@
-import { CNode, TNodeProps } from "../Core/CNode";
+import { CNode, TNodeProps } from '../Core/CNode';
 
 export type TContainerProps = TNodeProps & {
   scale?: number;
@@ -30,7 +30,7 @@ export abstract class Container extends CNode {
 
   addChild(child: CNode): void {
     if (!(child instanceof CNode)) {
-      throw new Error("Child must be an instance of CNode");
+      throw new Error('Child must be an instance of CNode');
     }
 
     if (child.parent) {

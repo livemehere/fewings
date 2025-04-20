@@ -1,13 +1,13 @@
-import { InteractionManager, TPointerEvent } from "./InteractionManager";
-import { Group } from "../Containers/Group";
-import { Emitter } from "@fewings/core/classes/Emitter";
+import { InteractionManager, TPointerEvent } from './InteractionManager';
+import { Group } from '../Containers/Group';
+import { Emitter } from '@fewings/core/classes/Emitter';
 
 type Loop = (app: App, deltaTime: number) => void;
 
 type TAppEvents = {
-  pointermove: (e: Omit<TPointerEvent, "target" | "currentTarget">) => void;
-  pointerup: (e: Omit<TPointerEvent, "target" | "currentTarget">) => void;
-  pointerdown: (e: Omit<TPointerEvent, "target" | "currentTarget">) => void;
+  pointermove: (e: Omit<TPointerEvent, 'target' | 'currentTarget'>) => void;
+  pointerup: (e: Omit<TPointerEvent, 'target' | 'currentTarget'>) => void;
+  pointerdown: (e: Omit<TPointerEvent, 'target' | 'currentTarget'>) => void;
 };
 
 export type TAppProps = {
@@ -45,7 +45,7 @@ export class App extends Emitter<TAppEvents> {
   constructor(props: TAppProps) {
     super();
     this.canvas = props.canvas;
-    this.ctx = this.canvas.getContext("2d", {
+    this.ctx = this.canvas.getContext('2d', {
       desynchronized: true,
     }) as CanvasRenderingContext2D;
 
@@ -66,8 +66,8 @@ export class App extends Emitter<TAppEvents> {
       debug: this.debug,
     });
     this.resize();
-    this.debugLog("[App constructor] dpr", this.dpr);
-    this.debugLog("[App constructor] fps", this.fps);
+    this.debugLog('[App constructor] dpr', this.dpr);
+    this.debugLog('[App constructor] fps', this.fps);
   }
 
   debugLog(...args: any[]) {
@@ -98,13 +98,13 @@ export class App extends Emitter<TAppEvents> {
     this.canvas.height = this._height * this.dpr;
     this.canvas.style.width = `${this._width}px`;
     this.canvas.style.height = `${this._height}px`;
-    this.debugLog("[App resize]", this.canvas.width, this.canvas.height);
+    this.debugLog('[App resize]', this.canvas.width, this.canvas.height);
     this.interactionManager.resize();
   }
 
   private appRenderRoutine(
     ctx: CanvasRenderingContext2D,
-    callback: () => void,
+    callback: () => void
   ) {
     ctx.save();
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -124,9 +124,9 @@ export class App extends Emitter<TAppEvents> {
 
   addLoop(cb: Loop) {
     this.loops.add(cb);
-    this.debugLog("[App Loop] addLoop", this.loops.size);
+    this.debugLog('[App Loop] addLoop', this.loops.size);
     if (!this.isLooping()) {
-      this.debugLog("[App Loop] loop started...");
+      this.debugLog('[App Loop] loop started...');
       this.startLoop();
     }
 
@@ -137,7 +137,7 @@ export class App extends Emitter<TAppEvents> {
 
   removeLoop(cb: Loop) {
     this.loops.delete(cb);
-    this.debugLog("[App Loop] removeLoop", this.loops.size);
+    this.debugLog('[App Loop] removeLoop', this.loops.size);
 
     if (this.loops.size === 0) {
       this.stopLoop();
@@ -167,7 +167,7 @@ export class App extends Emitter<TAppEvents> {
     if (this.rafId) {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
-      this.debugLog("[App Loop] stopLoop", this.loops.size);
+      this.debugLog('[App Loop] stopLoop', this.loops.size);
     }
   }
 

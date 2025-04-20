@@ -1,17 +1,17 @@
-import { Container } from "./Containers/Container";
+import { Container } from './Containers/Container';
 
 export const ModelTypeMap = {
-  PRIMITIVE: "primitive",
-  CONTAINER: "container",
-  FRAME: "frame",
-  GROUP: "group",
-  CUSTOM: "custom",
-  RECT: "rect",
-  ELLIPSE: "ellipse",
-  POLYGON: "polygon",
-  TEXT: "text",
-  IMAGE: "image",
-  LINE: "line",
+  PRIMITIVE: 'primitive',
+  CONTAINER: 'container',
+  FRAME: 'frame',
+  GROUP: 'group',
+  CUSTOM: 'custom',
+  RECT: 'rect',
+  ELLIPSE: 'ellipse',
+  POLYGON: 'polygon',
+  TEXT: 'text',
+  IMAGE: 'image',
+  LINE: 'line',
 } as const;
 
 export type TModelType = (typeof ModelTypeMap)[keyof typeof ModelTypeMap];

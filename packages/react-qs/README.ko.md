@@ -47,14 +47,14 @@ pnpm add @fewings/react-qs react-router
 `useQsState` 훅은 React의 `useState`와 유사하게 작동하지만, 상태가 URL 쿼리 파라미터에 저장됩니다:
 
 ```tsx
-import { useQsState } from "@fewings/react-qs";
+import { useQsState } from '@fewings/react-qs';
 
 function SearchPage() {
   // URL 쿼리 파라미터를 상태로 사용
   const [search, setSearch] = useQsState({
-    query: "",
-    page: "1",
-    category: "all",
+    query: '',
+    page: '1',
+    category: 'all',
   });
 
   return (
@@ -104,8 +104,8 @@ function SearchPage() {
 
 ```tsx
 const [filter, setFilter] = useQsState(
-  { sort: "newest", view: "grid" },
-  { navigateMode: "replace" },
+  { sort: 'newest', view: 'grid' },
+  { navigateMode: 'replace' }
 );
 ```
 
@@ -114,7 +114,7 @@ const [filter, setFilter] = useQsState(
 `useState`와 마찬가지로 함수형 업데이트를 지원합니다:
 
 ```tsx
-const [pagination, setPagination] = useQsState({ page: "1", perPage: "10" });
+const [pagination, setPagination] = useQsState({ page: '1', perPage: '10' });
 
 // 함수형 업데이트로 이전 상태 기반 업데이트
 setPagination((prev) => ({
@@ -135,9 +135,9 @@ interface SearchParams {
 }
 
 const [search, setSearch] = useQsState<SearchParams>({
-  query: "",
-  page: "1",
-  category: "all",
+  query: '',
+  page: '1',
+  category: 'all',
 });
 ```
 
@@ -147,8 +147,8 @@ const [search, setSearch] = useQsState<SearchParams>({
 
 ```tsx
 const [filter, setFilter] = useQsState({
-  sort: "newest", // URL에 ?sort= 파라미터가 없으면 "newest"를 기본값으로 사용
-  view: "grid", // URL에 ?view= 파라미터가 없으면 "grid"를 기본값으로 사용
+  sort: 'newest', // URL에 ?sort= 파라미터가 없으면 "newest"를 기본값으로 사용
+  view: 'grid', // URL에 ?view= 파라미터가 없으면 "grid"를 기본값으로 사용
 });
 ```
 

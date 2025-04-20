@@ -17,15 +17,15 @@ A hook that observes element position changes using `requestAnimationFrame` per 
 declare const useElementPositionObserver: (
   ref: React.RefObject<HTMLElement | null>,
   onChange: (rect: DOMRect) => void,
-  active: boolean,
+  active: boolean
 ) => void;
 ```
 
 ## Example
 
 ```tsx
-import { useElementPositionObserver } from "@fewings/react/hooks";
-import { useRef, useState } from "react";
+import { useElementPositionObserver } from '@fewings/react/hooks';
+import { useRef, useState } from 'react';
 
 function PositionTracker() {
   const ref = useRef<HTMLDivElement>(null);
@@ -46,14 +46,14 @@ function PositionTracker() {
         height: rect.height,
       });
     },
-    true,
+    true
   );
 
   return (
     <>
       <div
         ref={ref}
-        style={{ width: "100px", height: "100px", background: "blue" }}
+        style={{ width: '100px', height: '100px', background: 'blue' }}
       >
         Track me!
       </div>

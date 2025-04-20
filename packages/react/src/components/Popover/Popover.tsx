@@ -2,7 +2,7 @@ import {
   useClickOutside,
   useControlledState,
   useElementPositionObserver,
-} from "@fewings/react/hooks";
+} from '@fewings/react/hooks';
 import React, {
   useContext,
   useRef,
@@ -11,15 +11,15 @@ import React, {
   useCallback,
   useMemo,
   useLayoutEffect,
-} from "react";
-import { createPortal } from "react-dom";
-import { TPopoverAnchor, TPopoverTrigger } from "./types";
-import { PopoverContext } from "./PopoverContext";
+} from 'react';
+import { createPortal } from 'react-dom';
+import { TPopoverAnchor, TPopoverTrigger } from './types';
+import { PopoverContext } from './PopoverContext';
 
 const Root = ({
   children,
   closeOnClickOutSide = true,
-  type = "click",
+  type = 'click',
   initialOpen,
   open: openProp,
   onChangeOpen,
@@ -58,7 +58,7 @@ const Root = ({
     </PopoverContext.Provider>
   );
 };
-Root.displayName = "PopoverRoot";
+Root.displayName = 'PopoverRoot';
 
 const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
   const { open, setOpen, triggerRef, panelRef, closeOnClickOutSide, type } =
@@ -73,13 +73,13 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
     cloneElement(child, {
       onClick: (e: React.MouseEvent) => {
         child.props.onClick?.(e);
-        if (type === "click") {
+        if (type === 'click') {
           setOpen(!open);
         }
       },
       onPointerEnter: (e: React.PointerEvent) => {
         child.props.onPointerEnter?.(e);
-        if (type === "hover") {
+        if (type === 'hover') {
           setOpen(true);
         }
       },
@@ -88,12 +88,12 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
 
         const pointerEl = document.elementFromPoint(e.clientX, e.clientY);
         const isPanel = panelRef.current?.contains(pointerEl as Node);
-        if (type === "hover" && !isPanel) {
+        if (type === 'hover' && !isPanel) {
           setOpen(false);
         }
       },
       ref: (el: HTMLElement) => {
-        if (typeof child.props.ref === "function") {
+        if (typeof child.props.ref === 'function') {
           child.props.ref(el);
         } else if (child.props.ref) {
           child.props.ref.current = el;
@@ -102,14 +102,14 @@ const Trigger = ({ children }: { children: React.ReactElement<any> }) => {
         triggerRef.current = el;
         ref.current = el;
       },
-    }),
+    })
   );
 };
-Trigger.displayName = "PopoverTrigger";
+Trigger.displayName = 'PopoverTrigger';
 
 const Panel = ({
   children,
-  anchor = "bottom-left",
+  anchor = 'bottom-left',
   wrapper,
   zIndex = 99,
   portal = true,
@@ -138,59 +138,59 @@ const Panel = ({
       const style = panelRef.current.style;
 
       switch (anchor) {
-        case "bottom-right":
+        case 'bottom-right':
           style.top = `${triggerRect.bottom}px`;
           style.right = `${window.innerWidth - triggerRect.right}px`;
           break;
-        case "bottom-left":
+        case 'bottom-left':
           style.top = `${triggerRect.bottom}px`;
           style.left = `${triggerRect.left}px`;
           break;
-        case "bottom-center":
+        case 'bottom-center':
           style.top = `${triggerRect.bottom}px`;
           style.left = `${triggerRect.left + triggerRect.width / 2 - (pBounds?.width || 0) / 2}px`;
           break;
-        case "top-right":
+        case 'top-right':
           style.bottom = `${window.innerHeight - triggerRect.top}px`;
           style.right = `${window.innerWidth - triggerRect.right}px`;
           break;
-        case "top-left":
+        case 'top-left':
           style.bottom = `${window.innerHeight - triggerRect.top}px`;
           style.left = `${triggerRect.left}px`;
           break;
-        case "top-center":
+        case 'top-center':
           style.bottom = `${window.innerHeight - triggerRect.top}px`;
           style.left = `${triggerRect.left + triggerRect.width / 2 - (pBounds?.width || 0) / 2}px`;
           break;
-        case "left-top":
+        case 'left-top':
           style.top = `${triggerRect.top}px`;
           style.right = `${window.innerWidth - triggerRect.left}px`;
           break;
-        case "left-center":
+        case 'left-center':
           style.top = `${triggerRect.top + triggerRect.height / 2 - (pBounds?.height || 0) / 2}px`;
           style.right = `${window.innerWidth - triggerRect.left}px`;
           break;
-        case "left-bottom":
+        case 'left-bottom':
           style.bottom = `${window.innerHeight - triggerRect.bottom}px`;
           style.right = `${window.innerWidth - triggerRect.left}px`;
           break;
-        case "right-top":
+        case 'right-top':
           style.top = `${triggerRect.top}px`;
           style.left = `${triggerRect.right}px`;
           break;
-        case "right-center":
+        case 'right-center':
           style.top = `${triggerRect.top + triggerRect.height / 2 - (pBounds?.height || 0) / 2}px`;
           style.left = `${triggerRect.right}px`;
           break;
-        case "right-bottom":
+        case 'right-bottom':
           style.bottom = `${window.innerHeight - triggerRect.bottom}px`;
           style.left = `${triggerRect.right}px`;
           break;
         default:
-          throw new Error("Invalid anchor");
+          throw new Error('Invalid anchor');
       }
     },
-    [anchor, fitOnTriggerWidth],
+    [anchor, fitOnTriggerWidth]
   );
 
   useElementPositionObserver(triggerRef, setPanelPosition, open);
@@ -202,7 +202,7 @@ const Panel = ({
         setPanelPosition(triggerRect);
       }
     },
-    open,
+    open
   );
 
   useLayoutEffect(() => {
@@ -221,14 +221,14 @@ const Panel = ({
           panelRef.current = el;
         }}
         style={{
-          position: "fixed",
+          position: 'fixed',
           zIndex,
-          width: "fit-content",
-          height: "fit-content",
+          width: 'fit-content',
+          height: 'fit-content',
         }}
         // eslint-disable-next-line react/no-unknown-property
         onPointerLeave={() => {
-          if (type === "hover") {
+          if (type === 'hover') {
             setOpen(false);
           }
         }}
@@ -236,18 +236,18 @@ const Panel = ({
         {children}
       </div>
     ),
-    [open, zIndex, type],
+    [open, zIndex, type]
   );
 
   if (portal) {
     return createPortal(
       <Wrapper>{open && <Content>{children}</Content>}</Wrapper>,
-      document.body,
+      document.body
     );
   }
   return <Wrapper>{open && <Content>{children}</Content>}</Wrapper>;
 };
-Panel.displayName = "PopoverPanel";
+Panel.displayName = 'PopoverPanel';
 
 export const Popover = {
   Root,

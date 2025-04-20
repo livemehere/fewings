@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 /**
  * A hook that observes element position changes using requestAnimationFrame
@@ -14,7 +14,7 @@ import { useEffect, useRef } from "react";
 export const useElementPositionObserver = (
   ref: React.RefObject<HTMLElement | null>,
   onChange: (rect: DOMRect) => void,
-  active: boolean,
+  active: boolean
 ) => {
   const prevRectRef = useRef<DOMRect | null>(null);
 

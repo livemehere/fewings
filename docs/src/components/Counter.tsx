@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { AnimateNumber } from "@fewings/fancy-react/AnimateNumber";
+import { useState } from 'react';
+import { AnimateNumber } from '@fewings/fancy-react/AnimateNumber';
 
 const Counter = () => {
   const [cnt, setCnt] = useState(0);

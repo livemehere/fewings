@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { TextEditorEvent, TextEditor } from "../core/TextEditor";
-import { useCallbackRef } from "@fewings/react/hooks";
-import { useContextSelector } from "@fewings/react/contextSelector";
-import { TextEditorContext } from "../provider/TextEditorProvider";
+import { useEffect } from 'react';
+import { TextEditorEvent, TextEditor } from '../core/TextEditor';
+import { useCallbackRef } from '@fewings/react/hooks';
+import { useContextSelector } from '@fewings/react/contextSelector';
+import { TextEditorContext } from '../provider/TextEditorProvider';
 
 /** for inside of TextEditorContext.Provider */
 export default function useTextEditorEffect<

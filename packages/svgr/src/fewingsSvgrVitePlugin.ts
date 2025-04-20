@@ -1,8 +1,8 @@
-import type { PluginOption } from "vite";
-import { build as buildFiles } from "./core/build.mjs";
-import { debounce } from "@fewings/core/fp";
-import path from "path";
-import { watch, FSWatcher } from "chokidar";
+import type { PluginOption } from 'vite';
+import { build as buildFiles } from './core/build.mjs';
+import { debounce } from '@fewings/core/fp';
+import path from 'path';
+import { watch, FSWatcher } from 'chokidar';
 
 type Options = {
   svgPath: string; // Path to the SVG files
@@ -25,22 +25,22 @@ export const fewingsSvgrVitePlugin = (options: Options): PluginOption => {
       componentName: options.componentName,
       typeName: options.typeName,
     });
-    console.log("🚀 @fewings/svgr build completed");
+    console.log('🚀 @fewings/svgr build completed');
   };
   const delayBuild = debounce(build, 100);
 
   return [
     {
-      name: "vite-plugin-fewings-svgr",
+      name: 'vite-plugin-fewings-svgr',
       configureServer() {
         build();
         if (watcher) {
           watcher.close();
-          console.log("🚀 @fewings/svgr watcher closed");
+          console.log('🚀 @fewings/svgr watcher closed');
         }
         watcher = watch(path.resolve(process.cwd(), options.svgPath));
-        watcher.on("all", () => delayBuild());
-        console.log("🚀 @fewings/svgr watcher started");
+        watcher.on('all', () => delayBuild());
+        console.log('🚀 @fewings/svgr watcher started');
       },
     },
   ];

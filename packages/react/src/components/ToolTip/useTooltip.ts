@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { TOOLTIP_DEFAULT_OPTIONS, TToolTipOptions } from "./schema";
+import { useMemo } from 'react';
+import { TOOLTIP_DEFAULT_OPTIONS, TToolTipOptions } from './schema';
 
 const ROTATE_MAP = {
   top: 180,
@@ -12,8 +12,8 @@ export function useTooltip(options: TToolTipOptions = {}) {
   const mergedOptions = useMemo(() => {
     const filteredOptions = Object.fromEntries(
       Object.entries(options).filter(
-        ([_, value]) => value !== null && value !== undefined,
-      ),
+        ([_, value]) => value !== null && value !== undefined
+      )
     );
 
     return {
@@ -36,28 +36,28 @@ export function useTooltip(options: TToolTipOptions = {}) {
   const arrowPositionStyleMap = useMemo(() => {
     return {
       top: {
-        position: "absolute",
-        top: "100%",
-        left: "50%",
-        transform: "translateX(-50%)",
+        position: 'absolute',
+        top: '100%',
+        left: '50%',
+        transform: 'translateX(-50%)',
       } as React.CSSProperties,
       bottom: {
-        position: "absolute",
-        bottom: "100%",
-        left: "50%",
-        transform: "translateX(-50%)",
+        position: 'absolute',
+        bottom: '100%',
+        left: '50%',
+        transform: 'translateX(-50%)',
       } as React.CSSProperties,
       left: {
-        position: "absolute",
-        left: "100%",
-        top: "50%",
-        transform: "translateY(-50%)",
+        position: 'absolute',
+        left: '100%',
+        top: '50%',
+        transform: 'translateY(-50%)',
       } as React.CSSProperties,
       right: {
-        position: "absolute",
-        right: "100%",
-        top: "50%",
-        transform: "translateY(-50%)",
+        position: 'absolute',
+        right: '100%',
+        top: '50%',
+        transform: 'translateY(-50%)',
       } as React.CSSProperties,
     };
   }, []);

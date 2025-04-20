@@ -86,7 +86,7 @@ useElementPositionObserver(
     // Callback to execute when the element's position changes
     console.log(rect.top, rect.left);
   },
-  isActive, // Whether observation is active
+  isActive // Whether observation is active
 );
 ```
 
@@ -109,7 +109,7 @@ Provides a performance-optimized context API. Unlike React's default Context API
 
 ```tsx
 // Create context
-const MyContext = createContext({ count: 0, user: { name: "" } });
+const MyContext = createContext({ count: 0, user: { name: '' } });
 
 // Selectively use only the needed values in components
 const count = useContextSelector(MyContext, (state) => state.count);

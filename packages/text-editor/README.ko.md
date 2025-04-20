@@ -56,17 +56,17 @@ pnpm add @fewings/text-editor
 ```
 
 ```javascript
-import { TextEditor } from "@fewings/text-editor";
+import { TextEditor } from '@fewings/text-editor';
 
 // 에디터 컨테이너 요소 가져오기
-const editorElement = document.getElementById("editor-container");
+const editorElement = document.getElementById('editor-container');
 
 // TextEditor 인스턴스 생성
 const editor = new TextEditor({
   element: editorElement,
   initialHtml:
     "<div data-block-id='w1u2oultf'>안녕하세요, 이것은 텍스트 에디터입니다.</div>", // 초기 HTML 내용 ⚠️ 앞서 언급한 DOM 구조를 준수해야 합니다 (직계 요소는 data-block-id 를 가진 HTMLDivElement 이어야 합니다)
-  mode: "edit", // 'edit' 또는 'view' 모드 지정
+  mode: 'edit', // 'edit' 또는 'view' 모드 지정
   spellcheck: true, // 맞춤법 검사 활성화 여부
 });
 ```
@@ -77,8 +77,8 @@ TextEditor는 몇몇 핵심 이벤트를 제공합니다.(추가 예정)
 
 ```javascript
 // 커서 위치 변경 이벤트
-editor.on("cursorChanged", (cursorStatus) => {
-  console.log("현재 커서 상태:", cursorStatus);
+editor.on('cursorChanged', (cursorStatus) => {
+  console.log('현재 커서 상태:', cursorStatus);
 
   // cursorStatus 객체는 현재 선택된 텍스트의 스타일 정보를 포함합니다:
   // isH1, isBold, isItalic, color, bgColor 등
@@ -87,15 +87,15 @@ editor.on("cursorChanged", (cursorStatus) => {
 });
 
 // HTML 내용 변경 이벤트
-editor.on("onChange", (html) => {
-  console.log("에디터 내용 변경:", html);
+editor.on('onChange', (html) => {
+  console.log('에디터 내용 변경:', html);
 
   // 변경된 HTML을 저장하거나 다른 처리를 할 수 있습니다
 });
 
 // 블록 추가 이벤트 (새로운 라인이 추가될 때 마다 발생)
-editor.on("blockAdded", (blockElement) => {
-  console.log("새 블록 추가됨:", blockElement);
+editor.on('blockAdded', (blockElement) => {
+  console.log('새 블록 추가됨:', blockElement);
 });
 ```
 
@@ -105,30 +105,30 @@ editor.on("blockAdded", (blockElement) => {
 
 ```javascript
 // 볼드체 적용
-document.getElementById("bold-button").addEventListener("click", () => {
-  editor.action("bold");
+document.getElementById('bold-button').addEventListener('click', () => {
+  editor.action('bold');
 });
 
 // 이탤릭체 적용
-document.getElementById("italic-button").addEventListener("click", () => {
-  editor.action("italic");
+document.getElementById('italic-button').addEventListener('click', () => {
+  editor.action('italic');
 });
 
 // 제목 스타일 적용
-document.getElementById("h1-button").addEventListener("click", () => {
-  editor.action("heading", "h1");
+document.getElementById('h1-button').addEventListener('click', () => {
+  editor.action('heading', 'h1');
 });
 
 // 텍스트 색상 변경
-document.getElementById("color-picker").addEventListener("change", (e) => {
-  editor.action("color", e.target.value);
+document.getElementById('color-picker').addEventListener('change', (e) => {
+  editor.action('color', e.target.value);
 });
 
 // 링크 삽입
-document.getElementById("link-button").addEventListener("click", () => {
-  const url = prompt("URL을 입력하세요");
+document.getElementById('link-button').addEventListener('click', () => {
+  const url = prompt('URL을 입력하세요');
   if (url) {
-    editor.action("link", url);
+    editor.action('link', url);
   }
 });
 ```
@@ -138,18 +138,18 @@ document.getElementById("link-button").addEventListener("click", () => {
 React 어플리케이션에서는 제공되는 컴포넌트와 훅을 활용하여 더 쉽게 에디터를 사용할 수 있습니다.
 
 ```tsx
-import { useState } from "react";
+import { useState } from 'react';
 import {
   TextEditorBody,
   TextEditorProvider,
   TextEditorView,
-} from "@fewings/text-editor";
+} from '@fewings/text-editor';
 
 const initialHtml =
   "<div data-block-id='w1u2oultf'>안녕하세요, 이것은 텍스트 에디터입니다.</div>";
 
 interface Props {
-  mode?: "edit" | "view";
+  mode?: 'edit' | 'view';
   spellcheck?: boolean;
   showPreview?: boolean;
 }
@@ -169,7 +169,7 @@ export default function SampleTextEditor({
         spellcheck={spellcheck}
       >
         <div className="editor_layout">
-          <TextEditorBody style={{ height: 400, overflowY: "scroll" }} />
+          <TextEditorBody style={{ height: 400, overflowY: 'scroll' }} />
         </div>
       </TextEditorProvider>
       {showPreview && <TextEditorView html={preview} className="preview" />}
@@ -185,11 +185,11 @@ export default function SampleTextEditor({
 const html = editor.toHtml();
 
 // 에디터 내용 설정하기
-editor.setHtml("<p>새로운 내용입니다.</p>");
+editor.setHtml('<p>새로운 내용입니다.</p>');
 
 // 에디터 모드 변경 (편집/읽기 전용)
-editor.setMode("view"); // 읽기 전용으로 변경
-editor.setMode("edit"); // 편집 가능하도록 변경
+editor.setMode('view'); // 읽기 전용으로 변경
+editor.setMode('edit'); // 편집 가능하도록 변경
 ```
 
 ### 6. 에디터 정리하기

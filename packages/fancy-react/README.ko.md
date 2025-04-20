@@ -47,7 +47,7 @@ AnimateNumber 컴포넌트는 숫자 값이 변경될 때 부드러운 애니메
 ### 기본 사용법
 
 ```tsx
-import { AnimateNumber } from "@fewings/fancy-react/AnimateNumber";
+import { AnimateNumber } from '@fewings/fancy-react/AnimateNumber';
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -88,9 +88,9 @@ function Counter() {
 <AnimateNumber
   value={score}
   style={{
-    fontSize: "2rem",
-    fontWeight: "bold",
-    color: "#2563eb",
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: '#2563eb',
   }}
 />
 ```

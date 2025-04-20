@@ -1,34 +1,34 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from '@storybook/react';
 
-import { TextEditorConfig } from "@fewings/text-editor";
+import { TextEditorConfig } from '@fewings/text-editor';
 
-import "./sample/Theme.css";
-import "./sample/Editor.css";
-import SampleTextEditor from "./sample/SampleEditor";
+import './sample/Theme.css';
+import './sample/Editor.css';
+import SampleTextEditor from './sample/SampleEditor';
 
 const meta: Meta<TextEditorConfig> = {
-  title: "text-editor/sample",
-  tags: ["autodocs"],
+  title: 'text-editor/sample',
+  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          "`@fewings/text-editor` provides core functionality for text editing. Fully customizable and extensible, it allows you to create your own text editor with ease. This example demonstrates a simple text editor with a toolbar and body area.",
+          '`@fewings/text-editor` provides core functionality for text editing. Fully customizable and extensible, it allows you to create your own text editor with ease. This example demonstrates a simple text editor with a toolbar and body area.',
       },
     },
   },
   args: {
-    mode: "edit",
+    mode: 'edit',
     spellcheck: true,
   },
   argTypes: {
     mode: {
-      options: ["view", "edit"],
-      control: { type: "select" },
+      options: ['view', 'edit'],
+      control: { type: 'select' },
     },
     spellcheck: {
       options: [true, false],
-      control: { type: "boolean" },
+      control: { type: 'boolean' },
     },
   },
 };

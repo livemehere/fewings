@@ -1,5 +1,5 @@
-import { TShapeProps, Shape } from "./Shape";
-import { IPoint, ModelTypeMap, TModelType } from "../types";
+import { TShapeProps, Shape } from './Shape';
+import { IPoint, ModelTypeMap, TModelType } from '../types';
 
 export class Ellipse extends Shape {
   readonly type: TModelType = ModelTypeMap.ELLIPSE;
@@ -43,7 +43,7 @@ export class Ellipse extends Shape {
       this.height / 2,
       0,
       0,
-      Math.PI * 2,
+      Math.PI * 2
     );
     ctx.closePath();
   }
@@ -57,7 +57,7 @@ export class Ellipse extends Shape {
       this.height / 2,
       0,
       0,
-      Math.PI * 2,
+      Math.PI * 2
     );
     ctx.closePath();
   }

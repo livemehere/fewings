@@ -8,16 +8,16 @@
  */
 export function shade(color: string, weight: number): string {
   // Ensure the color starts with '#' and remove it
-  if (color.startsWith("#")) {
+  if (color.startsWith('#')) {
     color = color.slice(1);
   }
 
   // Convert 3-character HEX to 6-character HEX
   if (color.length === 3) {
     color = color
-      .split("")
+      .split('')
       .map((char) => char + char)
-      .join("");
+      .join('');
   }
 
   // Validate HEX format
@@ -25,7 +25,7 @@ export function shade(color: string, weight: number): string {
     (color.length !== 6 && color.length !== 8) ||
     !/^[0-9a-fA-F]{6,8}$/.test(color)
   ) {
-    throw new Error("Invalid HEX color format");
+    throw new Error('Invalid HEX color format');
   }
 
   // Clamp weight between -100 and 100
@@ -40,7 +40,7 @@ export function shade(color: string, weight: number): string {
   // Adjust brightness
   const adjust = (channel: number) => {
     const newChannel = Math.round(
-      channel + (weight / 100) * (weight > 0 ? 255 - channel : channel),
+      channel + (weight / 100) * (weight > 0 ? 255 - channel : channel)
     );
     return Math.max(0, Math.min(255, newChannel)); // Clamp between 0 and 255
   };
@@ -50,7 +50,7 @@ export function shade(color: string, weight: number): string {
   const newB = adjust(b);
 
   // Convert RGB back to HEX
-  const toHex = (channel: number) => channel.toString(16).padStart(2, "0");
+  const toHex = (channel: number) => channel.toString(16).padStart(2, '0');
 
-  return `#${toHex(newR)}${toHex(newG)}${toHex(newB)}${a ?? ""}`;
+  return `#${toHex(newR)}${toHex(newG)}${toHex(newB)}${a ?? ''}`;
 }

@@ -29,7 +29,7 @@
   }
 
   /* Edit Mode only */
-  &[contenteditable="true"] {
+  &[contenteditable='true'] {
     [data-block-id] {
       /* where cursor is */
       &.block-selected {

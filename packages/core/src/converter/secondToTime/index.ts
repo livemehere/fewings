@@ -3,13 +3,13 @@
  */
 export function secondToTime(
   second: number,
-  to: "h" | "m",
+  to: 'h' | 'm'
 ): {
   h: number;
   m: number;
   s: number;
 } {
-  if (to === "h") {
+  if (to === 'h') {
     return {
       h: Math.floor(second / 3600),
       m: Math.floor((second % 3600) / 60),

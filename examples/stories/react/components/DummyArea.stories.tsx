@@ -1,39 +1,39 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { DummyArea } from "@fewings/react/components";
+import { Meta, StoryObj } from '@storybook/react';
+import { DummyArea } from '@fewings/react/components';
 
 const meta: Meta<typeof DummyArea> = {
   component: DummyArea,
-  title: "react/components/DummyArea",
+  title: 'react/components/DummyArea',
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "A dummy area component that serves as a placeholder for other components. It can be styled with different themes and dimensions.",
+          'A dummy area component that serves as a placeholder for other components. It can be styled with different themes and dimensions.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     width: {
       control: {
-        type: "number",
+        type: 'number',
       },
     },
     height: {
       control: {
-        type: "number",
+        type: 'number',
       },
     },
     theme: {
-      options: ["light", "dark"],
+      options: ['light', 'dark'],
       control: {
-        type: "select",
+        type: 'select',
       },
     },
     children: {
       control: {
-        type: "text",
+        type: 'text',
       },
     },
   },
@@ -46,7 +46,7 @@ export const Default: Story = {
   args: {
     width: 500,
     height: 500,
-    children: "500x500",
-    theme: "light",
+    children: '500x500',
+    theme: 'light',
   },
 };

@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import { useControlledState } from "@fewings/react/hooks";
+import { useEffect, useRef, useState } from 'react';
+import { useControlledState } from '@fewings/react/hooks';
 
 export interface DragStyle {
-  position: "absolute";
+  position: 'absolute';
   top: number | string;
   left: number | string;
 }
 
 interface UseDragPositionProps {
-  dir?: "x" | "y" | "xy";
+  dir?: 'x' | 'y' | 'xy';
   style?: DragStyle;
   defaultStyle?: DragStyle;
   onChangeStyle?: (style: DragStyle) => void;
@@ -17,13 +17,13 @@ interface UseDragPositionProps {
 }
 
 const defaultStyle: DragStyle = {
-  position: "absolute",
+  position: 'absolute',
   top: 0,
   left: 0,
 };
 
 export const useDragPosition = (opt?: UseDragPositionProps) => {
-  const dir = opt?.dir || "xy";
+  const dir = opt?.dir || 'xy';
   const startRef = useRef<{
     x: number | null;
     y: number | null;
@@ -106,8 +106,8 @@ export const useDragPosition = (opt?: UseDragPositionProps) => {
       if (startX == null) return;
       const { minLeft, maxLeft, minTop, maxTop } = setBounds();
 
-      const xChange = dir.includes("x");
-      const yChange = dir.includes("y");
+      const xChange = dir.includes('x');
+      const yChange = dir.includes('y');
       const dx = xChange ? e.clientX - startX : 0;
       const dy = yChange ? e.clientY - startY! : 0;
 
@@ -120,14 +120,14 @@ export const useDragPosition = (opt?: UseDragPositionProps) => {
         left,
       }));
     };
-    el.addEventListener("pointerdown", onPointerDown);
-    window.addEventListener("pointerup", onPointerUp);
-    window.addEventListener("pointermove", onPointerMove);
+    el.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointermove', onPointerMove);
 
     return () => {
-      el.removeEventListener("pointerdown", onPointerDown);
-      window.removeEventListener("pointerup", onPointerUp);
-      window.removeEventListener("pointermove", onPointerMove);
+      el.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointermove', onPointerMove);
     };
   }, [dir]);
 

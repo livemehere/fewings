@@ -89,18 +89,18 @@ The Vite plugin automatically watches for changes to your SVG files during devel
 
 ```typescript
 // vite.config.ts
-import { defineConfig } from "vite";
-import { fewingsSvgrVitePlugin } from "@fewings/svgr";
-import svgr from "vite-plugin-svgr";
+import { defineConfig } from 'vite';
+import { fewingsSvgrVitePlugin } from '@fewings/svgr';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [
     svgr(), // Standard SVGR plugin for importing SVGs as React components
     fewingsSvgrVitePlugin({
-      svgPath: "./public/assets/svg",
-      outDir: "./src/Icon",
-      componentName: "Icon",
-      importBase: "@assets/svg", // Optional: base path for SVG imports
+      svgPath: './public/assets/svg',
+      outDir: './src/Icon',
+      componentName: 'Icon',
+      importBase: '@assets/svg', // Optional: base path for SVG imports
     }),
   ],
 });
@@ -129,7 +129,7 @@ After @fewings/svgr has processed your SVG files, it will generate:
 
 ```tsx
 // Using the generated Icon component
-import { Icon } from "./src/Icon/Icon";
+import { Icon } from './src/Icon/Icon';
 
 function App() {
   return (
@@ -141,7 +141,7 @@ function App() {
 }
 
 // Using the generated map directly
-import { IconMap, IconKeys } from "./src/Icon/IconMap";
+import { IconMap, IconKeys } from './src/Icon/IconMap';
 
 function CustomIcon({
   name,

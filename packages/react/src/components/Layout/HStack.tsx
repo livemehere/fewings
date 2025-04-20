@@ -2,36 +2,36 @@ type Props<T extends keyof React.JSX.IntrinsicElements> =
   React.PropsWithChildren<{
     inline?: boolean;
     gap?: number | string;
-    align?: "start" | "center" | "end" | "stretch" | "baseline";
+    align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
     justify?:
-      | "start"
-      | "center"
-      | "end"
-      | "space-between"
-      | "space-around"
-      | "space-evenly";
+      | 'start'
+      | 'center'
+      | 'end'
+      | 'space-between'
+      | 'space-around'
+      | 'space-evenly';
     padding?: number | string;
     as?: T;
   }> &
-    React.ComponentProps<"div">;
+    React.ComponentProps<'div'>;
 
 export function HStack<T extends keyof React.JSX.IntrinsicElements>({
   inline,
   children,
   gap = 0,
-  align = "stretch",
-  justify = "start",
+  align = 'stretch',
+  justify = 'start',
   padding,
   style = {},
-  as = "div" as T,
+  as = 'div' as T,
   ...props
 }: Props<T>) {
   const Tag: any = as;
   return (
     <Tag
       style={{
-        display: inline ? "inline-flex" : "flex",
-        flexDirection: "row",
+        display: inline ? 'inline-flex' : 'flex',
+        flexDirection: 'row',
         gap,
         alignItems: align,
         justifyContent: justify,

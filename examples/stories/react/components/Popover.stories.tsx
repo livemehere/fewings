@@ -1,52 +1,52 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Popover, DummyArea } from "@fewings/react/components";
+import { Meta, StoryObj } from '@storybook/react';
+import { Popover, DummyArea } from '@fewings/react/components';
 
 type ArgsType = React.ComponentProps<typeof Popover.Root> &
   React.ComponentProps<typeof Popover.Panel>;
 
 const meta: Meta<ArgsType> = {
-  title: "react/components/Popover",
+  title: 'react/components/Popover',
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "The Popover component is a wrapper for the Popover.Trigger and Popover.Panel components. It manages the open state and provides context to its children.",
+          'The Popover component is a wrapper for the Popover.Trigger and Popover.Panel components. It manages the open state and provides context to its children.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     closeOnClickOutSide: true,
-    type: "click",
+    type: 'click',
     initialOpen: false,
     disabled: false,
-    anchor: "bottom-center",
+    anchor: 'bottom-center',
     portal: true,
     fitOnTriggerWidth: false,
   },
   argTypes: {
-    closeOnClickOutSide: { control: "boolean" },
-    type: { control: "select", options: ["click", "hover"] },
+    closeOnClickOutSide: { control: 'boolean' },
+    type: { control: 'select', options: ['click', 'hover'] },
     anchor: {
-      control: "select",
+      control: 'select',
       options: [
-        "top-left",
-        "top-right",
-        "top-center",
-        "bottom-left",
-        "bottom-right",
-        "bottom-center",
-        "left-center",
-        "left-top",
-        "left-bottom",
-        "right-center",
-        "right-top",
-        "right-bottom",
+        'top-left',
+        'top-right',
+        'top-center',
+        'bottom-left',
+        'bottom-right',
+        'bottom-center',
+        'left-center',
+        'left-top',
+        'left-bottom',
+        'right-center',
+        'right-top',
+        'right-bottom',
       ],
     },
-    initialOpen: { control: "boolean" },
-    disabled: { control: "boolean" },
+    initialOpen: { control: 'boolean' },
+    disabled: { control: 'boolean' },
   },
 };
 
@@ -70,7 +70,7 @@ export const Basic: Story = {
       disabled={disabled}
     >
       <Popover.Trigger>
-        <DummyArea width={150} height={80} style={{ cursor: "pointer" }}>
+        <DummyArea width={150} height={80} style={{ cursor: 'pointer' }}>
           Popover.Trigger
         </DummyArea>
       </Popover.Trigger>

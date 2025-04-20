@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useCallbackRef } from "@fewings/react/hooks";
+import { useEffect } from 'react';
+import { useCallbackRef } from '@fewings/react/hooks';
 
 export const useInterval = (callback: () => void, delay: number) => {
   const savedCallback = useCallbackRef(callback);

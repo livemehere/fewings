@@ -3,7 +3,7 @@ export class VerticesHelper {
     x: number,
     y: number,
     width: number,
-    height: number,
+    height: number
   ) {
     return [
       { x: x, y: y },

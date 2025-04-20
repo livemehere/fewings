@@ -1,6 +1,6 @@
-import { RefObject } from "react";
+import { RefObject } from 'react';
 
-export type TPopoverTrigger = "click" | "hover";
+export type TPopoverTrigger = 'click' | 'hover';
 export type TPopoverContext = {
   open: boolean;
   setOpen: (v: boolean) => void;
@@ -12,15 +12,15 @@ export type TPopoverContext = {
 };
 
 export type TPopoverAnchor =
-  | "top-left"
-  | "top-right"
-  | "top-center"
-  | "bottom-left"
-  | "bottom-right"
-  | "bottom-center"
-  | "left-center"
-  | "left-top"
-  | "left-bottom"
-  | "right-center"
-  | "right-top"
-  | "right-bottom";
+  | 'top-left'
+  | 'top-right'
+  | 'top-center'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'bottom-center'
+  | 'left-center'
+  | 'left-top'
+  | 'left-bottom'
+  | 'right-center'
+  | 'right-top'
+  | 'right-bottom';

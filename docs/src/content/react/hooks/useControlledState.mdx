@@ -26,8 +26,8 @@ declare const useControlledState: <T>({
 ## Example
 
 ```tsx
-import { useControlledState } from "@fewings/react/hooks";
-import { useState } from "react";
+import { useControlledState } from '@fewings/react/hooks';
+import { useState } from 'react';
 
 function Toggle({ value, defaultValue, onChange }) {
   // you'd better set default value like this for remove the warning of `value` is undefined
@@ -38,7 +38,7 @@ function Toggle({ value, defaultValue, onChange }) {
   });
 
   return (
-    <button onClick={() => setState(!state)}>{state ? "On" : "Off"}</button>
+    <button onClick={() => setState(!state)}>{state ? 'On' : 'Off'}</button>
   );
 }
 

@@ -1,10 +1,10 @@
-import { useMemo } from "react";
-import { IconKeys, IconMap } from "./IconMap";
+import { useMemo } from 'react';
+import { IconKeys, IconMap } from './IconMap';
 
 export const Icon = ({
   name,
   ...props
-}: React.ComponentProps<"svg"> & {
+}: React.ComponentProps<'svg'> & {
   title?: string;
   titleId?: string;
   desc?: string;

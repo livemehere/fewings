@@ -1,8 +1,8 @@
-import { Group } from "../Containers/Group";
-import { Rect } from "../Shapes/Rect";
-import { Shape } from "../Shapes/Shape";
+import { Group } from '../Containers/Group';
+import { Rect } from '../Shapes/Rect';
+import { Shape } from '../Shapes/Shape';
 
-describe("Group", () => {
+describe('Group', () => {
   let group: Group;
   let r1: Shape;
   let r2: Shape;
@@ -12,7 +12,7 @@ describe("Group", () => {
     r2 = new Rect({ x: 100, y: 100, width: 100, height: 100 });
   });
 
-  it("should have default values", () => {
+  it('should have default values', () => {
     expect(group.x).toBe(0);
     expect(group.y).toBe(0);
     expect(group.width).toBe(0);
@@ -27,7 +27,7 @@ describe("Group", () => {
     });
   });
 
-  it("should have correct x, y, width, height", () => {
+  it('should have correct x, y, width, height', () => {
     group.addChild(r1);
     group.addChild(r2);
     expect(group.x).toBe(0);
@@ -36,7 +36,7 @@ describe("Group", () => {
     expect(group.height).toBe(200);
   });
 
-  it("getBounds()", () => {
+  it('getBounds()', () => {
     group.addChild(r1);
     group.addChild(r2);
     expect(group.getBounds()).toEqual({
@@ -54,5 +54,5 @@ describe("Group", () => {
       bottom: 200,
     });
   });
-  it.todo("getGlobalBounds()", () => {});
+  it.todo('getGlobalBounds()', () => {});
 });

@@ -5,9 +5,9 @@
 watch on dev mode.
 
 ```ts
-import { defineConfig } from "vite";
-import { fewingsSvgrVitePlugin } from "@fewings/svgr";
-import svgr from "vite-plugin-svgr";
+import { defineConfig } from 'vite';
+import { fewingsSvgrVitePlugin } from '@fewings/svgr';
+import svgr from 'vite-plugin-svgr';
 
 type Options = {
   svgPath: string;
@@ -22,9 +22,9 @@ export default defineConfig({
   plugins: [
     svgr(),
     fewingsSvgrVitePlugin({
-      svgPath: "./public/assets/svg",
-      outDir: "./src/Icon",
-      componentName: "Icon",
+      svgPath: './public/assets/svg',
+      outDir: './src/Icon',
+      componentName: 'Icon',
     }),
   ],
 });

@@ -1,15 +1,15 @@
-import * as esbuild from "esbuild";
-import * as tsup from "tsup";
-import { resolve, dirname, basename, join } from "path";
-import { fileURLToPath, pathToFileURL } from "url";
-import { globSync } from "glob";
-import { writeFileSync, rm, existsSync } from "fs";
+import * as esbuild from 'esbuild';
+import * as tsup from 'tsup';
+import { resolve, dirname, basename, join } from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
+import { globSync } from 'glob';
+import { writeFileSync, rm, existsSync } from 'fs';
 
-const EXTERNAL_DEPENDENCIES = ["@fewings/*"];
+const EXTERNAL_DEPENDENCIES = ['@fewings/*'];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const TARGET_PACKAGES = globSync("packages/*").map((pkg) =>
-  resolve(__dirname, `../${pkg}`),
+const TARGET_PACKAGES = globSync('packages/*').map((pkg) =>
+  resolve(__dirname, `../${pkg}`)
 );
 
 const tasks = [];
@@ -41,11 +41,11 @@ function createEsbuildConfig(entries, outDir, pkg) {
     entryPoints: entries,
     outdir: outDir,
     bundle: true,
-    logLevel: "silent",
+    logLevel: 'silent',
     external: EXTERNAL_DEPENDENCIES,
-    outbase: join(pkg, "src"),
-    packages: "external",
-    resolveExtensions: [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"],
+    outbase: join(pkg, 'src'),
+    packages: 'external',
+    resolveExtensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'],
     minify: true,
   };
   return config;
@@ -56,14 +56,14 @@ async function buildWithEsbuild(entries, outDir, pkg) {
 
   await esbuild.build({
     ...baseConfig,
-    format: "esm",
-    outExtension: { ".js": ".mjs" },
+    format: 'esm',
+    outExtension: { '.js': '.mjs' },
   });
   console.log(`ESM: Built ${pkg}`);
 
   await esbuild.build({
     ...baseConfig,
-    format: "cjs",
+    format: 'cjs',
   });
   console.log(`CJS: Built ${pkg}`);
 }
@@ -73,41 +73,41 @@ async function buildWithTsup(entries, outDir) {
     entry:
       entries.length === 1
         ? {
-            [entries[0].replace(/^.*?src\//, "").replace(/\.ts$/, "")]:
+            [entries[0].replace(/^.*?src\//, '').replace(/\.ts$/, '')]:
               entries[0],
           }
         : entries,
-    format: ["cjs", "esm"],
+    format: ['cjs', 'esm'],
     dts: { only: true },
     outDir: outDir,
     silent: true,
     external: EXTERNAL_DEPENDENCIES,
-    logLevel: "silent",
+    logLevel: 'silent',
   });
-  console.log("---------");
+  console.log('---------');
   console.log(
     `TSC: ${entries
       .map((e) => {
-        const depths = e.split("/");
-        const srcIdx = depths.indexOf("src");
-        return depths.slice(srcIdx - 1).join("/");
+        const depths = e.split('/');
+        const srcIdx = depths.indexOf('src');
+        return depths.slice(srcIdx - 1).join('/');
       })
-      .join("\n")} build completed`,
+      .join('\n')} build completed`
   );
 }
 
 async function updatePackageJsonExports(pkg, entries) {
-  const pkgJsonPath = resolve(pkg, "package.json");
+  const pkgJsonPath = resolve(pkg, 'package.json');
   const pkgJsonUrl = pathToFileURL(pkgJsonPath).href;
   const { default: pkgJson } = await import(pkgJsonUrl, {
-    assert: { type: "json" },
+    assert: { type: 'json' },
   });
 
   const existingExports = pkgJson.exports || {};
 
   const expectedKeys = entries.map((entry) => {
     const subPkgName = basename(dirname(entry));
-    return subPkgName === "src" ? "." : `./${subPkgName}`;
+    return subPkgName === 'src' ? '.' : `./${subPkgName}`;
   });
 
   const existingKeys = Object.keys(existingExports);
@@ -120,18 +120,18 @@ async function updatePackageJsonExports(pkg, entries) {
 
   const newExports = entries.reduce((acc, entry) => {
     const subPkgName = basename(dirname(entry));
-    const isRoot = subPkgName === "src";
-    const name = isRoot ? "." : `./${subPkgName}`;
+    const isRoot = subPkgName === 'src';
+    const name = isRoot ? '.' : `./${subPkgName}`;
     acc[name] = {
       import: {
-        default: isRoot ? "./dist/index.mjs" : `./dist/${subPkgName}/index.mjs`,
+        default: isRoot ? './dist/index.mjs' : `./dist/${subPkgName}/index.mjs`,
         types: isRoot
-          ? "./dist/index.d.mts"
+          ? './dist/index.d.mts'
           : `./dist/${subPkgName}/index.d.mts`,
       },
       require: {
-        default: isRoot ? "./dist/index.js" : `./dist/${subPkgName}/index.js`,
-        types: isRoot ? "./dist/index.d.ts" : `./dist/${subPkgName}/index.d.ts`,
+        default: isRoot ? './dist/index.js' : `./dist/${subPkgName}/index.js`,
+        types: isRoot ? './dist/index.d.ts' : `./dist/${subPkgName}/index.d.ts`,
       },
     };
     return acc;
@@ -143,7 +143,7 @@ async function updatePackageJsonExports(pkg, entries) {
 }
 
 async function processPackage(pkg) {
-  const outDir = resolve(pkg, "dist");
+  const outDir = resolve(pkg, 'dist');
 
   // Clean previous build outputs
   await cleanOutputDirectory(outDir);
@@ -161,9 +161,9 @@ async function processPackage(pkg) {
   // Build TypeScript declarations
   tasks.push(
     buildWithTsup(
-      entries.map((entry) => entry.replace(/\\/g, "/")),
-      outDir,
-    ),
+      entries.map((entry) => entry.replace(/\\/g, '/')),
+      outDir
+    )
   );
 
   // Update package.json exports
@@ -178,5 +178,5 @@ async function processPackage(pkg) {
 
   await Promise.all(tasks);
 
-  console.log("Build completed");
+  console.log('Build completed');
 })();

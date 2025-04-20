@@ -1,8 +1,8 @@
-import { AnimatePresence, motion } from "motion/react";
-import { ComponentProps, useEffect, useMemo, useRef } from "react";
+import { AnimatePresence, motion } from 'motion/react';
+import { ComponentProps, useEffect, useMemo, useRef } from 'react';
 
-import { Chars } from "./Chars";
-import { isNumberString } from "./utils";
+import { Chars } from './Chars';
+import { isNumberString } from './utils';
 
 type Props = {
   value: number;
@@ -18,9 +18,9 @@ export function AnimateNumber({
   format = (v) => `${v}`,
   style,
   ...props
-}: Props & ComponentProps<"div">) {
+}: Props & ComponentProps<'div'>) {
   const formatRef = useRef(format);
-  const chars = useMemo(() => formatRef.current(value).split(""), [value]);
+  const chars = useMemo(() => formatRef.current(value).split(''), [value]);
 
   useEffect(() => {
     formatRef.current = format;
@@ -29,10 +29,10 @@ export function AnimateNumber({
   return (
     <div
       style={{
-        width: "fit-content",
-        height: "fit-content",
-        display: "flex",
-        alignItems: "center",
+        width: 'fit-content',
+        height: 'fit-content',
+        display: 'flex',
+        alignItems: 'center',
         ...style,
       }}
       {...props}
@@ -43,14 +43,14 @@ export function AnimateNumber({
             <Chars key={i} to={+char} countDur={countDur} widthDur={sizeDur} />
           ) : (
             <motion.div
-              key={`${char}${i !== 0 && i !== chars.length - 1 ? i : ""}`}
+              key={`${char}${i !== 0 && i !== chars.length - 1 ? i : ''}`}
               initial={{
                 opacity: 0,
                 width: 0,
               }}
               animate={{
                 opacity: 1,
-                width: "auto",
+                width: 'auto',
               }}
               exit={{
                 width: 0,
@@ -58,12 +58,12 @@ export function AnimateNumber({
               }}
               transition={{
                 duration: sizeDur,
-                transformOrigin: "left",
+                transformOrigin: 'left',
               }}
             >
               {char}
             </motion.div>
-          ),
+          )
         )}
       </AnimatePresence>
     </div>

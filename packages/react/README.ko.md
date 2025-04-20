@@ -86,7 +86,7 @@ useElementPositionObserver(
     // 요소의 위치가 변경될 때 실행할 콜백
     console.log(rect.top, rect.left);
   },
-  isActive, // 관찰 활성화 여부
+  isActive // 관찰 활성화 여부
 );
 ```
 
@@ -111,7 +111,7 @@ const { pageNumbers, currentGroupIdx, totalGroupLength, isLastGroup } =
 
 ```tsx
 // 컨텍스트 생성
-const MyContext = createContext({ count: 0, user: { name: "" } });
+const MyContext = createContext({ count: 0, user: { name: '' } });
 
 // 컴포넌트에서 필요한 값만 선택적으로 사용
 const count = useContextSelector(MyContext, (state) => state.count);

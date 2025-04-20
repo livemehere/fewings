@@ -1,11 +1,11 @@
-import { Emitter } from "@fewings/core/classes";
-import { BlockAPI } from "./BlockAPI";
-import { CursorAPI } from "./CursorAPI";
-import { InlineAPI } from "./InlineAPI";
-import { DomAPI } from "./DomAPI";
-import { rgbaToHex } from "../Helper/color";
+import { Emitter } from '@fewings/core/classes';
+import { BlockAPI } from './BlockAPI';
+import { CursorAPI } from './CursorAPI';
+import { InlineAPI } from './InlineAPI';
+import { DomAPI } from './DomAPI';
+import { rgbaToHex } from '../Helper/color';
 
-export type TEditorMode = "edit" | "view";
+export type TEditorMode = 'edit' | 'view';
 
 export type TCursorStatus = {
   isH1: boolean;
@@ -32,7 +32,7 @@ export type TCursorStatus = {
 };
 
 export type TActionValueMap = {
-  heading: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  heading: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   bold: undefined;
   italic: undefined;
   underline: undefined;
@@ -77,7 +77,7 @@ export type TextEditorEvent = {
 };
 
 export class TextEditor extends Emitter<TextEditorEvent> {
-  static TARGET_ELEMENT_ATTR_NAME = "data-editor-body";
+  static TARGET_ELEMENT_ATTR_NAME = 'data-editor-body';
   static TARGET_ELEMENT_SELECTOR = `[${TextEditor.TARGET_ELEMENT_ATTR_NAME}='true']`;
 
   readonly element: HTMLElement;
@@ -91,7 +91,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
 
   constructor(config: TextEditorConfig) {
     super();
-    this._mode = config.mode ?? "edit";
+    this._mode = config.mode ?? 'edit';
     this._spellcheck = config.spellcheck ?? true;
     this.element = config.element;
     this._initialHtml = config.initialHtml;
@@ -105,7 +105,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
 
   setMode(mode: TEditorMode) {
     this._mode = mode;
-    this.element.contentEditable = mode === "edit" ? "true" : "false";
+    this.element.contentEditable = mode === 'edit' ? 'true' : 'false';
   }
 
   get spellcheck() {
@@ -123,25 +123,25 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   }
 
   private _initListeners() {
-    this.element.addEventListener("keyup", this._onKeyUp);
-    this.element.addEventListener("click", this._onClick);
-    document.addEventListener("selectionchange", this._onSelectionChange);
+    this.element.addEventListener('keyup', this._onKeyUp);
+    this.element.addEventListener('click', this._onClick);
+    document.addEventListener('selectionchange', this._onSelectionChange);
 
-    this.element.addEventListener("keydown", this._onKeyDown);
-    this.element.addEventListener("paste", this._onPaste);
-    this.element.addEventListener("copy", this._onCopy);
-    this.element.addEventListener("cut", this._onCut);
+    this.element.addEventListener('keydown', this._onKeyDown);
+    this.element.addEventListener('paste', this._onPaste);
+    this.element.addEventListener('copy', this._onCopy);
+    this.element.addEventListener('cut', this._onCut);
   }
 
   private _removeListeners() {
-    this.element.removeEventListener("keyup", this._onKeyUp);
-    this.element.removeEventListener("click", this._onClick);
-    document.removeEventListener("selectionchange", this._onSelectionChange);
+    this.element.removeEventListener('keyup', this._onKeyUp);
+    this.element.removeEventListener('click', this._onClick);
+    document.removeEventListener('selectionchange', this._onSelectionChange);
 
-    this.element.removeEventListener("keydown", this._onKeyDown);
-    this.element.removeEventListener("paste", this._onPaste);
-    this.element.removeEventListener("copy", this._onCopy);
-    this.element.removeEventListener("cut", this._onCut);
+    this.element.removeEventListener('keydown', this._onKeyDown);
+    this.element.removeEventListener('paste', this._onPaste);
+    this.element.removeEventListener('copy', this._onCopy);
+    this.element.removeEventListener('cut', this._onCut);
   }
 
   destroy() {
@@ -153,11 +153,11 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   private _initElement(
     target: HTMLElement,
     mode: TEditorMode,
-    spellcheck: boolean,
+    spellcheck: boolean
   ) {
     this.setMode(mode);
     target.draggable = false;
-    target.setAttribute(TextEditor.TARGET_ELEMENT_ATTR_NAME, "true");
+    target.setAttribute(TextEditor.TARGET_ELEMENT_ATTR_NAME, 'true');
     target.spellcheck = spellcheck;
     if (this._initialHtml) {
       target.innerHTML = this._initialHtml;
@@ -169,14 +169,14 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   private _watchBlockAvailable() {
     this.observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
+        if (mutation.type === 'childList') {
           mutation.addedNodes.forEach((newNode) => {
             if (BlockAPI.isBlock(newNode)) {
               BlockAPI.setId(newNode);
               if (newNode.firstChild instanceof HTMLDivElement) {
-                newNode.innerHTML = "<br/>";
+                newNode.innerHTML = '<br/>';
               }
-              this.dispatch("blockAdded", newNode);
+              this.dispatch('blockAdded', newNode);
             } else {
               if (newNode instanceof HTMLElement) {
                 BlockAPI.wrapWithBlock(newNode);
@@ -196,7 +196,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   private _dispatchCursorChanged() {
     if (!CursorAPI.isRangeInElement(this.element, CursorAPI.getRange())) return;
     const curElements = BlockAPI.getAncestorElements(
-      CursorAPI.getRange().startContainer,
+      CursorAPI.getRange().startContainer
     );
     const curBlock = BlockAPI.getCurrentCursorBlock();
 
@@ -216,7 +216,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       isAlignLeft: false,
       isAlignCenter: false,
       isAlignRight: false,
-      blockFontSize: "16px",
+      blockFontSize: '16px',
       color: undefined,
       bgColor: undefined,
       link: undefined,
@@ -224,36 +224,36 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       curBlock,
     };
     curElements.forEach((el) => {
-      if (el.tagName === "H1") cursorStatus.isH1 = true;
-      if (el.tagName === "H2") cursorStatus.isH2 = true;
-      if (el.tagName === "H3") cursorStatus.isH3 = true;
-      if (el.tagName === "H4") cursorStatus.isH4 = true;
-      if (el.tagName === "H5") cursorStatus.isH5 = true;
-      if (el.tagName === "H6") cursorStatus.isH6 = true;
-      if (el.tagName === "B") cursorStatus.isBold = true;
-      if (el.tagName === "I") cursorStatus.isItalic = true;
-      if (el.tagName === "U") cursorStatus.isUnderline = true;
-      if (el.tagName === "STRIKE") cursorStatus.isStrikethrough = true;
-      if (el.tagName === "UL") cursorStatus.isUnorderedList = true;
-      if (el.tagName === "OL") cursorStatus.isOrderedList = true;
+      if (el.tagName === 'H1') cursorStatus.isH1 = true;
+      if (el.tagName === 'H2') cursorStatus.isH2 = true;
+      if (el.tagName === 'H3') cursorStatus.isH3 = true;
+      if (el.tagName === 'H4') cursorStatus.isH4 = true;
+      if (el.tagName === 'H5') cursorStatus.isH5 = true;
+      if (el.tagName === 'H6') cursorStatus.isH6 = true;
+      if (el.tagName === 'B') cursorStatus.isBold = true;
+      if (el.tagName === 'I') cursorStatus.isItalic = true;
+      if (el.tagName === 'U') cursorStatus.isUnderline = true;
+      if (el.tagName === 'STRIKE') cursorStatus.isStrikethrough = true;
+      if (el.tagName === 'UL') cursorStatus.isUnorderedList = true;
+      if (el.tagName === 'OL') cursorStatus.isOrderedList = true;
 
-      if (el.tagName === "FONT" && cursorStatus.color === undefined) {
-        cursorStatus.color = el.getAttribute("color") ?? undefined;
+      if (el.tagName === 'FONT' && cursorStatus.color === undefined) {
+        cursorStatus.color = el.getAttribute('color') ?? undefined;
       }
-      if (el.tagName === "SPAN" && cursorStatus.bgColor === undefined) {
+      if (el.tagName === 'SPAN' && cursorStatus.bgColor === undefined) {
         cursorStatus.bgColor = rgbaToHex(el.style.backgroundColor) ?? undefined;
       }
 
-      if (el.tagName === "A") {
-        cursorStatus.link = el.getAttribute("href") ?? undefined;
+      if (el.tagName === 'A') {
+        cursorStatus.link = el.getAttribute('href') ?? undefined;
       }
     });
 
     if (curBlock) {
       const style = getComputedStyle(curBlock);
-      if (style.textAlign === "left") cursorStatus.isAlignLeft = true;
-      if (style.textAlign === "center") cursorStatus.isAlignCenter = true;
-      if (style.textAlign === "right") cursorStatus.isAlignRight = true;
+      if (style.textAlign === 'left') cursorStatus.isAlignLeft = true;
+      if (style.textAlign === 'center') cursorStatus.isAlignCenter = true;
+      if (style.textAlign === 'right') cursorStatus.isAlignRight = true;
       cursorStatus.blockFontSize = style.fontSize;
 
       if (cursorStatus.color === undefined) {
@@ -266,7 +266,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
 
     this.curElements = curElements;
     this.curBlock = curBlock;
-    this.dispatch("cursorChanged", cursorStatus);
+    this.dispatch('cursorChanged', cursorStatus);
   }
 
   private _onSelectionChange = (_e: Event) => {
@@ -276,11 +276,11 @@ export class TextEditor extends Emitter<TextEditorEvent> {
 
   private _dispatchHtmlChange() {
     const html = this.element.innerHTML;
-    this.dispatch("onChange", html);
+    this.dispatch('onChange', html);
   }
 
   private _onPaste = (e: ClipboardEvent) => {
-    const text = e.clipboardData?.getData("text/plain");
+    const text = e.clipboardData?.getData('text/plain');
     if (text && BlockAPI.isBlockHtmlString(text)) {
       e.preventDefault();
       const curBlock = BlockAPI.getCurrentCursorBlock();
@@ -293,7 +293,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       this._dispatchHtmlChange();
     }
 
-    this.dispatch("onPaste", e);
+    this.dispatch('onPaste', e);
   };
 
   private _onCopy = (e: ClipboardEvent) => {
@@ -302,7 +302,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       e.preventDefault();
       navigator.clipboard.writeText(BlockAPI.stringify(blocks)); // block html strings
     }
-    this.dispatch("onCopy", e);
+    this.dispatch('onCopy', e);
   };
 
   private _onCut = (e: ClipboardEvent) => {
@@ -314,7 +314,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
     }
     this._ensureEditorHasBlock();
     this._dispatchHtmlChange();
-    this.dispatch("onCut", e);
+    this.dispatch('onCut', e);
   };
 
   private _onKeyDown = (e: KeyboardEvent) => {
@@ -322,7 +322,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
     this._dispatchHtmlChange();
     this._shortcutHandler(e);
 
-    this.dispatch("onKeyDown", e);
+    this.dispatch('onKeyDown', e);
   };
 
   private _onKeyUp = (_e: KeyboardEvent) => {
@@ -331,12 +331,12 @@ export class TextEditor extends Emitter<TextEditorEvent> {
 
   private _onClick = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (target.tagName === "A") {
+    if (target.tagName === 'A') {
       e.preventDefault();
-      const href = target.getAttribute("href");
+      const href = target.getAttribute('href');
       if (href) {
         // open in new tab
-        window.open(href, "_blank");
+        window.open(href, '_blank');
       }
     }
   };
@@ -346,7 +346,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       const div = BlockAPI.create();
       // FIXME: unexpected work on actions (paste .. )
       // BlockAPI.setEmptyMarker(div);
-      div.innerHTML = "<br/>";
+      div.innerHTML = '<br/>';
       this.element.appendChild(div);
     }
   }
@@ -384,12 +384,12 @@ export class TextEditor extends Emitter<TextEditorEvent> {
 
   private async _shortcutHandler(e: KeyboardEvent) {
     //TODO: care about mac os actions. normally ctrlKey is cmdKey on mac os.
-    if (e.key === "Tab") {
+    if (e.key === 'Tab') {
       e.preventDefault();
       const cur = CursorAPI.getRange();
       const ancestors = BlockAPI.getAncestorElements(cur.startContainer);
       const canTabAction = ancestors.some(
-        (e) => e.tagName === "UL" || e.tagName === "OL",
+        (e) => e.tagName === 'UL' || e.tagName === 'OL'
       );
       if (canTabAction) {
         if (e.shiftKey) {
@@ -425,60 +425,60 @@ export class TextEditor extends Emitter<TextEditorEvent> {
 
   action<T extends TEditorActionKeys>(action: T, value?: TActionValueMap[T]) {
     switch (action) {
-      case "heading":
+      case 'heading':
         if (
-          typeof value !== "string" ||
-          !["h1", "h2", "h3", "h4", "h5", "h6"].includes(value)
+          typeof value !== 'string' ||
+          !['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(value)
         ) {
           throw new Error(
-            "TextEditor.apply: heading value must be a string and one of h1, h2, h3, h4, h5, h6",
+            'TextEditor.apply: heading value must be a string and one of h1, h2, h3, h4, h5, h6'
           );
         }
-        InlineAPI.heading(value as TActionValueMap["heading"]);
+        InlineAPI.heading(value as TActionValueMap['heading']);
         break;
-      case "bold":
+      case 'bold':
         InlineAPI.bold();
         break;
-      case "italic":
+      case 'italic':
         InlineAPI.italic();
         break;
-      case "underline":
+      case 'underline':
         InlineAPI.underline();
         break;
-      case "strikethrough":
+      case 'strikethrough':
         InlineAPI.strikethrough();
         break;
-      case "removeStyle":
+      case 'removeStyle':
         InlineAPI.removeFormat();
         break;
-      case "unorderedList":
-        this._merge("ul");
+      case 'unorderedList':
+        this._merge('ul');
         break;
-      case "orderedList":
-        this._merge("ol");
+      case 'orderedList':
+        this._merge('ol');
         break;
-      case "alignLeft":
-        InlineAPI.align("justifyLeft");
+      case 'alignLeft':
+        InlineAPI.align('justifyLeft');
         break;
-      case "alignCenter":
-        InlineAPI.align("justifyCenter");
+      case 'alignCenter':
+        InlineAPI.align('justifyCenter');
         break;
-      case "alignRight":
-        InlineAPI.align("justifyRight");
+      case 'alignRight':
+        InlineAPI.align('justifyRight');
         break;
-      case "color":
-        InlineAPI.color(value as TActionValueMap["color"]);
+      case 'color':
+        InlineAPI.color(value as TActionValueMap['color']);
         break;
-      case "bgColor":
-        InlineAPI.bgColor(value as TActionValueMap["bgColor"]);
+      case 'bgColor':
+        InlineAPI.bgColor(value as TActionValueMap['bgColor']);
         break;
-      case "link":
-        InlineAPI.link(value as TActionValueMap["link"]);
+      case 'link':
+        InlineAPI.link(value as TActionValueMap['link']);
         break;
-      case "fontSize":
+      case 'fontSize':
         const block = BlockAPI.getCurrentCursorBlock();
         if (block) {
-          block.style.fontSize = value as TActionValueMap["fontSize"];
+          block.style.fontSize = value as TActionValueMap['fontSize'];
         }
         break;
       default:
@@ -489,7 +489,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
     // this._checkEmptyBlock();
   }
 
-  private _merge(tagName: "ul" | "ol") {
+  private _merge(tagName: 'ul' | 'ol') {
     const range = CursorAPI.getRange();
     CursorAPI.preventApplyToEditor(this.element, range);
 
@@ -531,7 +531,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       DomAPI.merge(selectedElements, tagName);
     } else {
       throw new Error(
-        "CursorAPI.merge: selected elements must be block or normal element",
+        'CursorAPI.merge: selected elements must be block or normal element'
       );
     }
   }

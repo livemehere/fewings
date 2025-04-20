@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 import {
   App,
   Rect,
@@ -6,7 +6,7 @@ import {
   TransformHelper,
   CustomShape,
   MathHelper,
-} from "../../../packages/canvas/src";
+} from '../../../packages/canvas/src';
 
 const Home = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -27,7 +27,7 @@ const Home = () => {
     const group = new Group({ debug: true, rotate: MathHelper.degToRad(45) });
 
     app.stage.addChild(group);
-    listeners.push(TransformHelper.draggable(app, group, "xy"));
+    listeners.push(TransformHelper.draggable(app, group, 'xy'));
 
     const n = 5;
     for (let i = 0; i < n; i++) {
@@ -36,8 +36,8 @@ const Home = () => {
         y: 100 + i * 100,
         width: 100,
         height: 100,
-        fillStyle: "red",
-        strokeStyle: "blue",
+        fillStyle: 'red',
+        strokeStyle: 'blue',
         strokeWidth: 10,
         // opacity: 0.5,
         // shadowColor: "black",
@@ -52,42 +52,42 @@ const Home = () => {
       });
       group.addChild(rect);
       listeners.push(
-        rect.on("pointerenter", (e) => {
-          e.target.fillStyle = "green";
-        }),
+        rect.on('pointerenter', (e) => {
+          e.target.fillStyle = 'green';
+        })
       );
       listeners.push(
-        rect.on("pointerleave", (e) => {
-          e.target.fillStyle = "black";
-        }),
+        rect.on('pointerleave', (e) => {
+          e.target.fillStyle = 'black';
+        })
       );
 
-      listeners.push(TransformHelper.draggable(app, rect, "xy"));
+      listeners.push(TransformHelper.draggable(app, rect, 'xy'));
     }
 
     let panOff: (() => void) | null = null;
     const downHandler = (e: KeyboardEvent) => {
-      if (e.key === "r") {
+      if (e.key === 'r') {
         group.rotate += 0.1;
       }
 
-      if (e.key === " " && !panOff) {
-        document.body.style.cursor = "grab";
-        panOff = TransformHelper.enablePanning(app, { axis: "xy" });
+      if (e.key === ' ' && !panOff) {
+        document.body.style.cursor = 'grab';
+        panOff = TransformHelper.enablePanning(app, { axis: 'xy' });
       }
     };
 
     const upHandler = (e: KeyboardEvent) => {
-      if (e.key === " ") {
+      if (e.key === ' ') {
         if (panOff) {
           panOff();
           panOff = null;
-          document.body.style.cursor = "default";
+          document.body.style.cursor = 'default';
         }
       }
     };
-    window.addEventListener("keydown", downHandler);
-    window.addEventListener("keyup", upHandler);
+    window.addEventListener('keydown', downHandler);
+    window.addEventListener('keyup', upHandler);
     app.startLoop();
 
     const grid = new CustomShape({
@@ -95,7 +95,7 @@ const Home = () => {
       y: 0,
       width: app.canvas.width,
       height: app.canvas.height,
-      strokeStyle: "rgba(0, 0, 0, 0.3)",
+      strokeStyle: 'rgba(0, 0, 0, 0.3)',
       render: function (ctx) {
         const gap = app.stage.scale * 100;
         const rulerSize = 30;
@@ -114,11 +114,11 @@ const Home = () => {
         ctx.beginPath();
         ctx.rect(0, 0, totalW, rulerSize);
         ctx.rect(0, 0, rulerSize, totalH);
-        ctx.fillStyle = "black";
+        ctx.fillStyle = 'black';
         ctx.fill();
 
-        ctx.font = "20px Arial";
-        ctx.fillStyle = "red";
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'red';
         const skipStep = Math.max(1, Math.floor(0.5 / app.stage.scale));
 
         const baseY = rulerSize / 2;
@@ -242,13 +242,13 @@ const Home = () => {
     const wheelHandler = (e: WheelEvent) => {
       app.stage.scale += -e.deltaY / 1000;
     };
-    app.canvas.addEventListener("wheel", wheelHandler);
+    app.canvas.addEventListener('wheel', wheelHandler);
 
     return () => {
       listeners.forEach((l) => l());
-      window.removeEventListener("keydown", downHandler);
-      window.removeEventListener("keyup", upHandler);
-      app.canvas.removeEventListener("wheel", wheelHandler);
+      window.removeEventListener('keydown', downHandler);
+      window.removeEventListener('keyup', upHandler);
+      app.canvas.removeEventListener('wheel', wheelHandler);
       app.clearLoops();
       off();
     };

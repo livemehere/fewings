@@ -1,6 +1,6 @@
-import { CNode } from "../Core/CNode";
-import { Bounds, ModelTypeMap, TModelType } from "../types";
-import { Container, TContainerProps } from "./Container";
+import { CNode } from '../Core/CNode';
+import { Bounds, ModelTypeMap, TModelType } from '../types';
+import { Container, TContainerProps } from './Container';
 
 export class Group extends Container {
   readonly type: TModelType = ModelTypeMap.GROUP;
@@ -147,18 +147,18 @@ export class Group extends Container {
   }
 
   override clone(): Group {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   override getGlobalBounds(): Bounds {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   override toJSON(): string {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   override fromJSON(json: string): CNode {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 }

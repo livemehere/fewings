@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import FeatureCard from "./FeatureCard";
-import AnimatedText from "./AnimatedText";
-import Badge from "./Badge";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import FeatureCard from './FeatureCard';
+import AnimatedText from './AnimatedText';
+import Badge from './Badge';
 
 // Home page client component
 const HomePage = () => {
@@ -21,7 +21,7 @@ const HomePage = () => {
         <AnimatedText>Build Better React Apps with Fewings</AnimatedText>
         <p
           className={`text-xl text-gray-400 max-w-3xl text-center mb-10 transition-all duration-500 delay-100 ease-out ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
           }`}
         >
           Fewings is an efficient and lightweight collection of React utilities
@@ -34,22 +34,22 @@ const HomePage = () => {
             <button
               className={`bg-gradient-to-r from-blue-500 to-purple-500 text-white border-none py-3 px-6 rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 ${
                 isVisible
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-5 opacity-0"
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-5 opacity-0'
               }`}
-              style={{ transitionDelay: "0.2s" }}
+              style={{ transitionDelay: '0.2s' }}
               onMouseEnter={(e) => {
                 e.currentTarget.classList.add(
-                  "transform",
-                  "-translate-y-0.5",
-                  "shadow-md",
+                  'transform',
+                  '-translate-y-0.5',
+                  'shadow-md'
                 );
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.classList.remove(
-                  "transform",
-                  "-translate-y-0.5",
-                  "shadow-md",
+                  'transform',
+                  '-translate-y-0.5',
+                  'shadow-md'
                 );
               }}
             >
@@ -60,15 +60,15 @@ const HomePage = () => {
             <button
               className={`bg-transparent text-gray-200 border border-gray-600 py-3 px-6 rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 ${
                 isVisible
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-5 opacity-0"
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-5 opacity-0'
               }`}
-              style={{ transitionDelay: "0.3s" }}
+              style={{ transitionDelay: '0.3s' }}
               onMouseEnter={(e) => {
-                e.currentTarget.classList.add("bg-gray-700/20");
+                e.currentTarget.classList.add('bg-gray-700/20');
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.classList.remove("bg-gray-700/20");
+                e.currentTarget.classList.remove('bg-gray-700/20');
               }}
             >
               GitHub
@@ -79,9 +79,9 @@ const HomePage = () => {
 
       <h2
         className={`text-3xl font-semibold text-white text-center mb-12 transition-all duration-500 ease-out ${
-          isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
         }`}
-        style={{ transitionDelay: "0.4s" }}
+        style={{ transitionDelay: '0.4s' }}
       >
         Explore Packages
       </h2>
@@ -89,9 +89,9 @@ const HomePage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div
           className={`transition-all duration-500 ease-out ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
           }`}
-          style={{ transitionDelay: "0.5s" }}
+          style={{ transitionDelay: '0.5s' }}
         >
           <FeatureCard
             title="@fewings/core"
@@ -104,9 +104,9 @@ const HomePage = () => {
 
         <div
           className={`transition-all duration-500 ease-out ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
           }`}
-          style={{ transitionDelay: "0.6s" }}
+          style={{ transitionDelay: '0.6s' }}
         >
           <FeatureCard
             title="@fewings/react"
@@ -119,9 +119,9 @@ const HomePage = () => {
 
         <div
           className={`transition-all duration-500 ease-out ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
           }`}
-          style={{ transitionDelay: "0.7s" }}
+          style={{ transitionDelay: '0.7s' }}
         >
           <FeatureCard
             title="@fewings/fancy-react"
@@ -134,9 +134,9 @@ const HomePage = () => {
 
         <div
           className={`transition-all duration-500 ease-out ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
           }`}
-          style={{ transitionDelay: "0.8s" }}
+          style={{ transitionDelay: '0.8s' }}
         >
           <FeatureCard
             title="@fewings/react-qs"
@@ -149,9 +149,9 @@ const HomePage = () => {
 
         <div
           className={`transition-all duration-500 ease-out ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
           }`}
-          style={{ transitionDelay: "0.9s" }}
+          style={{ transitionDelay: '0.9s' }}
         >
           <FeatureCard
             title="@fewings/svgr"
@@ -165,9 +165,9 @@ const HomePage = () => {
 
       <div
         className={`mt-24 p-12 bg-gray-900 rounded-2xl text-center transition-all duration-500 ease-out ${
-          isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
         }`}
-        style={{ transitionDelay: "1s" }}
+        style={{ transitionDelay: '1s' }}
       >
         <h2 className="text-2xl font-semibold text-white mb-4">
           Get Started Now
@@ -183,16 +183,16 @@ const HomePage = () => {
             className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-none py-3 px-6 rounded-lg text-base font-semibold cursor-pointer transition-all duration-200"
             onMouseEnter={(e) => {
               e.currentTarget.classList.add(
-                "transform",
-                "-translate-y-0.5",
-                "shadow-md",
+                'transform',
+                '-translate-y-0.5',
+                'shadow-md'
               );
             }}
             onMouseLeave={(e) => {
               e.currentTarget.classList.remove(
-                "transform",
-                "-translate-y-0.5",
-                "shadow-md",
+                'transform',
+                '-translate-y-0.5',
+                'shadow-md'
               );
             }}
           >

@@ -1,17 +1,17 @@
-import { ComponentProps } from "react";
-import { TextEditor } from "../core/TextEditor";
+import { ComponentProps } from 'react';
+import { TextEditor } from '../core/TextEditor';
 
 interface Props {
   html?: string;
 }
 
 export default function TextEditorView({
-  html = "",
+  html = '',
   ...props
-}: Props & ComponentProps<"div">) {
+}: Props & ComponentProps<'div'>) {
   return (
     <div
-      {...{ [TextEditor.TARGET_ELEMENT_ATTR_NAME]: "true" }}
+      {...{ [TextEditor.TARGET_ELEMENT_ATTR_NAME]: 'true' }}
       dangerouslySetInnerHTML={{ __html: html }}
       {...props}
     ></div>

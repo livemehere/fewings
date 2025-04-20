@@ -54,26 +54,26 @@ pnpm add @fewings/core
 
 ```javascript
 // math 모듈에서 특정 함수 임포트
-import { clamp } from "@fewings/core/math";
+import { clamp } from '@fewings/core/math';
 
 // 값을 특정 범위로 제한
 const limitedValue = clamp(150, 0, 100); // 100 반환
 
 // fp 모듈에서 특정 함수 임포트
-import { debounce } from "@fewings/core/fp";
+import { debounce } from '@fewings/core/fp';
 
 // 디바운스된 함수 생성
 const debouncedFunction = debounce(() => {
-  console.log("창 크기 변경 완료");
+  console.log('창 크기 변경 완료');
 }, 300);
 
 // 이벤트 리스너에 적용
-window.addEventListener("resize", debouncedFunction);
+window.addEventListener('resize', debouncedFunction);
 
 // hash 모듈 사용
-import { djb2 } from "@fewings/core/hash";
+import { djb2 } from '@fewings/core/hash';
 
-const hash = djb2("hello world"); // 문자열에서 해시 생성
+const hash = djb2('hello world'); // 문자열에서 해시 생성
 ```
 
 ## Contributing

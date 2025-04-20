@@ -1,1 +1,1 @@
-export * from "./DummyArea";
+export * from './DummyArea';

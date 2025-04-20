@@ -1,5 +1,5 @@
 export const percentToRatio = (percent: number | string): number => {
-  if (typeof percent === "number") {
+  if (typeof percent === 'number') {
     return percent / 100;
   } else {
     return parseFloat(percent) / 100;

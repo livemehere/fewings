@@ -1,6 +1,6 @@
-import { shade } from "@fewings/core/color";
+import { shade } from '@fewings/core/color';
 
-const originColor = "#de4343";
+const originColor = '#de4343';
 const colors = [
   {
     color: shade(originColor, -30),
@@ -20,9 +20,9 @@ const ShadeExample = () => {
   return (
     <div
       style={{
-        display: "flex",
+        display: 'flex',
         gap: 10,
-        justifyContent: "center",
+        justifyContent: 'center',
         padding: 40,
       }}
     >
@@ -31,14 +31,14 @@ const ShadeExample = () => {
           key={value}
           style={{
             backgroundColor: color,
-            color: "white",
+            color: 'white',
             width: 200,
             height: 80,
-            fontWeight: "bold",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
+            fontWeight: 'bold',
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
           <div>{color}</div>

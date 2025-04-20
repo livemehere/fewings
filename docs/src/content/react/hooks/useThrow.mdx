@@ -11,17 +11,17 @@ declare const useThrow: () => (v: Error | any) => void;
 ## Example
 
 ```tsx
-import { useThrow } from "@fewings/react/hooks";
-import { useState } from "react";
+import { useThrow } from '@fewings/react/hooks';
+import { useState } from 'react';
 
 function ErrorDemo() {
   const throwError = useThrow();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleError = () => {
     try {
       // This will throw and be caught by an error boundary
-      throwError(new Error("Something went wrong!"));
+      throwError(new Error('Something went wrong!'));
     } catch (e) {
       // In practice, this code won't execute because the error is thrown
       // But in case you want to handle errors differently

@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { convertFilesWithMeta, setUpOptions, validateOptions } from "./util";
+import { useEffect, useRef, useState } from 'react';
+import { convertFilesWithMeta, setUpOptions, validateOptions } from './util';
 import {
   THandleFileOptions,
   TFileWithMeta,
   THandleFileEventHooks,
-} from "./schema";
+} from './schema';
 
 export function useHandleFile({
   onChange,
@@ -15,15 +15,15 @@ export function useHandleFile({
   const [isDragOver, setIsDragOver] = useState(false);
 
   useEffect(() => {
-    const inputEl = document.createElement("input");
-    inputEl.type = "file";
+    const inputEl = document.createElement('input');
+    inputEl.type = 'file';
     ref.current = inputEl;
   }, []);
 
   const _setupInputOption = () => {
     const inputEl = ref.current;
     if (!inputEl) {
-      throw new Error("input element is not created.");
+      throw new Error('input element is not created.');
     }
     setUpOptions(inputEl, options);
     return inputEl;
@@ -31,7 +31,7 @@ export function useHandleFile({
 
   const _makeResults = async (files: FileList) => {
     if (files.length === 0) {
-      throw new Error("No files selected");
+      throw new Error('No files selected');
     }
     await validateOptions(files, options);
     return convertFilesWithMeta(files);
@@ -44,7 +44,7 @@ export function useHandleFile({
         try {
           const files = (e.target as HTMLInputElement).files;
           if (!files) {
-            return reject("No files selected");
+            return reject('No files selected');
           }
           const results = await _makeResults(files);
           resolve(results);
@@ -85,7 +85,7 @@ export function useHandleFile({
         try {
           const files = e.dataTransfer.files;
           if (!files || files.length === 0) {
-            throw new Error("No files selected");
+            throw new Error('No files selected');
           }
           const results = await _makeResults(files);
           onChange?.(results);

@@ -1,5 +1,5 @@
-import { SetStateAction, useState } from "react";
-import { useCallbackRef } from "@fewings/react/hooks";
+import { SetStateAction, useState } from 'react';
+import { useCallbackRef } from '@fewings/react/hooks';
 
 interface TControlledState<T> {
   value?: T;
@@ -13,7 +13,7 @@ export const useControlledState = <T>({
   onChange,
 }: TControlledState<T>) => {
   const [unControlledValue, setUnControlledValue] = useState<T | undefined>(
-    defaultValue,
+    defaultValue
   );
 
   const isControlled = value !== undefined;
@@ -21,7 +21,7 @@ export const useControlledState = <T>({
   const handleChange = useCallbackRef(onChange);
   const setState = useCallbackRef((state: SetStateAction<T>) => {
     const nextState =
-      typeof state === "function"
+      typeof state === 'function'
         ? (state as (prevState: T) => T)(value as T)
         : state;
     if (isControlled) {

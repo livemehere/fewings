@@ -10,14 +10,14 @@ declare function map(
   min: number,
   max: number,
   newMin: number,
-  newMax: number,
+  newMax: number
 ): number;
 ```
 
 ## Example
 
 ```ts
-import { map } from "@fewings/core/math";
+import { map } from '@fewings/core/math';
 
 console.log(map(50, 0, 100, 0, 1)); // 0.5
 console.log(map(50, 0, 100, 0, 10)); // 5

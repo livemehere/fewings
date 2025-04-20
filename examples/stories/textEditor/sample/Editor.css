@@ -50,7 +50,7 @@
       &:hover {
         background: var(--hover-color);
       }
-      &[data-active="true"] {
+      &[data-active='true'] {
         background: var(--active-color);
         color: #fff;
         svg path {

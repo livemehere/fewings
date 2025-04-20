@@ -11,20 +11,20 @@ declare function resolveCssValue(v: string | number): string;
 ## Example
 
 ```ts
-import { resolveCssValue } from "@fewings/core/converter";
+import { resolveCssValue } from '@fewings/core/converter';
 
 console.log(resolveCssValue(10)); // "10px"
 console.log(resolveCssValue(0)); // "0px"
 console.log(resolveCssValue(3.5)); // "3.5px"
 
-console.log(resolveCssValue("10")); // "10px"
-console.log(resolveCssValue("0")); // "0px"
-console.log(resolveCssValue("3.5")); // "3.5px"
+console.log(resolveCssValue('10')); // "10px"
+console.log(resolveCssValue('0')); // "0px"
+console.log(resolveCssValue('3.5')); // "3.5px"
 
-console.log(resolveCssValue("10px")); // "10px"
-console.log(resolveCssValue("50%")); // "50%"
-console.log(resolveCssValue("1.5em")); // "1.5em"
-console.log(resolveCssValue("auto")); // "auto"
-console.log(resolveCssValue("inherit")); // "inherit"
-console.log(resolveCssValue("var(--custom-var)")); // "var(--custom-var)"
+console.log(resolveCssValue('10px')); // "10px"
+console.log(resolveCssValue('50%')); // "50%"
+console.log(resolveCssValue('1.5em')); // "1.5em"
+console.log(resolveCssValue('auto')); // "auto"
+console.log(resolveCssValue('inherit')); // "inherit"
+console.log(resolveCssValue('var(--custom-var)')); // "var(--custom-var)"
 ```

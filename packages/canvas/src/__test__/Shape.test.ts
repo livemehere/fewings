@@ -1,8 +1,8 @@
-import { describe, it, expect } from "vitest";
-import { Shape } from "../Shapes/Shape";
-import { Rect } from "../Shapes/Rect";
+import { describe, it, expect } from 'vitest';
+import { Shape } from '../Shapes/Shape';
+import { Rect } from '../Shapes/Rect';
 
-describe("Shape", () => {
+describe('Shape', () => {
   let shape: Shape;
   beforeEach(() => {
     shape = new Rect({
@@ -13,14 +13,14 @@ describe("Shape", () => {
     });
   });
 
-  it("should have correct initial position and dimensions", () => {
+  it('should have correct initial position and dimensions', () => {
     expect(shape.x).toBe(0);
     expect(shape.y).toBe(0);
     expect(shape.width).toBe(100);
     expect(shape.height).toBe(100);
   });
 
-  it("should have defined vertices and correct bounds", () => {
+  it('should have defined vertices and correct bounds', () => {
     expect(shape.vertices).toBeDefined();
     expect(shape.getBounds()).toEqual({
       left: 0,
@@ -30,7 +30,7 @@ describe("Shape", () => {
     });
   });
 
-  it("should resize correctly and update vertices", () => {
+  it('should resize correctly and update vertices', () => {
     shape.width = 200;
     shape.height = 200;
     expect(shape.vertices).toEqual([
@@ -47,7 +47,7 @@ describe("Shape", () => {
     });
   });
 
-  it("should move correctly and update vertices", () => {
+  it('should move correctly and update vertices', () => {
     shape.x = 100;
     shape.y = 100;
     expect(shape.vertices).toEqual([
@@ -64,11 +64,11 @@ describe("Shape", () => {
     });
   });
 
-  it("should calculate and return the center point correctly", () => {
+  it('should calculate and return the center point correctly', () => {
     expect(shape.getCenter()).toEqual({ x: 50, y: 50 });
   });
 
-  it.todo("toJSON");
-  it.todo("fromJSON");
-  it.todo("clone");
+  it.todo('toJSON');
+  it.todo('fromJSON');
+  it.todo('clone');
 });

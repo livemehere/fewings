@@ -5,16 +5,16 @@
 ## API
 
 ```ts
-import { SetStateAction } from "react";
+import { SetStateAction } from 'react';
 
 type QsValue = string | string[] | undefined | null;
 
 type Options = {
-  navigateMode?: "replace" | "push";
+  navigateMode?: 'replace' | 'push';
 };
 declare const useQsState: <State extends Record<string, QsValue>>(
   initialState?: State,
-  options?: Options,
+  options?: Options
 ) => readonly [
   State & Record<string, string | string[]>,
   (newState: SetStateAction<State>) => void,
@@ -24,17 +24,17 @@ declare const useQsState: <State extends Record<string, QsValue>>(
 ## Example
 
 ```tsx
-import { useQsState } from "@fewings/react-qs";
+import { useQsState } from '@fewings/react-qs';
 
 const App = () => {
   const [qs, setQs] = useQsState(
     {
-      name: "kong",
-      age: "10",
+      name: 'kong',
+      age: '10',
     },
     {
-      navigateMode: "replace",
-    },
+      navigateMode: 'replace',
+    }
   );
   return (
     <div>

@@ -1,8 +1,8 @@
-import nextra from "nextra";
-import { remarkSandpack } from "remark-sandpack";
+import nextra from 'nextra';
+import { remarkSandpack } from 'remark-sandpack';
 
 const withNextra = nextra({
-  contentDirBasePath: "/docs",
+  contentDirBasePath: '/docs',
   defaultShowCopyCode: true,
   mdxOptions: {
     remarkPlugins: [remarkSandpack],
@@ -14,9 +14,9 @@ const withNextra = nextra({
 
 // You can include other Next.js configuration options here, in addition to Nextra settings:
 export default withNextra({
-  output: "export",
+  output: 'export',
   images: {
     unoptimized: true,
   },
-  basePath: "/fewings",
+  basePath: '/fewings',
 });

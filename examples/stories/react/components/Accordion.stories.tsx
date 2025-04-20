@@ -1,20 +1,20 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Accordion, DummyArea, Space } from "@fewings/react/components";
+import { Meta, StoryObj } from '@storybook/react';
+import { Accordion, DummyArea, Space } from '@fewings/react/components';
 
 type ArgsType = React.ComponentProps<typeof Accordion.Root>;
 
 const meta: Meta<ArgsType> = {
-  title: "react/components/Accordion",
+  title: 'react/components/Accordion',
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "The Accordion component is a container that allows users to expand and collapse sections of content.",
+          'The Accordion component is a container that allows users to expand and collapse sections of content.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     initialOpen: false,
     open: undefined,
@@ -24,10 +24,10 @@ const meta: Meta<ArgsType> = {
       control: false,
     },
     open: {
-      type: "boolean",
+      type: 'boolean',
     },
     initialOpen: {
-      type: "boolean",
+      type: 'boolean',
     },
   },
 };
@@ -40,7 +40,7 @@ export const Basic: Story = {
     <div style={{ minWidth: 400, height: 800 }}>
       <Accordion.Root {...args}>
         <Accordion.Trigger>
-          <DummyArea height={80} style={{ cursor: "pointer" }}>
+          <DummyArea height={80} style={{ cursor: 'pointer' }}>
             Accordion.Trigger
           </DummyArea>
         </Accordion.Trigger>

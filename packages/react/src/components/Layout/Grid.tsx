@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 
 interface Props {
   children: React.ReactNode;
@@ -30,8 +30,8 @@ export function Grid({
       <div
         className={className}
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           rowGap: rowGap ?? gap,
           ...style,
         }}
@@ -55,7 +55,7 @@ function Row({
     <div
       className={className}
       style={{
-        display: "flex",
+        display: 'flex',
         flex: 1,
         ...style,
         columnGap: _gap,
@@ -82,4 +82,4 @@ function Col({ children, className, style }: Props) {
 
 Grid.Row = Row;
 Grid.Col = Col;
-Grid.displayName = "Grid";
+Grid.displayName = 'Grid';

@@ -10,7 +10,7 @@
  */
 declare function secondToTime(
   second: number,
-  to: "h" | "m",
+  to: 'h' | 'm'
 ): {
   h: number;
   m: number;
@@ -21,10 +21,10 @@ declare function secondToTime(
 ## Example
 
 ```ts
-import { secondToTime } from "@fewings/core/converter";
+import { secondToTime } from '@fewings/core/converter';
 
-console.log(secondToTime(3600, "h")); // { h: 1, m: 0, s: 0 }
-console.log(secondToTime(3660, "h")); // { h: 1, m: 1, s: 0 }
-console.log(secondToTime(3661, "h")); // { h: 1, m: 1, s: 1 }
-console.log(secondToTime(3661, "m")); // { h: 61, m: 1, s: 1 }
+console.log(secondToTime(3600, 'h')); // { h: 1, m: 0, s: 0 }
+console.log(secondToTime(3660, 'h')); // { h: 1, m: 1, s: 0 }
+console.log(secondToTime(3661, 'h')); // { h: 1, m: 1, s: 1 }
+console.log(secondToTime(3661, 'm')); // { h: 61, m: 1, s: 1 }
 ```

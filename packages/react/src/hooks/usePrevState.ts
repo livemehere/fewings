@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export const usePrevState = <T>(state: T | undefined) => {
   const prevState = useRef<T | undefined>(undefined);
