@@ -196,6 +196,6 @@ editor.setMode("edit"); // 편집 가능하도록 변경
 editor.destroy();
 ```
 
-## Contributing
+## 기여하기
 
-도와주신다면 너무 좋습니다! 제안사항, 버그 리포트 또는 기능 요청이 있으시면 `이슈`를 열거나 `PR` 을 올려 주세요.
+기여는 언제나 환영합니다! 제안, 버그 신고 또는 기능 요청이 있으시면 [GitHub 저장소](https://github.com/livemehere/fewings)에 이슈를 열거나 풀 리퀘스트를 제출해주세요.
