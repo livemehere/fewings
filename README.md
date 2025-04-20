@@ -1,6 +1,17 @@
-# @fewings
-
-`@fewings` is a collection of library packages that provide essential features, components, and development environment elements needed for web development.
+<p align="center">
+    <a href="https://github.com/livemehere/fewings">
+        <img src="https://github.com/livemehere/fewings/blob/master/img/logo.png?raw=true" alt="logo" width="200" />
+    </a>
+    <h1 align="center">@fewings</h1>      
+    <p align="center">
+        A collection of library packages that provide essential features, components, and development environment elements needed for web development.
+    </p>
+    <p align="center">
+        <a href="https://livemehere.github.io/fewings/">Documentation</a>
+        &middot;
+        <a href="https://www.npmjs.com/org/fewings">npm</a>
+    </p>
+</p>
 
 ## Packages
 
