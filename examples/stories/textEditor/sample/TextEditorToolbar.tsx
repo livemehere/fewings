@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { EditorIcon } from "./Icons";
 import {
   BlockAPI,
   CursorAPI,
   useTextEditor,
   useTextEditorCursorState,
-} from "../../../../packages/textEditor/src";
-import { Popover, ToolTip } from "@fewings/react/components";
+} from "@fewings/textEditor";
+import { Popover } from "@fewings/react/components";
 
 export default function TextEditorToolbar() {
   const editor = useTextEditor();
