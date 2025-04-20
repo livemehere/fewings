@@ -61,6 +61,19 @@ export interface TextEditorConfig {
 export type TextEditorEvent = {
   blockAdded: (blockElement: HTMLElement) => void;
   cursorChanged: (cursorStatus: TCursorStatus) => void;
+  //
+  onChange: (html: string) => void;
+  // TODO:
+  // onKeyUp: (e: KeyboardEvent) => void;
+  // onClick: (e: MouseEvent) => void;
+  onKeyDown: (e: KeyboardEvent) => void;
+  onPaste: (e: ClipboardEvent) => void;
+  onCopy: (e: ClipboardEvent) => void;
+  onCut: (e: ClipboardEvent) => void;
+  // onDrop: (e: DragEvent) => void;
+  // onDragOver: (e: DragEvent) => void;
+  // onDragLeave: (e: DragEvent) => void;
+  // onDragEnter: (e: DragEvent) => void;
 };
 
 export class TextEditor extends Emitter<TextEditorEvent> {
@@ -104,26 +117,37 @@ export class TextEditor extends Emitter<TextEditorEvent> {
     this.element.spellcheck = spellcheck;
   }
 
+  setHtml(html: string) {
+    this.element.innerHTML = html;
+    this._dispatchHtmlChange();
+  }
+
   private _initListeners() {
-    this.element.addEventListener("keydown", this._onKeyDown);
     this.element.addEventListener("keyup", this._onKeyUp);
     this.element.addEventListener("click", this._onClick);
     document.addEventListener("selectionchange", this._onSelectionChange);
+
+    this.element.addEventListener("keydown", this._onKeyDown);
     this.element.addEventListener("paste", this._onPaste);
+    this.element.addEventListener("copy", this._onCopy);
+    this.element.addEventListener("cut", this._onCut);
   }
 
   private _removeListeners() {
-    this.element.removeEventListener("keydown", this._onKeyDown);
     this.element.removeEventListener("keyup", this._onKeyUp);
     this.element.removeEventListener("click", this._onClick);
     document.removeEventListener("selectionchange", this._onSelectionChange);
+
+    this.element.removeEventListener("keydown", this._onKeyDown);
     this.element.removeEventListener("paste", this._onPaste);
+    this.element.removeEventListener("copy", this._onCopy);
+    this.element.removeEventListener("cut", this._onCut);
   }
 
   destroy() {
     this._removeListeners();
     this.observer.disconnect();
-    super.removeAllListeners();
+    super.removeAllListeners(); // Emitter
   }
 
   private _initElement(
@@ -141,9 +165,7 @@ export class TextEditor extends Emitter<TextEditorEvent> {
     this._watchBlockAvailable();
   }
 
-  /**
-   * - drag and drop create new block, so id will change.s
-   */
+  /** Ensures that the first depth element is always defined as a block HTMLElement */
   private _watchBlockAvailable() {
     this.observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -151,9 +173,6 @@ export class TextEditor extends Emitter<TextEditorEvent> {
           mutation.addedNodes.forEach((newNode) => {
             if (BlockAPI.isBlock(newNode)) {
               BlockAPI.setId(newNode);
-              // FIXME: unexpected work on actions (paste .. )
-              // BlockAPI.setEmptyMarker(newNode);
-              // disable block element inside `Block`
               if (newNode.firstChild instanceof HTMLDivElement) {
                 newNode.innerHTML = "<br/>";
               }
@@ -252,12 +271,57 @@ export class TextEditor extends Emitter<TextEditorEvent> {
   private _onSelectionChange = (_e: Event) => {
     this._updateSelectedBlock();
     this._dispatchCursorChanged();
-    // this._checkEmptyBlock();
+  };
+
+  private _dispatchHtmlChange() {
+    const html = this.element.innerHTML;
+    this.dispatch("onChange", html);
+  }
+
+  private _onPaste = (e: ClipboardEvent) => {
+    const text = e.clipboardData?.getData("text/plain");
+    if (text && BlockAPI.isBlockHtmlString(text)) {
+      e.preventDefault();
+      const curBlock = BlockAPI.getCurrentCursorBlock();
+      const blockFragment = BlockAPI.parse(text);
+      if (curBlock) {
+        curBlock.after(blockFragment);
+      } else {
+        this.element.appendChild(blockFragment);
+      }
+      this._dispatchHtmlChange();
+    }
+
+    this.dispatch("onPaste", e);
+  };
+
+  private _onCopy = (e: ClipboardEvent) => {
+    const blocks = BlockAPI.getSelectedBlocks(this.element);
+    if (blocks.length >= 2) {
+      e.preventDefault();
+      navigator.clipboard.writeText(BlockAPI.stringify(blocks)); // block html strings
+    }
+    this.dispatch("onCopy", e);
+  };
+
+  private _onCut = (e: ClipboardEvent) => {
+    const blocks = BlockAPI.getSelectedBlocks(this.element);
+    if (blocks.length >= 2) {
+      e.preventDefault();
+      navigator.clipboard.writeText(BlockAPI.stringify(blocks));
+      blocks.forEach((block) => block.remove());
+    }
+    this._ensureEditorHasBlock();
+    this._dispatchHtmlChange();
+    this.dispatch("onCut", e);
   };
 
   private _onKeyDown = (e: KeyboardEvent) => {
     this._ensureEditorHasBlock();
-    this._shortcutHandler(e);
+    this._dispatchHtmlChange();
+    // this._shortcutHandler(e);
+
+    this.dispatch("onKeyDown", e);
   };
 
   private _onKeyUp = (_e: KeyboardEvent) => {
@@ -316,20 +380,6 @@ export class TextEditor extends Emitter<TextEditorEvent> {
       CursorAPI.setCursor(clone);
     }
   }
-
-  private _onPaste = (e: ClipboardEvent) => {
-    const text = e.clipboardData?.getData("text/plain");
-    /** if paste text is block html string, action custom paste */
-    if (text?.includes("data-block-id")) {
-      e.preventDefault();
-      const template = document.createElement("template");
-      template.innerHTML = text;
-      const curBlock = BlockAPI.getCurrentCursorBlock();
-      if (curBlock) {
-        curBlock.after(template.content);
-      }
-    }
-  };
 
   private async _shortcutHandler(e: KeyboardEvent) {
     //TODO: care about mac os actions. normally ctrlKey is cmdKey on mac os.

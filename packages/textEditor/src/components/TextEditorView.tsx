@@ -6,12 +6,13 @@ interface Props {
 }
 
 export default function TextEditorView({
+  html = "",
   ...props
 }: Props & ComponentProps<"div">) {
   return (
     <div
       {...{ [TextEditor.TARGET_ELEMENT_ATTR_NAME]: "true" }}
-      dangerouslySetInnerHTML={{ __html: props.html ?? "" }}
+      dangerouslySetInnerHTML={{ __html: html }}
       {...props}
     ></div>
   );

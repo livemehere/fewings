@@ -1,8 +1,11 @@
-import { useContextSelector } from '@fewings/react/contextSelector';
-import { TextEditorContext } from '../provider/TextEditorProvider';
-import useTextEditorEffect from './useTextEditorEffect';
+import { TCursorStatus } from "./../core/TextEditor";
+import useTextEditorEffect from "./useTextEditorEffect";
+import { useState } from "react";
 
 export default function useTextEditorCursorState() {
-  const editor = useContextSelector(TextEditorContext, (ctx) => ctx.editor);
-  return useTextEditorEffect(editor!, 'cursorChanged');
+  const [state, setState] = useState<TCursorStatus | undefined>(undefined);
+  useTextEditorEffect("cursorChanged", (v) => {
+    setState(v);
+  });
+  return state;
 }

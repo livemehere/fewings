@@ -14,7 +14,6 @@ export default function TextEditorBody(props: ComponentProps<"div">) {
         ref={(el) => {
           if (!el || !!editor) return;
           setEditorEl(el);
-          console.log("[TextEditorBody] element binding");
         }}
         {...props}
       />

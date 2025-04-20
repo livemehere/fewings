@@ -1,5 +1,5 @@
-import { DomAPI } from './DomAPI';
-import { TextEditor } from './TextEditor';
+import { DomAPI } from "./DomAPI";
+import { TextEditor } from "./TextEditor";
 
 export class CursorAPI {
   static getEditorElement() {
@@ -9,7 +9,7 @@ export class CursorAPI {
   static preventApplyToEditor(range: Range) {
     const editorEl = this.getEditorElement();
     if (!editorEl) {
-      throw new Error('TextEditor Element not found');
+      throw new Error("TextEditor Element not found");
     }
 
     if (
@@ -18,14 +18,14 @@ export class CursorAPI {
       !editorEl.contains(range.startContainer) ||
       !editorEl.contains(range.endContainer)
     ) {
-      throw new Error('CursorAPI.validateMutate: range is a editor or outside');
+      throw new Error("CursorAPI.validateMutate: range is a editor or outside");
     }
   }
 
   static getRange(): Range {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
-      throw new Error('[getRange] selection is null');
+      throw new Error("[getRange] selection is null");
     }
     return selection.getRangeAt(0);
   }
@@ -34,7 +34,7 @@ export class CursorAPI {
     const range = document.createRange();
     const textNode = element.childNodes[0] as Text;
     if (!textNode) {
-      throw new Error('[createRangeFromElementTextNode] textNode is null');
+      throw new Error("[createRangeFromElementTextNode] textNode is null");
     }
     range.selectNodeContents(textNode);
     range.setEnd(textNode, textNode.textContent!.length);
@@ -44,7 +44,7 @@ export class CursorAPI {
   static setRange(range: Range) {
     const selection = window.getSelection();
     if (!selection) {
-      throw new Error('[setRange] selection is null');
+      throw new Error("[setRange] selection is null");
     }
     selection.removeAllRanges();
     selection.addRange(range);
