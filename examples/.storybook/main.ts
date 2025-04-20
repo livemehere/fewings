@@ -14,5 +14,10 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
+  async viteFinal(config, { configType }) {
+    const { dirname } = require("path");
+    config.root = dirname(require.resolve("storybook-builder-vite"));
+    return config;
+  },
 };
 export default config;
