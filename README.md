@@ -7,7 +7,7 @@
         A collection of library packages that provide essential features, components, and development environment elements needed for web development.
     </p>
     <p align="center">
-        <a href="https://livemehere.github.io/fewings/">Documentation</a>
+        <a href="https://livemehere.github.io/fewings/">github</a>
         &middot;
         <a href="https://www.npmjs.com/org/fewings">npm</a>
     </p>

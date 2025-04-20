@@ -1,6 +1,17 @@
-# @fewings
-
-`@fewings`는 웹 개발에 필요한 핵심 기능, 컴포넌트, 개발 환경 구성 요소들을 패키지 형태로 모은 라이브러리 컬렉션입니다.
+<p align="center">
+    <a href="https://github.com/livemehere/fewings">
+        <img src="https://github.com/livemehere/fewings/blob/master/img/logo.png?raw=true" alt="logo" width="200" />
+    </a>
+    <h1 align="center">@fewings</h1>      
+    <p align="center">
+        웹 개발에 필요한 핵심 기능, 컴포넌트 및 개발 환경 요소를 제공하는 라이브러리 패키지 모음입니다.
+    </p>
+    <p align="center">
+        <a href="https://livemehere.github.io/fewings/">github</a>
+        &middot;
+        <a href="https://www.npmjs.com/org/fewings">npm</a>
+    </p>
+</p>
 
 ## Packages
 
