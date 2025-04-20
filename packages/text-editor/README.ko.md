@@ -13,7 +13,7 @@
      &middot;
     <a href="https://www.npmjs.com/package/@fewings/text-editor">npm</a>
     &middot;
-    <a href="https://github.com/livemehere/fewings/blob/master/README.md">English</a>
+    <a href="https://github.com/livemehere/fewings/blob/master/packages/text-editor/README.md">English</a>
   </p>
 </>
 
