@@ -24,9 +24,6 @@ jobs:
           version: 9.15.5
           run_install: false
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile --recursive
-
       # Manual Checkout
       - uses: actions/checkout@v4
         with:
@@ -38,7 +35,7 @@ jobs:
       #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
-          install_command: pnpm install # default: npm ci
+          install_command: pnpm install --frozen-lockfile --recursive # default: npm ci
           build_command: cd examples && pnpm build-storybook # default: npm run build-storybook
           path: examples/storybook-static # default: dist/storybook
           checkout: false # default: true
