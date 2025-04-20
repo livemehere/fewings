@@ -9,6 +9,8 @@
     애니메이션과 시각적 효과를 활용한 인터렉션 컴포넌트를 제공합니다
     </p>
     <p align="center">
+        <a href="https://livemehere.github.io/fewings/?path=/docs/fancy-react-animatenumber--docs">DEMO</a>
+        &middot;
         <a href="https://www.npmjs.com/package/@fewings/fancy-react">npm</a>
         &middot;
         <a href="https://github.com/livemehere/fewings/blob/master/packages/fancy-react/README.md">English</a>

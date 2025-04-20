@@ -9,6 +9,8 @@
     Provides interactive components utilizing animations and visual effects
     </p>
     <p align="center">
+    <a href="https://livemehere.github.io/fewings/?path=/docs/fancy-react-animatenumber--docs">DEMO</a>
+        &middot;
         <a href="https://www.npmjs.com/package/@fewings/fancy-react">npm</a>
         &middot;
         <a href="https://github.com/livemehere/fewings/blob/master/packages/fancy-react/README.ko.md">한국어</a>
