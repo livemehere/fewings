@@ -226,6 +226,7 @@ const Panel = ({
           width: "fit-content",
           height: "fit-content",
         }}
+        // eslint-disable-next-line react/no-unknown-property
         onPointerLeave={() => {
           if (type === "hover") {
             setOpen(false);

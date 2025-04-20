@@ -5,25 +5,34 @@
   "main": "index.js",
   "author": "livemehere",
   "license": "MIT",
+  "type": "module",
   "packageManager": "pnpm@9.15.5",
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.10.10",
     "esbuild": "^0.24.2",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "glob": "^11.0.1",
+    "globals": "^15.14.0",
     "jsdom": "^26.1.0",
     "prettier": "^3.4.2",
     "tsup": "^8.3.5",
     "typescript": "~5.6.2",
+    "typescript-eslint": "^8.22.0",
     "vite": "^6.0.11",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.4"
   },
   "scripts": {
     "build:all": "node --no-warnings scripts/build.mjs",
-    "test:all": "vitest"
+    "test:all": "vitest",
+    "format": "prettier --write .",
+    "lint": "eslint ."
   }
 }

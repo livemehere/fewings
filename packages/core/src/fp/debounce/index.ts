@@ -13,6 +13,7 @@ export function debounce<T extends (...args: any[]) => void>(
   let lastArgs: Parameters<T> | null;
 
   const debounced = function (this: any, ...args: Parameters<T>) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
     lastArgs = args;
 

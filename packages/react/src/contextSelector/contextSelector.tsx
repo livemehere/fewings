@@ -15,7 +15,7 @@ interface Store<T> {
   notify: () => void;
 }
 
-export const createContext = <T extends unknown>(initialValue: T) => {
+export const createContext = <T,>(initialValue: T) => {
   const context = createContextOrg<Store<T>>(undefined as any);
   const ProviderOrg = context.Provider;
   context.Provider = (({

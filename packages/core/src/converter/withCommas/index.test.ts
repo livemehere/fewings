@@ -8,7 +8,10 @@ describe("core/converter/withCommas", () => {
     });
 
     it("should be fail (limitation of the implementation)", () => {
+      // eslint-disable-next-line no-loss-of-precision
       expect(withCommas(123456789.123456789)).not.toBe("123,456,789.123456789");
+
+      // eslint-disable-next-line no-loss-of-precision
       expect(withCommas(123456789.123456789)).toBe("123,456,789.12345679");
     });
   });
