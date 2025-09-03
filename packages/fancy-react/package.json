@@ -3,7 +3,7 @@
   "author": "livemehere",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "description": "react components with fancy style",
   "homepage": "https://github.com/livemehere/fewings/tree/master/packages/fancy-react",
   "repository": {
@@ -44,10 +44,10 @@
     "./AnimateNumber": {
       "import": {
         "default": "./dist/AnimateNumber/index.mjs",
-        "types": "./dist/AnimateNumber/index.d.mts"
+        "types": "./dist/AnimateNumber/index.d.ts"
       },
       "require": {
-        "default": "./dist/AnimateNumber/index.js",
+        "default": "./dist/AnimateNumber/index.cjs",
         "types": "./dist/AnimateNumber/index.d.cts"
       }
     }

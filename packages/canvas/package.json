@@ -3,7 +3,7 @@
   "author": "livemehere",
   "version": "0.0.1",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "description": "Canvas utility library for creating and manipulating canvas elements.",
   "keywords": [
     "canvas",
@@ -33,20 +33,20 @@
     "./utils": {
       "import": {
         "default": "./dist/utils/index.mjs",
-        "types": "./dist/utils/index.d.mts"
+        "types": "./dist/utils/index.d.ts"
       },
       "require": {
-        "default": "./dist/utils/index.js",
+        "default": "./dist/utils/index.cjs",
         "types": "./dist/utils/index.d.cts"
       }
     },
     ".": {
       "import": {
         "default": "./dist/index.mjs",
-        "types": "./dist/index.d.mts"
+        "types": "./dist/index.d.ts"
       },
       "require": {
-        "default": "./dist/index.js",
+        "default": "./dist/index.cjs",
         "types": "./dist/index.d.cts"
       }
     }

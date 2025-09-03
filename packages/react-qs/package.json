@@ -3,7 +3,7 @@
   "author": "livemehere",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "description": "React hooks for use url query params as state",
   "keywords": [
     "react",
@@ -43,10 +43,10 @@
     ".": {
       "import": {
         "default": "./dist/index.mjs",
-        "types": "./dist/index.d.mts"
+        "types": "./dist/index.d.ts"
       },
       "require": {
-        "default": "./dist/index.js",
+        "default": "./dist/index.cjs",
         "types": "./dist/index.d.cts"
       }
     }

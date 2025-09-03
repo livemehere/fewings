@@ -3,7 +3,7 @@
   "author": "livemehere",
   "version": "1.0.1",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "description": "Useful react components and hooks",
   "keywords": [
     "react",
@@ -43,50 +43,50 @@
     "./overlay": {
       "import": {
         "default": "./dist/overlay/index.mjs",
-        "types": "./dist/overlay/index.d.mts"
+        "types": "./dist/overlay/index.d.ts"
       },
       "require": {
-        "default": "./dist/overlay/index.js",
+        "default": "./dist/overlay/index.cjs",
         "types": "./dist/overlay/index.d.cts"
       }
     },
     "./hooks": {
       "import": {
         "default": "./dist/hooks/index.mjs",
-        "types": "./dist/hooks/index.d.mts"
+        "types": "./dist/hooks/index.d.ts"
       },
       "require": {
-        "default": "./dist/hooks/index.js",
+        "default": "./dist/hooks/index.cjs",
         "types": "./dist/hooks/index.d.cts"
       }
     },
     "./handleFile": {
       "import": {
         "default": "./dist/handleFile/index.mjs",
-        "types": "./dist/handleFile/index.d.mts"
+        "types": "./dist/handleFile/index.d.ts"
       },
       "require": {
-        "default": "./dist/handleFile/index.js",
+        "default": "./dist/handleFile/index.cjs",
         "types": "./dist/handleFile/index.d.cts"
       }
     },
     "./contextSelector": {
       "import": {
         "default": "./dist/contextSelector/index.mjs",
-        "types": "./dist/contextSelector/index.d.mts"
+        "types": "./dist/contextSelector/index.d.ts"
       },
       "require": {
-        "default": "./dist/contextSelector/index.js",
+        "default": "./dist/contextSelector/index.cjs",
         "types": "./dist/contextSelector/index.d.cts"
       }
     },
     "./components": {
       "import": {
         "default": "./dist/components/index.mjs",
-        "types": "./dist/components/index.d.mts"
+        "types": "./dist/components/index.d.ts"
       },
       "require": {
-        "default": "./dist/components/index.js",
+        "default": "./dist/components/index.cjs",
         "types": "./dist/components/index.d.cts"
       }
     }

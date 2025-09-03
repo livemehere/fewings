@@ -1,9 +1,9 @@
 {
   "name": "@fewings/core",
   "author": "livemehere",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "homepage": "https://github.com/livemehere/fewings/tree/master/packages/core",
   "repository": {
     "type": "git",
@@ -32,90 +32,90 @@
     "./qs": {
       "import": {
         "default": "./dist/qs/index.mjs",
-        "types": "./dist/qs/index.d.mts"
+        "types": "./dist/qs/index.d.ts"
       },
       "require": {
-        "default": "./dist/qs/index.js",
+        "default": "./dist/qs/index.cjs",
         "types": "./dist/qs/index.d.cts"
       }
     },
     "./path": {
       "import": {
         "default": "./dist/path/index.mjs",
-        "types": "./dist/path/index.d.mts"
+        "types": "./dist/path/index.d.ts"
       },
       "require": {
-        "default": "./dist/path/index.js",
+        "default": "./dist/path/index.cjs",
         "types": "./dist/path/index.d.cts"
       }
     },
     "./math": {
       "import": {
         "default": "./dist/math/index.mjs",
-        "types": "./dist/math/index.d.mts"
+        "types": "./dist/math/index.d.ts"
       },
       "require": {
-        "default": "./dist/math/index.js",
+        "default": "./dist/math/index.cjs",
         "types": "./dist/math/index.d.cts"
       }
     },
     "./hash": {
       "import": {
         "default": "./dist/hash/index.mjs",
-        "types": "./dist/hash/index.d.mts"
+        "types": "./dist/hash/index.d.ts"
       },
       "require": {
-        "default": "./dist/hash/index.js",
+        "default": "./dist/hash/index.cjs",
         "types": "./dist/hash/index.d.cts"
       }
     },
     "./fp": {
       "import": {
         "default": "./dist/fp/index.mjs",
-        "types": "./dist/fp/index.d.mts"
+        "types": "./dist/fp/index.d.ts"
       },
       "require": {
-        "default": "./dist/fp/index.js",
+        "default": "./dist/fp/index.cjs",
         "types": "./dist/fp/index.d.cts"
       }
     },
     "./dom": {
       "import": {
         "default": "./dist/dom/index.mjs",
-        "types": "./dist/dom/index.d.mts"
+        "types": "./dist/dom/index.d.ts"
       },
       "require": {
-        "default": "./dist/dom/index.js",
+        "default": "./dist/dom/index.cjs",
         "types": "./dist/dom/index.d.cts"
       }
     },
     "./converter": {
       "import": {
         "default": "./dist/converter/index.mjs",
-        "types": "./dist/converter/index.d.mts"
+        "types": "./dist/converter/index.d.ts"
       },
       "require": {
-        "default": "./dist/converter/index.js",
+        "default": "./dist/converter/index.cjs",
         "types": "./dist/converter/index.d.cts"
       }
     },
     "./color": {
       "import": {
         "default": "./dist/color/index.mjs",
-        "types": "./dist/color/index.d.mts"
+        "types": "./dist/color/index.d.ts"
       },
       "require": {
-        "default": "./dist/color/index.js",
+        "default": "./dist/color/index.cjs",
         "types": "./dist/color/index.d.cts"
       }
     },
     "./classes": {
       "import": {
         "default": "./dist/classes/index.mjs",
-        "types": "./dist/classes/index.d.mts"
+        "types": "./dist/classes/index.d.ts"
       },
       "require": {
-        "default": "./dist/classes/index.js",
+        "default": "./dist/classes/index.cjs",
         "types": "./dist/classes/index.d.cts"
       }
     }

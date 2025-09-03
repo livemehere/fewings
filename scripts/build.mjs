@@ -64,6 +64,7 @@ async function buildWithEsbuild(entries, outDir, pkg) {
   await esbuild.build({
     ...baseConfig,
     format: 'cjs',
+    outExtension:{'.js':'.cjs'}
   });
   console.log(`CJS: Built ${pkg}`);
 }
@@ -126,12 +127,12 @@ async function updatePackageJsonExports(pkg, entries) {
       import: {
         default: isRoot ? './dist/index.mjs' : `./dist/${subPkgName}/index.mjs`,
         types: isRoot
-          ? './dist/index.d.mts'
-          : `./dist/${subPkgName}/index.d.mts`,
+          ? './dist/index.d.ts'
+          : `./dist/${subPkgName}/index.d.ts`,
       },
       require: {
-        default: isRoot ? './dist/index.js' : `./dist/${subPkgName}/index.js`,
-        types: isRoot ? './dist/index.d.ts' : `./dist/${subPkgName}/index.d.ts`,
+        default: isRoot ? './dist/index.cjs' : `./dist/${subPkgName}/index.cjs`,
+        types: isRoot ? './dist/index.d.ts' : `./dist/${subPkgName}/index.d.cts`,
       },
     };
     return acc;
