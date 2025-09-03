@@ -100,7 +100,7 @@ async function updatePackageJsonExports(pkg, entries) {
   const pkgJsonPath = resolve(pkg, 'package.json');
   const pkgJsonUrl = pathToFileURL(pkgJsonPath).href;
   const { default: pkgJson } = await import(pkgJsonUrl, {
-    assert: { type: 'json' },
+    with: { type: 'json' },
   });
 
   const existingExports = pkgJson.exports || {};
