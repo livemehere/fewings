@@ -1,5 +1,5 @@
 import { djb2 } from '@fewings/core/hash';
-import { Emitter } from '@fewings/core/classes/Emitter';
+import { Emitter, TListener } from '@fewings/core/classes/Emitter';
 
 import {
   IPoint,
@@ -287,14 +287,12 @@ export abstract class CNode extends Emitter<ICNodeEvents> implements ICNode {
 
   override on<E extends keyof ICNodeEvents>(
     event: E,
-    listener: ICNodeEvents[E]
+    listener: TListener<ICNodeEvents, E>
   ): () => void {
-    super.on(event, listener);
+    const off = super.on(event, listener as any);
     CNode.totalListeners++;
     return () => {
-      this.listener[event] = this.listener[event]?.filter(
-        (l) => l !== listener
-      );
+      off();
       CNode.totalListeners--;
     };
   }
