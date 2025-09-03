@@ -1,30 +1,40 @@
-export type EventMap = Record<string, (...args: any[]) => void>;
-export type TListener<M extends EventMap, K extends keyof M> = M[K];
-export type TPayLoad<M extends EventMap, K extends keyof M> = Parameters<
-  TListener<M, K>
->;
+export type EventMap<T> = {
+  [K in keyof T]: (...args: any[]) => void;
+};
+export type TListener<M, K extends keyof M> = M[K] extends (
+    ...args: any[]
+  ) => any
+  ? M[K]
+  : never;
+export type TPayLoad<M, K extends keyof M> = M[K] extends (
+    ...args: infer P
+  ) => any
+  ? P
+  : never;
 
-export abstract class Emitter<T extends EventMap> {
-  listener: Partial<Record<keyof T, TListener<T, keyof T>[]>> = {};
+export abstract class Emitter<T extends EventMap<T>> {
+  protected listener: Partial<{ [K in keyof T]?: TListener<T, K>[] }> = {};
+
   on<E extends keyof T>(event: E, listener: TListener<T, E>) {
     if (!this.listener[event]) {
       this.listener[event] = [];
     }
-    const l = listener.bind(this) as TListener<T, E>;
-    this.listener[event].push(l);
+    this.listener[event].push(listener);
     return () => {
       const listeners = this.listener[event];
       if (!listeners) {
         return;
       }
-      this.listener[event] = listeners.filter((listener) => listener !== l);
+      this.listener[event] = listeners.filter(
+        (listener) => listener !== listener,
+      );
     };
   }
 
   once<E extends keyof T>(event: E, listener: TListener<T, E>) {
     const _listener: any = (...args: any[]) => {
       off();
-      listener(...args);
+      listener.apply(this, args);
     };
     const off = this.on(event, _listener);
     return off;
@@ -32,10 +42,11 @@ export abstract class Emitter<T extends EventMap> {
 
   dispatch<E extends keyof T>(event: E, ...payload: TPayLoad<T, E>) {
     const listeners = this.listener[event];
-    if (!listeners) {
-      return;
+    if (!listeners || listeners.length === 0) return;
+
+    for (const l of listeners) {
+      l.apply(this, payload);
     }
-    listeners.forEach((listener) => listener(...payload));
   }
 
   removeAllListeners() {
