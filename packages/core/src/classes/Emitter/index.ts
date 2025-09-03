@@ -50,4 +50,8 @@ export abstract class Emitter<T extends EventMap<T>> {
   removeAllListeners() {
     this.listener = {};
   }
+
+  has(event: keyof T) {
+    return !!this.listener[event]?.length;
+  }
 }
