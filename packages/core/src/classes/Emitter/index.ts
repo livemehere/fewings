@@ -2,13 +2,13 @@ export type EventMap<T> = {
   [K in keyof T]: (...args: any[]) => void;
 };
 export type TListener<M, K extends keyof M> = M[K] extends (
-    ...args: any[]
-  ) => any
+  ...args: any[]
+) => any
   ? M[K]
   : never;
 export type TPayLoad<M, K extends keyof M> = M[K] extends (
-    ...args: infer P
-  ) => any
+  ...args: infer P
+) => any
   ? P
   : never;
 
@@ -25,9 +25,7 @@ export abstract class Emitter<T extends EventMap<T>> {
       if (!listeners) {
         return;
       }
-      this.listener[event] = listeners.filter(
-        (listener) => listener !== listener,
-      );
+      this.listener[event] = listeners.filter((l) => l !== listener);
     };
   }
 
