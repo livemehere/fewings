@@ -48,7 +48,7 @@
       },
       "require": {
         "default": "./dist/AnimateNumber/index.js",
-        "types": "./dist/AnimateNumber/index.d.ts"
+        "types": "./dist/AnimateNumber/index.d.cts"
       }
     }
   }

@@ -47,7 +47,7 @@
       },
       "require": {
         "default": "./dist/overlay/index.js",
-        "types": "./dist/overlay/index.d.ts"
+        "types": "./dist/overlay/index.d.cts"
       }
     },
     "./hooks": {
@@ -57,7 +57,7 @@
       },
       "require": {
         "default": "./dist/hooks/index.js",
-        "types": "./dist/hooks/index.d.ts"
+        "types": "./dist/hooks/index.d.cts"
       }
     },
     "./handleFile": {
@@ -67,7 +67,7 @@
       },
       "require": {
         "default": "./dist/handleFile/index.js",
-        "types": "./dist/handleFile/index.d.ts"
+        "types": "./dist/handleFile/index.d.cts"
       }
     },
     "./contextSelector": {
@@ -77,7 +77,7 @@
       },
       "require": {
         "default": "./dist/contextSelector/index.js",
-        "types": "./dist/contextSelector/index.d.ts"
+        "types": "./dist/contextSelector/index.d.cts"
       }
     },
     "./components": {
@@ -87,7 +87,7 @@
       },
       "require": {
         "default": "./dist/components/index.js",
-        "types": "./dist/components/index.d.ts"
+        "types": "./dist/components/index.d.cts"
       }
     }
   }

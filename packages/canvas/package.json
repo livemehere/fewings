@@ -37,7 +37,7 @@
       },
       "require": {
         "default": "./dist/utils/index.js",
-        "types": "./dist/utils/index.d.ts"
+        "types": "./dist/utils/index.d.cts"
       }
     },
     ".": {
@@ -47,7 +47,7 @@
       },
       "require": {
         "default": "./dist/index.js",
-        "types": "./dist/index.d.ts"
+        "types": "./dist/index.d.cts"
       }
     }
   }
